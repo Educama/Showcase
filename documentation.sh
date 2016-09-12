@@ -1,10 +1,11 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 set -e # Exit with nonzero exit code if anything fails
-
-echo "Uploading documentation"
 
 REPO = "https://github.com/tobiasschaefer/tobiasschaefer.github.io.git"
 DIRECTORY = "documentation"
+SHA = `git rev-parse --verify HEAD`
+
+echo "Uploading documentation of $SHA"
 
 git clone $REPO $DIRECTORY
 
@@ -21,4 +22,6 @@ git status
 
 git diff
 
+git add .
+git commit -m "Test results of: ${SHA}"
 
