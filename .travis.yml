@@ -1,6 +1,8 @@
 language: java
 jdk:
 - oraclejdk8
+before_script: chmod +x documentation.sh
+after_success: ./documentation.sh
 deploy:
   edge: true
   provider: cloudfoundry
