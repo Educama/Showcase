@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -e # Exit with nonzero exit code if anything fails
 
-REPO = "https://github.com/tobiasschaefer/tobiasschaefer.github.io.git"
-DIRECTORY = "documentation"
-SHA = `git rev-parse --verify HEAD`
+REPO="https://github.com/tobiasschaefer/tobiasschaefer.github.io.git"
+DIRECTORY="documentation"
+SHA=`git rev-parse --verify HEAD`
 
 echo "Uploading documentation of $SHA"
 
