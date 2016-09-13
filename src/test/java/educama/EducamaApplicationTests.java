@@ -1,5 +1,6 @@
 package educama;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.IntegrationTest;
@@ -13,6 +14,7 @@ import educama.EducamaApplication;
 @SpringApplicationConfiguration(classes = EducamaApplication.class)
 @WebAppConfiguration
 @IntegrationTest
+@Ignore
 public class EducamaApplicationTests {
 
 	@Test
