@@ -1,6 +1,15 @@
 language: java
 jdk:
 - oraclejdk8
+before_script:
+# Integration of X.org for starting firefox with serenity:
+# https://docs.travis-ci.com/user/gui-and-headless-browsers/#Using-xvfb-to-Run-Tests-That-Require-a-GUI
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3 # give xvfb some time to start
+before_install:
+# X.org have to be started with the resolution of 1280x1024x16
+  - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16"
 deploy:
   edge: true
   provider: cloudfoundry
@@ -10,3 +19,5 @@ deploy:
   api: https://api.run.pivotal.io
   organization: tosch
   space: development
+addons:
+  firefox: "42.0"
