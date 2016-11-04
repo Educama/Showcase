@@ -11,7 +11,7 @@ import net.serenitybdd.core.pages.PageObject;
 import net.thucydides.core.annotations.DefaultUrl;
 
 @DefaultUrl("http://localhost:8090")
-public class CasesPage extends PageObject {
+public class ShipmentsListPage extends PageObject {
 
 	@FindBy(id = "casePage")
 	WebElement pageCase;
@@ -31,12 +31,12 @@ public class CasesPage extends PageObject {
 	@FindBy(id = "newCase")
 	WebElement buttonNewCase;
 
-	public void openCases() {
+	public void openShipments() {
 		clickOn(pageCase);
 	}
 
-	public List<String> getCaseList() {
-		List<String> casesList = new ArrayList<String>();
+	public List<String> getShipmentsList() {
+		List<String> shipmentsList = new ArrayList<String>();
 		// Now get all the TR elements from the table
 		List<WebElement> allRows = tableCase.findElements(By.tagName("tr"));
 		// And iterate over them, getting the cells
@@ -47,25 +47,25 @@ public class CasesPage extends PageObject {
 			for (WebElement cell : cells) {
 				// Count only one row for each case
 				if (i == 0) {
-					casesList.add(cell.getText());
+					shipmentsList.add(cell.getText());
 				}
 				i++;
 			}
 		}
-		return casesList;
+		return shipmentsList;
 	}
 
-	public void addCase() {
+	public void addShipment() {
 		inputTransportType.sendKeys("Sperrguttransport");
 		inputCustomerName.sendKeys("John Doe");
 
 	}
 
-	public void openAddCaseModal() {
+	public void openAddShipmentModal() {
 		clickOn(buttonAddCase);
 	}
 
-	public void closeAddCaseModal() {
+	public void closeAddShipmentModal() {
 		clickOn(buttonNewCase);
 	}
 }

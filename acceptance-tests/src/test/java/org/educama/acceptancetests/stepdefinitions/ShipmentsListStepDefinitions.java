@@ -1,51 +1,51 @@
 package org.educama.acceptancetests.stepdefinitions;
 
-import org.educama.acceptancetests.steps.CaseSteps;
+import org.educama.acceptancetests.steps.ShipmentsListSteps;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
 import net.thucydides.core.annotations.Steps;
 
-public class CaseStepDefinitions extends GlobalStepDefinitions {
+public class ShipmentsListStepDefinitions extends GlobalStepDefinitions {
 
 	@Steps
-	CaseSteps user;
+	ShipmentsListSteps user;
 
 	/*
 	 * Empty Caselist
 	 */
 
-	@Given("There are no open cases")
-	public void givenThereAreNoOpenCases() {
+	@Given("There are no open shipments")
+	public void givenThereAreNoOpenShipments() {
 		user.opensThePage();
-		user.openCasePage();
+		user.openShipmentsListPage();
 	}
 
-	@When("I show the list of open cases")
-	public void whenIShowTheListOfOpenCases() {
+	@When("I show the list of current shipments")
+	public void whenIShowTheListOfOpenShipments() {
 
 	}
 
 	@Then("I see an empty list")
 	public void thenISeeAnEmptyList() {
-		user.checksTheCaseList();
+		user.checksTheShipmentsList();
 	}
 
 	/*
 	 * Caselist with one case
 	 */
-	@Given("There is 1 case")
-	public void givenThereIsOneCase() {
+	@Given("There is 1 shipment")
+	public void givenThereIsOneShipment() {
 		user.opensThePage();
-		user.openCasePage();
-		user.openAddCaseModal();
-		user.addOneCase();
-		user.closeAddCaseModal();
+		user.openShipmentsListPage();
+		user.openAddShipmentModal();
+		user.addOneShipment();
+		user.closeAddShipmentModal();
 	}
 
-	@Then("I see 1 case")
-	public void thenISeeOneCase() {
-		user.checksTheCaseListForOneCase();
+	@Then("I see 1 shipment")
+	public void thenISeeOneShipment() {
+		user.checksTheShipmentListForOneShipment();
 	}
 }

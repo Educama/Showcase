@@ -1,23 +1,23 @@
 Narrative:
-  In order to work on cases
+  In order to work on shipments
   As a transport specialist
-  I want to see a list of open cases
+  I want to see a list of current shipments
   
 
-Scenario: List open cases with 5 cases
-Given There are 5 cases
-When I show the list of open cases
-Then I see 5 cases
+Scenario: List open shipments with 5 shipments
+Given There are 5 shipments
+When I show the list of current shipments
+Then I see 5 shipments
 
-Scenario: List open cases without cases
-Given There are no open cases
-When I show the list of open cases
+Scenario: List open shipments without shipments
+Given There are no open shipments
+When I show the list of current shipments
 Then I see an empty list
 
-Scenario: List open cases with 1 case
-Given There is 1 case
-When I show the list of open cases
-Then I see 1 case
+Scenario: List open shipments with 1 shipment
+Given There is 1 shipment
+When I show the list of current shipments
+Then I see 1 shipment
 
 
 

@@ -5,50 +5,50 @@ import static org.junit.Assert.assertThat;
 
 import java.util.List;
 
-import org.educama.acceptancetests.pages.CasesPage;
+import org.educama.acceptancetests.pages.ShipmentsListPage;
 
 import net.thucydides.core.annotations.Step;
 
-public class CaseSteps {
+public class ShipmentsListSteps {
 
-	CasesPage casePage;
+	ShipmentsListPage shipmentsListPage;
 
 	@Step
 	public void opensThePage() {
-		casePage.open();
+		shipmentsListPage.openShipments();
 	}
 
 	@Step
-	public void openCasePage() {
-		casePage.openCases();
+	public void openShipmentsListPage() {
+		shipmentsListPage.openShipments();
 	}
 
 	@Step
-	public void checksTheCaseList() {
-		assertThat("There are cases in the case list.", casePage.getCaseList().size() == 0, is(true));
+	public void checksTheShipmentsList() {
+		assertThat("There are cases in the case list.", shipmentsListPage.getShipmentsList().size() == 0, is(true));
 	}
 
 	@Step
-	public void checksTheCaseListForOneCase() {
-		List<String> caseList = casePage.getCaseList();
-		int size = caseList.size();
+	public void checksTheShipmentListForOneShipment() {
+		List<String> shipmentsList = shipmentsListPage.getShipmentsList();
+		int size = shipmentsList.size();
 
-		assertThat("There are" + size + " case/s in the case list", size == 1, is(true));
+		assertThat("There are" + size + " shipment/s in the shipment list", size == 1, is(true));
 	}
 
 	@Step
-	public void addOneCase() {
-		casePage.addCase();
+	public void addOneShipment() {
+		shipmentsListPage.addShipment();
 	}
 
 	@Step
-	public void openAddCaseModal() {
-		casePage.openAddCaseModal();
+	public void openAddShipmentModal() {
+		shipmentsListPage.openAddShipmentModal();
 	}
 
 	@Step
-	public void closeAddCaseModal() {
-		casePage.closeAddCaseModal();
+	public void closeAddShipmentModal() {
+		shipmentsListPage.closeAddShipmentModal();
 	}
 
 }
