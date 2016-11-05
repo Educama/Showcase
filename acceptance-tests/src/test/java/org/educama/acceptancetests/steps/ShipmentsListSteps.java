@@ -15,7 +15,7 @@ public class ShipmentsListSteps {
 
 	@Step
 	public void opensThePage() {
-		shipmentsListPage.openShipments();
+		shipmentsListPage.open();
 	}
 
 	@Step
