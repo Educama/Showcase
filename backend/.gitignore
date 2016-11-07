@@ -7,3 +7,8 @@ hs_err_pid*
 .classpath
 .project
 /manifest.yml
+
+# IntelliJ
+.idea
+.mvn
+*.iml
