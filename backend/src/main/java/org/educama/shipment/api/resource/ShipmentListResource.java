@@ -9,17 +9,13 @@ public class ShipmentListResource {
 
     public Collection<ShipmentResource> shipments;
 
-    public ShipmentListResource() {
-
-        this.shipments = new ArrayList<>();
-    }
-
-    public ShipmentListResource(Collection<Shipment> shipmentsList) {
-
-        this.shipments = new ArrayList<>();
+    public ShipmentListResource fromShipmentCollection(Collection<Shipment> shipmentsList) {
+    	this.shipments = new ArrayList<>();
+    	
         for (Shipment currentShipment : shipmentsList) {
-
-            shipments.add(new ShipmentResource(currentShipment));
+            shipments.add(new ShipmentResource().fromShipment(currentShipment));
         }
+        
+        return this;
     }
 }

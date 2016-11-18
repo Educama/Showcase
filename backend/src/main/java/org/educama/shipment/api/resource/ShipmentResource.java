@@ -1,29 +1,33 @@
 package org.educama.shipment.api.resource;
 
-
 public class ShipmentResource {
 
     public long id;
-    public String senderAdress;
-    public String receiverAdress;
+    public String senderAddress;
+    public String receiverAddress;
 
-    public ShipmentResource() {
-
-        this.senderAdress = "undefined";
-        this.receiverAdress = "undefined";
+    /**
+     * Creating a API-Model (Resource) instance from the internal data-model.
+     * 
+     * @param shipmentModel instance of the internal-data model
+     * @return a converted ShipmentResource
+     */
+    public ShipmentResource fromShipment(org.educama.shipment.model.Shipment shipmentModel) {
+        this.senderAddress = shipmentModel.senderAddress;
+        this.receiverAddress = shipmentModel.receiverAddress;
+        
+        return this;
     }
 
-    public ShipmentResource (org.educama.shipment.model.Shipment shipmentModel) {
-
-        this.senderAdress = shipmentModel.senderAdress;
-        this.receiverAdress = shipmentModel.receiverAdress;
-    }
-
+    /**
+     * Convert this instance of API-Model (Resource) to the internal data-model.
+     * 
+     * @return the converted instance
+     */
     public org.educama.shipment.model.Shipment toShipment() {
-
         org.educama.shipment.model.Shipment toConvert = new org.educama.shipment.model.Shipment();
-        toConvert.senderAdress = senderAdress;
-        toConvert.receiverAdress = receiverAdress;
+        toConvert.senderAddress = senderAddress;
+        toConvert.receiverAddress = receiverAddress;
 
         return toConvert;
     }
