@@ -15,11 +15,13 @@ export class CasesService {
         return CASES.find(item => item.id === id);
     }
 
-    addCase(type: string, customer: string) {
+    addCase(trackingId: string, customer: string, pickupAddress: string, deliveryAddress: string) {
         CASES.push({
-            type: type,
             id: this.id,
-            customer: customer
+            trackingId: trackingId,
+            customer: customer,
+            pickupAddress: pickupAddress,
+            deliveryAddress: deliveryAddress
         });
         this.id++;
     }

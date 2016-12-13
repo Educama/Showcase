@@ -1,18 +1,18 @@
 export const HTML_TEMPLATE = `
     <table id="casesList" class="table">
         <tr>
-            <th>Transportart</th>
-            <th>Case ID / Sendungsnummer</th>
-            <th>Kunde</th>
-            <th>...</th>
-            <th>...</th>
+            <th>Case ID</th>
+            <th>Tracking ID</th>
+            <th>Customer</th>
+            <th>Pick-Up Address</th>
+            <th>Delivery Address</th>
         </tr>
         <tr *ngFor="let case of cases" (click)="onSelect(case)" [class.highlight]="case === selectedCase">
-            <td>{{ case.type }}</td>
             <td>{{ case.id }}</td>
+            <td>{{ case.trackingId }}</td>
             <td>{{ case.customer }}</td>
-            <td></td>
-            <td></td>
+            <td>{{ case.pickup_address }}</td>
+            <td>{{ case.delivery_address }}</td>
         </tr>
     </table>
     <div *ngIf="selectedCase">

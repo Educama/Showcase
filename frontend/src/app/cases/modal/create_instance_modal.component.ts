@@ -17,20 +17,23 @@ export class CreateInstanceModalComponent {
         this.validFieldValues = true;
     }
 
-    submit(type: string, customer: string) {
+    submit(customer: string, pickupAddress: string, deliveryAddress: string) {
         if (!_checkFieldValues()) {
             this.validFieldValues = false;
             return;
         }
         this.close();
         this.modalOutput.emit({
-            type: type,
-            customer: customer
+            customer: customer,
+            pickupAddress: pickupAddress,
+            deliveryAddress: deliveryAddress
+
         });
 
         function _checkFieldValues() {
-            if (type.trim().length === 0) return false;
             if (customer.trim().length === 0) return false;
+            if (pickupAddress.trim().length === 0) return false;
+             if (deliveryAddress.trim().length === 0) return false;
             return true;
         }
     }
