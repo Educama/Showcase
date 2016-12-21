@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cmmn:definitions xmlns:dc="http://www.omg.org/spec/CMMN/20151109/DC" xmlns:di="http://www.omg.org/spec/CMMN/20151109/DI" xmlns:cmmndi="http://www.omg.org/spec/CMMN/20151109/CMMNDI" xmlns:cmmn="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/cmmn" id="Test" targetNamespace="http://bpmn.io/schema/cmmn" exporter="Camunda Modeler" exporterVersion="1.4.0">
-  <cmmn:case id="shipment" name="Shipment">
+  <cmmn:case id="CaseId_shipment" name="Shipment">
     <cmmn:casePlanModel id="shipmentCasePlanModel" name="Shipment">
-      <cmmn:planItem id="createShipmentTask" definitionRef="createShipmentHumanTask">
+      <cmmn:planItem id="HumanTask_createShipment" definitionRef="createShipmentHumanTask">
         <cmmn:itemControl id="PlanItemControl_0xrbldg">
           <cmmn:requiredRule id="RequiredRule_0zs2vog" />
-          <cmmn:manualActivationRule id="ManualActivationRule_02fqgxa">
-            <cmmn:condition id="Expression_0vfumpi">${false}</cmmn:condition>
+          <cmmn:manualActivationRule id="ManualActivationRule_0jkgk53">
+            <cmmn:condition id="Expression_0k2w168">${false}</cmmn:condition>
           </cmmn:manualActivationRule>
         </cmmn:itemControl>
       </cmmn:planItem>
+      <cmmn:planItem id="HumanTask_processShipment" definitionRef="HumanTask_16mj68s">
+        <cmmn:itemControl id="PlanItemControl_17nw5pn">
+          <cmmn:manualActivationRule id="ManualActivationRule_0ciq5wc" />
+        </cmmn:itemControl>
+        <cmmn:entryCriterion id="EntryCriterion_1waqzp3" sentryRef="Sentry_0x95prd" />
+      </cmmn:planItem>
+      <cmmn:sentry id="Sentry_0x95prd">
+        <cmmn:planItemOnPart id="PlanItemOnPart_102l33z" sourceRef="HumanTask_createShipment">        <cmmn:standardEvent>complete</cmmn:standardEvent>
+</cmmn:planItemOnPart>
+      </cmmn:sentry>
       <cmmn:humanTask id="createShipmentHumanTask" name="create Shipment" camunda:assignee="educama" />
+      <cmmn:humanTask id="HumanTask_16mj68s" name="process Shipment" camunda:assignee="educama" />
     </cmmn:casePlanModel>
   </cmmn:case>
   <cmmn:case id="Case_0abv4zj">
@@ -24,11 +35,14 @@
       <cmmn:humanTask id="HumanTask_1cfxd1r" name="create" />
     </cmmn:casePlanModel>
   </cmmn:case>
+  <cmmn:textAnnotation id="TextAnnotation_0ml9weh">  <cmmn:text>Platzhalter für spätere Case-Details</cmmn:text>
+</cmmn:textAnnotation>
+  <cmmn:association id="Association_1xi3yg4" sourceRef="HumanTask_processShipment" targetRef="TextAnnotation_0ml9weh" />
   <cmmndi:CMMNDI>
     <cmmndi:CMMNDiagram id="educamaShipment" name="EduCaMa Shipment">
       <cmmndi:Size xsi:type="dc:Dimension" width="500" height="500" />
       <cmmndi:CMMNShape id="DI_CasePlanModel_1" cmmnElementRef="shipmentCasePlanModel">
-        <dc:Bounds x="114" y="63" width="415" height="207" />
+        <dc:Bounds x="114" y="63" width="539" height="274" />
         <cmmndi:CMMNLabel />
       </cmmndi:CMMNShape>
       <cmmndi:CMMNShape id="CasePlanModel_0xe818e_di" cmmnElementRef="CasePlanModel_0xe818e">
@@ -39,10 +53,34 @@
         <dc:Bounds x="10157" y="382" width="100" height="80" />
         <cmmndi:CMMNLabel />
       </cmmndi:CMMNShape>
-      <cmmndi:CMMNShape id="PlanItem_0ct0xuu_di" cmmnElementRef="createShipmentTask">
-        <dc:Bounds x="150" y="96" width="100" height="80" />
+      <cmmndi:CMMNShape id="PlanItem_0ct0xuu_di" cmmnElementRef="HumanTask_createShipment">
+        <dc:Bounds x="160" y="142" width="100" height="80" />
         <cmmndi:CMMNLabel />
       </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="EntryCriterion_1waqzp3_di" cmmnElementRef="EntryCriterion_1waqzp3">
+        <dc:Bounds x="351" y="167" width="20" height="28" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNEdge id="PlanItemOnPart_102l33z_di" cmmnElementRef="PlanItemOnPart_102l33z" targetCMMNElementRef="EntryCriterion_1waqzp3" isStandardEventVisible="true">
+        <di:waypoint xsi:type="dc:Point" x="260" y="182" />
+        <di:waypoint xsi:type="dc:Point" x="351" y="181" />
+        <cmmndi:CMMNLabel>
+          <dc:Bounds x="260.5" y="155.5" width="90" height="20" />
+        </cmmndi:CMMNLabel>
+      </cmmndi:CMMNEdge>
+      <cmmndi:CMMNShape id="PlanItem_1vftsrk_di" cmmnElementRef="HumanTask_processShipment">
+        <dc:Bounds x="361" y="142" width="100" height="80" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="TextAnnotation_0ml9weh_di" cmmnElementRef="TextAnnotation_0ml9weh">
+        <dc:Bounds x="480" y="80" width="112" height="45" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNEdge id="Association_1xi3yg4_di" cmmnElementRef="Association_1xi3yg4">
+        <di:waypoint xsi:type="dc:Point" x="461" y="150" />
+        <di:waypoint xsi:type="dc:Point" x="501" y="125" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNEdge>
     </cmmndi:CMMNDiagram>
   </cmmndi:CMMNDI>
 </cmmn:definitions>
