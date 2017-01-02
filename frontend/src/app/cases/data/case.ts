@@ -1,5 +1,7 @@
 export class Case {
-  type: string;
   id: number;
+  trackingId: string;
   customer: string;
+  pickupAddress: string;
+  deliveryAddress: string;
 }

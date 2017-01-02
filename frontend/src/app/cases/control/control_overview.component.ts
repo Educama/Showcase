@@ -22,7 +22,7 @@ export class OverviewControlComponent {
 
     getCaseData(data: any) {
         if (data !== null) {
-            this.casesService.addCase(data.type, data.customer);
+            this.casesService.addCase(data.trackingId, data.customer, data.pickup_address, data.delivery_address);
             this.loadCases.emit(true);
         }
     }

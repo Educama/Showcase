@@ -8,12 +8,16 @@ export const HTML_TEMPLATE = `
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="type">Transportart:</label>
-                        <input #type type="text" class="form-control" id="transportType">
+                        <label for="customer">Customer:</label>
+                        <input #customer type="text" class="form-control" id="customerName">
+                    </div>
+                     <div class="form-group">
+                        <label for="pickup_address">Pick-Up Address:</label>
+                        <input #pickup_address type="text" class="form-control" id="pickup_addressName">
                     </div>
                     <div class="form-group">
-                        <label for="customer">Kunde:</label>
-                        <input #customer type="text" class="form-control" id="customerName">
+                        <label for="delivery_address">Delivery Address:</label>
+                        <input #delivery_address type="text" class="form-control" id="delivery_addressName">
                     </div>
                     <div [hidden]="validFieldValues" class="text-warning">
                         Alle Felder müssen gefüllt sein, um einen neuen Transportauftrag anzulegen!
