@@ -4,8 +4,8 @@ export const HTML_TEMPLATE = `
         <educama-tab tabTitle="Instanzen / Transportauftrag">
             <cases-instances></cases-instances>
         </educama-tab>
-        <educama-tab tabTitle="Aufgaben">
+<!--    <educama-tab tabTitle="Aufgaben">
             <cases-tasks></cases-tasks>
-        </educama-tab>
+        </educama-tab>  -->
     </educama-tabset>
 `;
