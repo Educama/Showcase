@@ -6,11 +6,12 @@ import {ShipmentListPageComponent} from "./container/shipment-list-page.componen
 import {ShipmentListComponent} from "./components/shipment-list.component";
 import {ShipmentCapturePageComponent} from "./container/shipment-capture-page.component";
 import {ShipmentCaptureComponent} from "./components/shipment-capture.component";
+import {TabViewComponent} from "./container/tabview-page.component";
 
 @NgModule({
     imports: [SharedModule, SHIPMENT_ROUTING],
     declarations: [ShipmentCapturePageComponent, ShipmentCaptureComponent,
-        ShipmentListPageComponent, ShipmentListComponent],
+        ShipmentListPageComponent, ShipmentListComponent, TabViewComponent],
     exports: [ShipmentListPageComponent, ShipmentCapturePageComponent],
     providers: [ShipmentService]
 })

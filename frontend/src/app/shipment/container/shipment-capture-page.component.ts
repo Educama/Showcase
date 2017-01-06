@@ -31,7 +31,7 @@ export class ShipmentCapturePageComponent {
         shipment.senderAddress = createShipmentEvent.senderAddress;
         this._shipmentService.createShipment(shipment)
             .subscribe(shipment => {
-                this._router.navigate(['/shipments']);
+                this._router.navigate(['/home']);
             })
     }
 
@@ -39,7 +39,7 @@ export class ShipmentCapturePageComponent {
      * Handles the cancellation of a new shipment creation
      */
     public onCreateShipmentCancellationEvent() {
-        this._router.navigate(['/shipments']);
+        this._router.navigate(['/home']);
     }
 
     /*

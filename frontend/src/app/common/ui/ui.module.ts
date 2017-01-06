@@ -7,13 +7,14 @@ import {
     DropdownModule,
     InputTextModule,
     InputTextareaModule,
-    PanelModule
+    PanelModule,
+    TabViewModule
 } from 'primeng/primeng';
 
 @NgModule({
     imports: [CommonModule],
     exports: [ButtonModule, DataTableModule, DialogModule, DropdownModule,
-        InputTextModule, InputTextareaModule, PanelModule]
+        InputTextModule, InputTextareaModule, PanelModule, TabViewModule]
 })
 export class UIModule {
     static forRoot(): ModuleWithProviders {
