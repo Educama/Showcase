@@ -1,0 +1,9 @@
+build
+dist
+docs
+node_modules
+resources/styles/**/*.css
+npm-debug.log
+.settings
+target
+
