@@ -1,0 +1,8 @@
+<div class="customer-capture-page">
+    <h1>{{'CUSTOMER-CAPTURE-COMPONENT_TITLE' | translate}}</h1>
+    <educama-customer-capture
+        (createCustomerEvent)="onCreateCustomerEvent($event)"
+        (createCustomerCancellationEvent)="onCreateCustomerCancellationEvent($event)"
+    >
+    </educama-customer-capture>
+</div>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="camundaBpmDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/camunda?useSSL=false" />
+		<property name="username" value="camunda" />
+		<property name="password" value="camunda" />
+		<property name="defaultAutoCommit" value="false" />
+	</bean>
+
+	<bean id="processEngineConfiguration"
+		class="org.camunda.bpm.engine.impl.cfg.StandaloneProcessEngineConfiguration">
+
+		<property name="dataSource" ref="camundaBpmDataSource" />
+		<property name="databaseSchemaUpdate" value="true" />
+	</bean>
+
+</beans>

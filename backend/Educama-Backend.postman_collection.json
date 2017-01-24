@@ -1,54 +1,159 @@
 {
-	"id": "e384f5fa-7a66-bfc4-64fd-ee868944dd91",
-	"name": "Educama-Backend",
-	"description": "",
-	"order": [
-		"2bebd759-9a45-0679-557a-07562884040e",
-		"01443c63-88f6-8110-ea3f-958eb05575af"
-	],
-	"folders": [],
-	"timestamp": 1482041856460,
-	"owner": 0,
-	"public": false,
-	"requests": [
+	"variables": [],
+	"info": {
+		"name": "Educama-Backend",
+		"_postman_id": "ebd3d296-3d50-4dff-47aa-b8e9a9011839",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
 		{
-			"id": "01443c63-88f6-8110-ea3f-958eb05575af",
-			"headers": "Content-Type: application/json\n",
-			"url": "http://localhost:8081/educama/v1/shipments",
-			"preRequestScript": null,
-			"pathVariables": {},
-			"method": "POST",
-			"data": [],
-			"dataMode": "raw",
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1482478602953,
-			"name": "Create Shipment",
-			"description": "",
-			"collectionId": "e384f5fa-7a66-bfc4-64fd-ee868944dd91",
-			"responses": [],
-			"rawModeData": "{\n  \"customer\": \"NovaTec Consulting GmbH\",\n  \"senderAddress\": \"Dieselstr. 18/1, 70771 Leinfelden-Echterdingen\",\n  \"receiverAddress\": \"Santa Claus Main Post Office, FI-96930 Arctic Circle, Finland\"\n}"
+			"name": "List All Shipments",
+			"request": {
+				"url": "http://localhost:8081/educama/v1/shipments",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
 		},
 		{
-			"id": "2bebd759-9a45-0679-557a-07562884040e",
-			"headers": "Content-Type: application/json\n",
-			"url": "http://localhost:8081/educama/v1/shipments",
-			"pathVariables": {},
-			"preRequestScript": null,
-			"method": "GET",
-			"collectionId": "e384f5fa-7a66-bfc4-64fd-ee868944dd91",
-			"data": null,
-			"dataMode": "params",
-			"name": "List All Shipments",
-			"description": "",
-			"descriptionFormat": "html",
-			"time": 1482041856459,
-			"version": 2,
-			"responses": [],
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {}
+			"name": "Create Shipment",
+			"request": {
+				"url": "http://localhost:8081/educama/v1/shipments",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"customer\": \"NovaTec Consulting GmbH\",\n  \"senderAddress\": \"Dieselstr. 18/1, 70771 Leinfelden-Echterdingen\",\n  \"receiverAddress\": \"Santa Claus Main Post Office, FI-96930 Arctic Circle, Finland\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create Customer",
+			"request": {
+				"url": "http://localhost:8081/educama/v1/customers",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Peter Kutschera\",\n\t\"address\": {\n  \t\t\"street\": \"Dieselstr\",\n  \t\t\"streetNo\": \"18/1\",\n  \t\t\"zipCode\": \"70771\",\n  \t\t\"city\": \"Leinfelden-Echterdingen\"\n\t}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Customer",
+			"request": {
+				"url": "http://localhost:8081/educama/v1/customers",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create Customer (second one)",
+			"request": {
+				"url": "http://localhost:8081/educama/v1/customers",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Lars Dülfer\",\n\t\"address\": {\n  \t\t\"street\": \"Dieselstr\",\n  \t\t\"streetNo\": \"18/1\",\n  \t\t\"zipCode\": \"70771\",\n  \t\t\"city\": \"Leinfelden-Echterdingen\"\n\t}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "List All Customers",
+			"request": {
+				"url": "http://localhost:8081/educama/v1/customers",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Customer",
+			"request": {
+				"url": "http://localhost:8081/educama/v1/customers/2",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Update Customer",
+			"request": {
+				"url": "http://localhost:8081/educama/v1/customers/1",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"uuid\": \"cf1d4af8-cb1c-4344-bffe-f8895b01a7e3\",\n  \"name\": \"Peter Kutschera\",\n  \"address\": {\n    \"street\": \"Dieselstr\",\n    \"streetNo\": \"18/2\",\n    \"zipCode\": \"70771\",\n    \"city\": \"Leinfelden-Echterdingen\"\n  }\n}"
+				},
+				"description": ""
+			},
+			"response": []
 		}
 	]
 }

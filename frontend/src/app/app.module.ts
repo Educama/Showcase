@@ -14,11 +14,15 @@ import {REDUCER, INITIAL_STATE} from "./app.reducers";
 
 // shared module and feature modules
 import {SharedModule} from "./common/shared.module";
+import {CustomerModule} from "./customer/customer.module";
+import {NavigationModule} from "./navigation/navigation.module";
 import {ShipmentModule} from "./shipment/shipment.module";
 
 @NgModule({
     imports: [
         BrowserModule,
+        CustomerModule,
+        NavigationModule,
         ROUTING,
         SharedModule.forRoot(),
         ShipmentModule,

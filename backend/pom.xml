@@ -11,7 +11,7 @@
 	<description>Backend of Educama</description>
 
 	<parent>
-		<!-- The version of Spring Boot must be derived from the Spring Boot version 
+		<!-- The version of Spring Boot must be derived from the Spring Boot version
 			included in camunda-bpm-spring-boot-starter-webapp -->
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -52,9 +52,15 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-configuration-processor</artifactId>
-			<optional>true</optional>
+			<artifactId>spring-boot-starter-hateoas</artifactId>
 		</dependency>
+		<!--
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		-->
 
 		<!-- Required for generation of REST documentation -->
 		<dependency>
@@ -85,14 +91,14 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<!-- A Spring Boot application is not intended to be used as a dependency 
-						(but is by the acceptance tests). Spring Boot’s Maven plugins must be configured 
-						to produce a separate artifact that is suitable for use as a dependency. 
+					<!-- A Spring Boot application is not intended to be used as a dependency
+						(but is by the acceptance tests). Spring Boot’s Maven plugins must be configured
+						to produce a separate artifact that is suitable for use as a dependency.
 						See http://docs.spring.io/spring-boot/docs/1.4.x/reference/htmlsingle/#howto-create-an-additional-executable-jar -->
 					<classifier>exec</classifier>
 				</configuration>
 			</plugin>
-			<!-- Plugin to create releases: Use ./mvnw release:clean release:prepare 
+			<!-- Plugin to create releases: Use ./mvnw release:clean release:prepare
 				-DpushChanges=false to create a release. -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

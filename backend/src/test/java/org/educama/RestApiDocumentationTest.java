@@ -1,7 +1,10 @@
 package org.educama;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.educama.customer.api.CustomerController;
+import org.educama.shipment.api.ShipmentController;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,6 +54,10 @@ public class RestApiDocumentationTest {
 	private RestDocumentationResultHandler documentationHandler;
 
 	private FieldDescriptor[] fieldDescriptorShipment;
+	
+	private FieldDescriptor[] fieldDescriptorPerson;
+	
+	private FieldDescriptor[] fieldDescriptorAddress;
 
 	@Before
 	public void setUp() {
@@ -71,6 +78,18 @@ public class RestApiDocumentationTest {
 				fieldWithPath("customer").description("The name of the customer"),
 				fieldWithPath("senderAddress").description("The address of the sender"),
 				fieldWithPath("receiverAddress").description("The address of the final receiver") };
+		
+		fieldDescriptorPerson = new FieldDescriptor[] {
+				fieldWithPath("id").description("The unique database identifier"),
+				fieldWithPath("name").description("The name of the person"),
+				fieldWithPath("address").description("The address of the person (if exists)") };
+		
+		fieldDescriptorAddress = new FieldDescriptor[] {
+				fieldWithPath("id").description("The unique database identifier"),
+				fieldWithPath("street").description("The name of the street"),
+				fieldWithPath("streetNo").description("The number of the street"),
+				fieldWithPath("zipCode").description("The zipCode of the city"),
+				fieldWithPath("city").description("The name of the city") };
 	}
 
 	@Test
@@ -79,7 +98,7 @@ public class RestApiDocumentationTest {
 		shipment.put("customer", "NovaTec Consulting GmbH");
 		shipment.put("senderAddress", "Dieselstr. 18/1, 70771 Leinfelden-Echterdingen, Germany");
 		shipment.put("receiverAddress", "Santa Claus Main Post Office, FI-96930 Arctic Circle, Finland");
-		this.mockMvc.perform(post("/educama/v1/shipments").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsBytes(shipment)))
+		this.mockMvc.perform(post(ShipmentController.SHIPMENT_RESOURCE_PATH).contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsBytes(shipment)))
 				.andExpect(status().isCreated())
 				.andDo(this.documentationHandler.document(
 						requestFields(
@@ -93,10 +112,23 @@ public class RestApiDocumentationTest {
 
 	@Test
 	public void listShipment() throws Exception {
-		this.mockMvc.perform(get("/educama/v1/shipments"))
+		this.mockMvc.perform(get(ShipmentController.SHIPMENT_RESOURCE_PATH))
 			.andExpect(status().isOk())
 			.andDo(this.documentationHandler.document(
 					responseFields(
 							fieldWithPath("shipments[]").description("An array of shipment objects")).andWithPrefix("shipments[].", fieldDescriptorShipment)));
 	}
+	
+	@Test
+	@Ignore
+	public void listCustomers() throws Exception {
+		this.mockMvc.perform(get(CustomerController.CUSTOMER_RESOURCE_PATH))
+			.andExpect(status().isOk())
+			.andDo(this.documentationHandler.document(
+					responseFields(
+							fieldWithPath("customers[]").description("An array of customer objects")).andWithPrefix("customers[].", fieldDescriptorPerson)));
+
+	}
+
+	// TODO: Add test for create Customer, delete Persone and update Customer
 }
