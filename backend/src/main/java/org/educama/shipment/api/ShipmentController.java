@@ -1,10 +1,14 @@
 package org.educama.shipment.api;
 
+
 import org.educama.shipment.boundary.ShipmentBoundaryService;
+import org.camunda.bpm.engine.ProcessEngine;
+import org.camunda.bpm.engine.ProcessEngines;
+import org.camunda.bpm.engine.TaskService;
 import org.educama.shipment.api.resource.ShipmentListResource;
 import org.educama.shipment.api.resource.ShipmentResource;
+import org.educama.shipment.api.resource.TaskListResource;
 import org.educama.shipment.model.Shipment;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,11 +17,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.Collection;
 
 @RestController
 @RequestMapping(path = ShipmentController.SHIPMENT_RESOURCE_PATH, produces = {MediaType.APPLICATION_JSON_VALUE})
+
 public class ShipmentController {
 
     public static final String SHIPMENT_RESOURCE_PATH = "/educama/v1/shipments";
@@ -50,7 +54,19 @@ public class ShipmentController {
     public ShipmentListResource shipments() {
         Collection<Shipment> allShipments = shipmentBoundaryService.findAll();
         ShipmentListResource resourceList = new ShipmentListResource().fromShipmentCollection(allShipments);
-
         return resourceList;
+    }
+    
+    /**
+     * 
+     * @return a Tasklist assigned to user "educama"
+     */
+    @RequestMapping(value = "/tasks", method = RequestMethod.GET)
+    public TaskListResource getTasks() {
+    	ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
+    	TaskService taskService = processEngine.getTaskService();
+    	Collection <org.camunda.bpm.engine.task.Task> tasks = taskService.createTaskQuery().taskAssignee("educama").list();
+    	TaskListResource taskListe = new TaskListResource().fromTaskCollection(tasks);
+    	return taskListe;
     }
 }
