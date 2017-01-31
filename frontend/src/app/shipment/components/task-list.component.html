@@ -1,0 +1,20 @@
+<p-dataTable
+        id="task-list-component_task-table"
+        [value]="taskList"
+        selectionMode="single"
+        [(selection)]="selectedTask">
+    <p-column field="createTime" header="{{'TASK-RESOURCE_DATE' | translate}}">
+        <template let-col let-task="rowData" pTemplate="body">
+            <span>
+                {{task[col.field] | educamaI18nDateFormat:"shortDate" }}
+            </span>
+        </template>
+    </p-column>
+    <p-column field="trackingId" header="{{'TASK-RESOURCE_INSTANCE_ID' | translate}}"></p-column>
+    <p-column field="taskId" header="{{'TASK-RESOURCE_TASK-ID' | translate}}"></p-column>
+    <p-column field="name" header="{{'TASK-RESOURCE_TASK-NAME' | translate}}"></p-column>
+    <p-column field="description" header="{{'TASK-RESOURCE_DESCRIPTION' | translate}}"></p-column>
+    <p-column field="assignee" header="{{'TASK-RESOURCE_PERSON_RESPONSIBLE' | translate}}"></p-column>
+    <p-column field="customer" header="{{'SHIPMENT-RESOURCE_CUSTOMER' | translate}}"></p-column>
+
+</p-dataTable>

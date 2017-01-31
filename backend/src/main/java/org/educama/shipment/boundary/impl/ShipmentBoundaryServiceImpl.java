@@ -1,7 +1,6 @@
 package org.educama.shipment.boundary.impl;
 
 import java.util.Collection;
-
 import org.camunda.bpm.engine.runtime.CaseInstance;
 import org.educama.shipment.boundary.ShipmentBoundaryService;
 import org.educama.shipment.control.ShipmentCaseControlService;
@@ -21,14 +20,11 @@ public class ShipmentBoundaryServiceImpl implements ShipmentBoundaryService {
     @Autowired
     private ShipmentCaseControlService shipmentCaseControlService;
 
-
     @Override
     public Shipment createShipment(Shipment shipment) {
         CaseInstance caseInstance = shipmentCaseControlService.create();
         shipment.trackingId = caseInstance.getBusinessKey();
-
         Shipment createdShipment = shipmentRepository.save(shipment);
-
         return createdShipment;
     }
 
