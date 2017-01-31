@@ -91,3 +91,20 @@ include::{snippets}/listShipment/http-response.adoc[]
 
 ==== Response structure
 include::{snippets}/listShipment/response-fields.adoc[]
+
+== Tasks
+
+This resource provides the entry point for tasks.
+
+=== List of Tasks
+
+A `GET` request is used to get a list of tasks.
+
+==== Example Request
+include::{snippets}/listTasks/http-request.adoc[]
+
+==== Example Response
+include::{snippets}/listTasks/http-response.adoc[]
+
+==== Response structure
+include::{snippets}/listTasks/response-fields.adoc[]

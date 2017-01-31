@@ -15,10 +15,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
@@ -51,6 +49,8 @@ public class RestApiDocumentationTest {
 	private RestDocumentationResultHandler documentationHandler;
 
 	private FieldDescriptor[] fieldDescriptorShipment;
+	
+	private FieldDescriptor[] fieldDescriptorTasks;
 
 	@Before
 	public void setUp() {
@@ -71,8 +71,17 @@ public class RestApiDocumentationTest {
 				fieldWithPath("customer").description("The name of the customer"),
 				fieldWithPath("senderAddress").description("The address of the sender"),
 				fieldWithPath("receiverAddress").description("The address of the final receiver") };
+		
+		fieldDescriptorTasks = new FieldDescriptor[] {
+				fieldWithPath("createTime").description("The create time of the task"),
+				fieldWithPath("trackingId").description("The unique business key of the shipment mapped to the task"),
+				fieldWithPath("taskId").description("The Id of the task"),
+				fieldWithPath("name").description("The task name"),
+				fieldWithPath("description").description("The task description"),
+				fieldWithPath("assignee").description("The assigne of the task"),
+				fieldWithPath("customer").description("The shipments customer name") };
 	}
-
+		
 	@Test
 	public void createShipment() throws Exception {
 		Map<String,String> shipment = new LinkedHashMap<>();
@@ -90,7 +99,7 @@ public class RestApiDocumentationTest {
 						responseFields(fieldDescriptorShipment)
 				));
 	}
-
+	
 	@Test
 	public void listShipment() throws Exception {
 		this.mockMvc.perform(get("/educama/v1/shipments"))
@@ -99,4 +108,13 @@ public class RestApiDocumentationTest {
 					responseFields(
 							fieldWithPath("shipments[]").description("An array of shipment objects")).andWithPrefix("shipments[].", fieldDescriptorShipment)));
 	}
+	
+//	@Test
+//	public void listTasks() throws Exception {
+//		this.mockMvc.perform(get("/educama/v1/tasks"))
+//			.andExpect(status().isOk())
+//			.andDo(this.documentationHandler.document(
+//					responseFields(
+//							fieldWithPath("tasks[]").description("An array of task objects")).andWithPrefix("tasks[].", fieldDescriptorTasks)));
+//	}	
 }
