@@ -1,0 +1,44 @@
+{
+	"variables": [],
+	"info": {
+		"name": "ntpartner",
+		"_postman_id": "25f1a180-5c69-6140-a224-e9d618f23820",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/v1/partner?page=0&size=2",
+			"request": {
+				"url": "http://localhost:8080/v1/partner?page=1&size=2",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/v1/partner?page=0&size=2",
+			"request": {
+				"url": "http://localhost:8080/v1/address",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/v1/partner?page=0&size=2",
+			"request": {
+				"url": "http://localhost:8080/v1/address",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

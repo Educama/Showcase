@@ -14,6 +14,7 @@
         '@angular/router': 'node_modules/@angular/router/bundles/router.umd.js',
         '@angular/forms': 'node_modules/@angular/forms/bundles/forms.umd.js',
 
+        'lodash': 'node_modules/lodash/lodash.js',
         'rxjs': 'node_modules/rxjs',
         'primeng': 'node_modules/primeng',
         'ng2-translate': 'node_modules/ng2-translate/bundles',

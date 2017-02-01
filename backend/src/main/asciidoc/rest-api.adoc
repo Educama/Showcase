@@ -91,3 +91,80 @@ include::{snippets}/listShipment/http-response.adoc[]
 
 ==== Response structure
 include::{snippets}/listShipment/response-fields.adoc[]
+
+This resource provides the entry point with shipments.
+
+== Customer
+
+This resource provides the entry point for customers.
+
+=== Create Customer
+
+A `POST` request is used to create a customer.
+
+==== Example Request
+include::{snippets}/createCustomer/http-request.adoc[]
+
+==== Request structure
+include::{snippets}/createCustomer/request-fields.adoc[]
+
+==== Example Response
+include::{snippets}/createCustomer/http-response.adoc[]
+
+==== Response structure
+include::{snippets}/createCustomer/response-fields.adoc[]
+
+=== Get a Customer
+
+A `GET` request is used to get a single customer.
+
+==== Example Request
+include::{snippets}/getSingleCustomer/http-request.adoc[]
+
+==== Example Response
+include::{snippets}/getSingleCustomer/http-response.adoc[]
+
+==== Response structure
+include::{snippets}/getSingleCustomer/response-fields.adoc[]
+
+=== Get a list of Customers
+
+A `GET` request is used to get a list of customers.
+
+==== Example Request
+include::{snippets}/listCustomers/http-request.adoc[]
+
+==== Example Response
+include::{snippets}/listCustomers/http-response.adoc[]
+
+==== Response structure
+include::{snippets}/listCustomers/response-fields.adoc[]
+
+=== Delete a Customer
+
+A `DELETE` request is used to delete a single customer.
+
+==== Example Request
+include::{snippets}/deleteCustomer/http-request.adoc[]
+
+==== Example Response
+include::{snippets}/deleteCustomer/http-response.adoc[]
+
+=== Update Customer
+
+A `PUT` request is used to update a customer.
+
+==== Example Request
+include::{snippets}/updateCustomer/http-request.adoc[]
+
+==== Request structure
+include::{snippets}/updateCustomer/request-fields.adoc[]
+
+==== Example Response
+include::{snippets}/updateCustomer/http-response.adoc[]
+
+==== Response structure
+include::{snippets}/updateCustomer/response-fields.adoc[]
+
+
+

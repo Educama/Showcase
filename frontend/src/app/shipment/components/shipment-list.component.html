@@ -2,6 +2,7 @@
         id="shipment-list-component_shipments-table"
         [value]="shipmentList"
         [emptyMessage]="emptyListMessage"
+        [responsive] = true
         selectionMode="single"
         [(selection)]="selectedShipment">
     <p-column field="trackingId" header="{{'SHIPMENT-RESOURCE_TRACKING-ID' | translate}}"></p-column>
