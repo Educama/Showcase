@@ -13,7 +13,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 public class CustomerResourceAssembler {
 
     public CustomerResource toResource(Customer customer) {
-        CustomerResource resource = new CustomerResource(customer.uuid, customer.name, new AddressDS(customer.address));
+        CustomerResource resource = new CustomerResource(customer.uuid,customer.version, customer.name, new AddressDS(customer.address));
 
         // Add self reference
         resource.add(linkTo(methodOn(CustomerController.class).findOneByUuid(customer.uuid)).withSelfRel());

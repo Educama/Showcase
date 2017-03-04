@@ -1,5 +1,12 @@
 package org.educama.customer.boundary;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.junit.Assert.assertEquals;
+
+import java.util.List;
+
+import org.educama.customer.api.datastructure.AddressDS;
 import org.educama.customer.model.Address;
 import org.educama.customer.model.Customer;
 import org.educama.customer.repository.CustomerRepository;
@@ -9,13 +16,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -54,7 +58,31 @@ public class CustomerBoundaryServiceTest {
     @Test
     public void checkTestDataAvailable() {
         Page<Customer> customerPage = customerService.findAllCustomers(new PageRequest(0, 10));
-        assertEquals(3, customerPage.getTotalElements());
+        assertThat(customerPage.getTotalElements()).isEqualTo(3);
+    }
+
+    @Test
+    public void updatingCustomerWithSameVersionTwiceGiveResultsInOptimisticLockFailure() {
+        Customer customer = customerService.findAllCustomers(null).getContent().get(0);
+        customerService.updateCustomer(customer.uuid, customer.version, "Should persist",
+                new AddressDS(customer.address));
+        assertThatExceptionOfType(OptimisticLockingFailureException.class).isThrownBy(()-> customerService.updateCustomer(customer.uuid,
+                customer.version, "Second update", new AddressDS(customer.address))).withNoCause().withMessageContaining("indicates an optimistic lock failure");
+        Customer updatedCustomerFromDb = customerService.findCustomerByUuid(customer.uuid);
+        assertThat(updatedCustomerFromDb.name).isEqualTo("Should persist");
+    }
+    
+    @Test
+    public void updatingCustomerWithIncrementedVersionSuccessfullyUpdatesTwice() {
+        Customer customer = customerService.findAllCustomers(null).getContent().get(0);
+        customerService.updateCustomer(customer.uuid, customer.version, "Should not persist",
+                new AddressDS(customer.address));
+        Customer updatedCustomerFromDb = customerService.findCustomerByUuid(customer.uuid);
+        assertThat(updatedCustomerFromDb.name).isEqualTo("Should not persist");
+        customerService.updateCustomer(updatedCustomerFromDb.uuid, updatedCustomerFromDb.version, "Should persist",
+                new AddressDS(updatedCustomerFromDb.address));
+        updatedCustomerFromDb = customerService.findCustomerByUuid(customer.uuid);
+        assertThat(updatedCustomerFromDb.name).isEqualTo("Should persist");
     }
 
     // TODO: To be extended

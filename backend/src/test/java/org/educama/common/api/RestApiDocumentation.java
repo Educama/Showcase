@@ -114,6 +114,7 @@ public class RestApiDocumentation {
 
         fieldDescriptorSaveCustomerResource = new FieldDescriptor[]{
                 fieldWithPath("name").description("The name of the customer"),
+                fieldWithPath("version").description("Version as retrieved from the database. Resend as received for optimistic locking"),
                 fieldWithPath("address").description("The address of the customer"),
                 fieldWithPath("address.street").description("The street of the customer's address"),
                 fieldWithPath("address.streetNo").description("The street number of the customer's address"),
@@ -276,6 +277,7 @@ public class RestApiDocumentation {
     private Map<String, Object>  createCustomerResourceHashMap(String name) {
         Map<String, Object> customer = new LinkedHashMap<>();
         customer.put("name", name);
+        customer.put("version", 0);
         Map<String, String> address = new LinkedHashMap<>();
         address.put("street", "Normal street");
         address.put("streetNo", "234");

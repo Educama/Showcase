@@ -10,8 +10,15 @@ public class SaveCustomerResource extends ResourceSupport {
 
     @NotEmpty
     public String name;
+    
+    public long version;
 
     @NotNull
     public AddressDS address;
+
+	@Override
+	public String toString() {
+		return "SaveCustomerResource [name=" + name + ", version=" + version + ", address=" + address + "]";
+	}
 
 }

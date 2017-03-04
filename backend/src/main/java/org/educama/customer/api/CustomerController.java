@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 /**
  * REST-Service to access Customer resources
@@ -26,6 +27,8 @@ import java.util.UUID;
 @RequestMapping(value = CustomerController.CUSTOMER_RESOURCE_PATH, produces = {MediaType.APPLICATION_JSON_VALUE})
 @Transactional
 public class CustomerController {
+	
+	private static final Logger logger = Logger.getLogger(CustomerController.class.getCanonicalName());
 
     public static final String CUSTOMER_RESOURCE_PATH = "/educama/v1/customers";
 
@@ -47,7 +50,7 @@ public class CustomerController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<CustomerResource> createCustomer(
             @Valid @RequestBody SaveCustomerResource saveCustomerResource) {
-
+    	logger.info(()-> "createCustomer called with " + saveCustomerResource);
         if (saveCustomerResource != null) {
             Customer newCustomer = customerService.createCustomer(saveCustomerResource.name, saveCustomerResource.address);
             CustomerResource customerResource = customerResourceAssembler.toResource(newCustomer);
@@ -66,8 +69,9 @@ public class CustomerController {
     @RequestMapping(value = "/{uuid}", method = RequestMethod.PUT)
     public ResponseEntity<CustomerResource> updateCustomer(@PathVariable("uuid") UUID uuid,
                                                            @Valid @RequestBody SaveCustomerResource saveCustomerResource) {
+    	logger.info(()-> "updateCustomer called with " + saveCustomerResource);
         if (saveCustomerResource != null) {
-            Customer updatedCustomer = customerService.updateCustomer(uuid, saveCustomerResource.name, saveCustomerResource.address);
+            Customer updatedCustomer = customerService.updateCustomer(uuid, saveCustomerResource.version, saveCustomerResource.name, saveCustomerResource.address);
             CustomerResource customerResource = customerResourceAssembler.toResource(updatedCustomer);
             return new ResponseEntity<CustomerResource>(customerResource, HttpStatus.OK);
         }

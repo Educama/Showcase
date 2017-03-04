@@ -22,11 +22,12 @@ public interface CustomerBoundaryService {
      * EntityExistsException is thrown.
      *
      * @param uuid  The uuid of the customer to be updated
+     * @param version The version of the customer for optimistic locking
      * @param name  The name of the customer to be updated
      * @param address  The address {@AddressDS} of the customer to be updated
      * @return The updated version of the customer entity
      */
-    Customer updateCustomer(UUID uuid, String name, AddressDS address);
+    Customer updateCustomer(UUID uuid, long version, String name, AddressDS address);
 
     /**
      * Deletes the specified customer (by uuid)

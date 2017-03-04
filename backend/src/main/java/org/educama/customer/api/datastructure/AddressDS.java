@@ -42,4 +42,9 @@ public class AddressDS {
         return new Address(this.street, this.streetNo, this.zipCode, this.city);
     }
 
+	@Override
+	public String toString() {
+		return "AddressDS [street=" + street + ", streetNo=" + streetNo + ", zipCode=" + zipCode + ", city=" + city
+				+ "]";
+	}
 }

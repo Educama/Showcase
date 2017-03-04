@@ -73,6 +73,7 @@ export class CustomerCaptureComponent implements OnInit, DoCheck {
         this.saveCustomerEvent.emit(
             new SaveCustomerEvent(
                 this.customerCaptureForm.get("name").value,
+                this.editorMode === EditorMode.update ? this.customer.version : "",
                 new Address(
                     this.customerCaptureForm.get("street").value,
                     this.customerCaptureForm.get("housenumber").value,

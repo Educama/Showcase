@@ -105,6 +105,7 @@ export class CustomerCapturePageComponent implements OnInit, OnDestroy {
 
     private mapCustomerFromSaveCustomerEvent(saveCustomerEvent: SaveCustomerEvent): CustomerResource {
         let customer = new CustomerResource();
+        customer.version = saveCustomerEvent.version;
         customer.name = saveCustomerEvent.name;
         customer.address = saveCustomerEvent.address;
         return customer;

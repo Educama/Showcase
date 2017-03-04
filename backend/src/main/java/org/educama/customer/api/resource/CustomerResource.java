@@ -11,6 +11,9 @@ public class CustomerResource extends ResourceSupport {
 
     @NotNull
     public UUID uuid;
+    
+    @NotNull
+    public long version;
 
     @NotNull
     @NotEmpty
@@ -26,8 +29,9 @@ public class CustomerResource extends ResourceSupport {
         //empty
     }
 
-    public CustomerResource(UUID uuid, String name, AddressDS address) {
+    public CustomerResource(UUID uuid, long version, String name, AddressDS address) {
         this.uuid = uuid;
+        this.version = version;
         this.name = name;
         this.address = address;
     }

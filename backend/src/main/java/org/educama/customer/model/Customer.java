@@ -1,12 +1,14 @@
 package org.educama.customer.model;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
-import org.springframework.hateoas.Identifiable;
+import java.util.UUID;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
-import java.util.UUID;
+
+import org.springframework.data.jpa.domain.AbstractPersistable;
+import org.springframework.hateoas.Identifiable;
 
 /**
  * Customer Entity
@@ -16,6 +18,9 @@ public class Customer extends AbstractPersistable<Long> implements Identifiable<
 
     @NotNull
     public UUID uuid;
+    
+    @Version
+    public long version;
 
     @NotNull
     public String name;
@@ -42,5 +47,12 @@ public class Customer extends AbstractPersistable<Long> implements Identifiable<
         this.name = name;
         this.address = address;
     }
+
+	@Override
+	public String toString() {
+		return "Customer [uuid=" + uuid + ", version=" + version + ", name=" + name + ", address=" + address + "]";
+	}
+    
+    
 
 }
