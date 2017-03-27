@@ -1,5 +1,7 @@
 package org.educama.shipment.api;
 
+import org.educama.customer.boundary.CustomerBoundaryService;
+import org.educama.customer.model.Customer;
 import org.educama.shipment.api.resource.ShipmentListResource;
 import org.educama.shipment.api.resource.ShipmentResource;
 import org.educama.shipment.boundary.ShipmentBoundaryService;
@@ -27,6 +29,9 @@ public class ShipmentController {
     @Autowired
     private ShipmentBoundaryService shipmentBoundaryService;
 
+    @Autowired
+    private CustomerBoundaryService customerService;
+
     /**
      * API call to create a shipment.
      *
@@ -35,9 +40,12 @@ public class ShipmentController {
      */
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> createShipment(@RequestBody ShipmentResource shipmentWsResourceToCreate) {
+        Customer sender = customerService.findCustomerByUuid(shipmentWsResourceToCreate.uuidSender);
+        Customer receiver = customerService.findCustomerByUuid(shipmentWsResourceToCreate.uuidReceiver);
         Shipment convertedShipment = shipmentWsResourceToCreate.toShipment();
+        convertedShipment.sender = sender;
+        convertedShipment.receiver = receiver;
         Shipment createdShipment = shipmentBoundaryService.createShipment(convertedShipment);
-
         ShipmentResource responseShipmentResource = new ShipmentResource().fromShipment(createdShipment);
 
         return new ResponseEntity<>(responseShipmentResource, HttpStatus.CREATED);
