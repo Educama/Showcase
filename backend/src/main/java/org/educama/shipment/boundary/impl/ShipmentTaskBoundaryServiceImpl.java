@@ -37,7 +37,7 @@ public class ShipmentTaskBoundaryServiceImpl implements ShipmentTaskBoundaryServ
         for (Task task : tasks) {
             CaseInstance caseInstance = caseService.createCaseInstanceQuery().caseInstanceId(task.getCaseInstanceId()).singleResult();
             Shipment shipment = shipmentRepository.findOneBytrackingId(caseInstance.getBusinessKey());
-            ShipmentTaskDS shipmentTaskDS = new ShipmentTaskDS(task.getCreateTime(), shipment.trackingId, task.getId(), task.getName(), task.getDescription(), task.getAssignee(), shipment.customer);
+            ShipmentTaskDS shipmentTaskDS = new ShipmentTaskDS(task.getCreateTime(), shipment.trackingId, task.getId(), task.getName(), task.getDescription(), task.getAssignee(), shipment.sender.name);
             shipmentTasks.add(shipmentTaskDS);
         }
         return shipmentTasks;
