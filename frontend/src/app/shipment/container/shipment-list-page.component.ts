@@ -9,6 +9,9 @@ import {ShipmentListSlice} from "../reducer/shipment-list-page.reducer";
 import {ShipmentListModel} from "./shipment-list-page.model";
 import {State} from "../../app.reducers";
 import {ShipmentResource} from "../api/resources/shipment.resource";
+import {CustomerListPageModel} from "../../customer/container/customer-list-page.model";
+import {CustomerListSlice} from "../../customer/reducer/customer-list-page.reducer";
+import {CustomerListResource} from "../../customer/api/resources/customer-list.resource";
 
 @Component({
     selector: "educama-shipment-list-page",

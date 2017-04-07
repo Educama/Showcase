@@ -1,29 +1,295 @@
-<form name="form" [formGroup]="shipmentCaptureForm" class="shipment-capture-form">
-    <p-panel header="{{'SHIPMENT_CAPTURE_COMPONENT-PANEL_SENDER_RECEIVER_ADDRESS' | translate}}">
+<div class="shipment-capture-component">
+    <h1>{{'SHIPMENT-CAPTURE-COMPONENT_TITLE' | translate}}</h1>
+    <form name="form" [formGroup]="shipmentCaptureForm" class="shipment-capture-form">
+        <p-tabView>
+            <p-tabPanel header="{{'SHIPMENT_CAPTURE_COMPONENT-PANEL_SENDER_RECEIVER_ADDRESS' | translate}}">
+                <p-panel header="{{'SHIPMENT_CAPTURE_COMPONENT-PANEL_SENDER_RECEIVER_ADDRESS' | translate}}">
+                    <div class="ui-g ui-fluid">
+
+                        <!-- Sender Address -->
+                        <div class="ui-g-12 ui-lg-6">
+
+                            <div class="ui-g-12">
+                                <h4><label>{{'SHIPMENT-RESOURCE_SENDER' | translate}}</label></h4>
+                            </div>
+
+                            <div class="ui-g-9">
+                                <p-autoComplete formControlName="sender"
+                                                field="name"
+                                                [suggestions]="customerSuggestions"
+                                                (completeMethod)="loadUserSuggestions($event)"
+                                                (onSelect)="onSenderSelected($event)">
+                                </p-autoComplete>
+                            </div>
+                            <div class="ui-g-3">
+                                <button pButton type="button" (click)="createNewCustomer()"
+                                        label="{{'GENERIC_NEW' | translate}}"></button>
+                            </div>
+
+                            <div class="ui-g-12">
+                                <h4><label>{{'SHIPMENT-RESOURCE_SENDER-ADDRESS' | translate}}</label></h4>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-12 ui-xl-3">
+                                <label>{{'SHIPMENT-RESOURCE_SENDER-STREET-NUMBER' | translate}}</label>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-xl-6">
+                                <input pInputText
+                                       disabled="true"
+                                       [(ngModel)]="senderStreet"
+                                       [ngModelOptions]="{standalone: true}"
+                                       id="shipment-capture-component_sender-street"
+                                >
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-xl-3">
+                                <input pInputText
+                                       disabled="true"
+                                       id="shipment-capture-component_sender-street_number"
+                                       [ngModel]="senderStreetNo"
+                                       [ngModelOptions]="{standalone: true}"
+                                >
+                            </div>
+
+                            <div class="ui-g-12 ui-md-12 ui-xl-3">
+                                <label>{{'SHIPMENT-RESOURCE_SENDER-ZIPCODE-CITY' | translate}}</label>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-xl-3">
+                                <input pInputText
+                                       disabled="true"
+                                       [ngModel]="senderZipCode"
+                                       [ngModelOptions]="{standalone: true}"
+                                       id="shipment-capture-component_sender-zipcode"
+                                >
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-xl-6">
+                                <input pInputText
+                                       disabled="true"
+                                       [ngModel]="senderCity"
+                                       [ngModelOptions]="{standalone: true}"
+                                       id="shipment-capture-component_sender-city"
+                                >
+
+                            </div>
+                        </div>
+
+                        <!-- Receiver Address -->
+                        <div class="ui-g-12 ui-lg-6">
+
+                            <div class="ui-g-12">
+                                <h4><label>{{'SHIPMENT-RESOURCE_RECEIVER' | translate}}</label></h4>
+                            </div>
+
+                            <div class="ui-g-9">
+                                <p-autoComplete formControlName="receiver"
+                                                field="name"
+                                                [suggestions]="customerSuggestions"
+                                                (completeMethod)="loadUserSuggestions($event)"
+                                                (onSelect)="onReceiverSelected($event)">
+                                </p-autoComplete>
+                            </div>
+                            <div class="ui-g-3">
+                                <button pButton type="button" (click)="createNewCustomer()"label="{{'GENERIC_NEW' | translate}}"></button>
+                            </div>
+
+                            <div class="ui-g-12">
+                                <h4><label>{{'SHIPMENT-RESOURCE_RECEIVER-ADDRESS' | translate}}</label></h4>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-12 ui-xl-3">
+                                <label>{{'SHIPMENT-RESOURCE_RECEIVER-STREET-NUMBER' | translate}}</label>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-6 ui-xl-6">
+                                <input pInputText
+                                       [ngModel]="receiverStreet"
+                                       disabled="true"
+                                       [ngModelOptions]="{standalone: true}"
+                                       id="shipment-capture-component_receiver-street"
+                                >
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-xl-3">
+                                <input pInputText
+                                       disabled="true"
+                                       id="shipment-capture-component_receiver-street_number"
+                                       [ngModel]="receiverStreetNo"
+                                       [ngModelOptions]="{standalone: true}"
+                                >
+                            </div>
+
+                            <div class="ui-g-12 ui-md-12 ui-xl-3">
+                                <label>{{'SHIPMENT-RESOURCE_RECEIVER-ZIPCODE-CITY' | translate}}</label>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-xl-3">
+                                <input pInputText
+                                       disabled="true"
+                                       [ngModel]="receiverZipCode"
+                                       [ngModelOptions]="{standalone: true}"
+                                       id="shipment-capture-component_receiver-zipcode"
+                                >
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-xl-6">
+                                <input pInputText
+                                       disabled="true"
+                                       [ngModel]="receiverCity"
+                                       [ngModelOptions]="{standalone: true}"
+                                       id="shipment-capture-component_receiver-city"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="ui-g-6">
+                            <p-radioButton [(ngModel)]="isCustomer"
+                                           name="isCustomer"
+                                           value="SENDER"
+                                           formControlName="isCustomer"
+                                           label="{{'SHIPMENT_CAPTURE_COMPONENT_CLIENT' | translate}}"
+                                           id="shipment-capture-component_sender-is-customer"
+                            >
+                            </p-radioButton>
+                        </div>
+                        <div class="ui-g-6">
+                            <p-radioButton [(ngModel)]="isCustomer"
+                                           name="usCustomer"
+                                           value="RECEIVER"
+                                           formControlName="isCustomer"
+                                           label="{{'SHIPMENT_CAPTURE_COMPONENT_CLIENT' | translate}}"
+                                           id="shipment-capture-component_receiver-is-customer"
+                            >
+                            </p-radioButton>
+                        </div>
+                    </div>
+                </p-panel>
+            </p-tabPanel>
+
+            <p-tabPanel header="{{'SHIPMENT_CAPTURE_COMPONENT_CARGO-INFORMATION' | translate}}">
+                <p-panel header="{{'SHIPMENT_CAPTURE_COMPONENT_CARGO-INFORMATION' | translate}}">
+                    <div class="ui-g ui-fluid">
+                        <div class="ui-g-12 ui-md-4">
+                            <h4><label>{{'SHIPMENT-RESOURCE_NUMBER-OF_PACKETS' | translate}}</label></h4>
+                            <input pInputText formControlName="numberPackages"
+                                   id="shipment-capture-component_cargo_amount-packages"
+                            > <br/>
+                        </div>
+                        <div class="ui-g-12 ui-md-4">
+                            <h4><label>{{'SHIPMENT-RESOURCE_TOTAL-WEIGHT' | translate}}</label></h4>
+                            <input pInputText formControlName=totalWeight
+                                   id="shipment-capture-component_cargo_weight"
+                            >
+                        </div>
+                        <div class="ui-g-12 ui-md-4">
+                            <h4><label>{{'SHIPMENT-RESOURCE_TOTAL-VOLUME' | translate}}</label></h4>
+                            <input pInputText formControlName="totalCapacity"
+                                   id="shipment-capture-component_cargo_volume"
+                            > <br/>
+                        </div>
+                        <div class="ui-g-12 ui-md-10">
+                            <h4><label>{{'TASK-RESOURCE_DESCRIPTION' | translate}}</label></h4>
+                            <textarea pInputTextarea
+                                      rows="10"
+                                      cols="45"
+                                      formControlName="cargoDescription"
+                                      id="shipment-capture-component_cargo_description"></textarea>
+
+                        </div>
+                        <div class="ui-g-12 ui-md-2">
+                            <h4><label>{{'SHIPMENT-RESOURCE_DANGEROUS-GOODS' | translate}}</label></h4>
+                            <p-checkbox [(ngModel)]="dangerousCheck"
+                                        formControlName="dangerousGoods"
+                                        binary="true"
+                                        id="shipment-capture-component_cargo_dangerous-goods"
+                            >
+                            </p-checkbox>
+                        </div>
+                    </div>
+                </p-panel>
+            </p-tabPanel>
+
+            <p-tabPanel header="{{'SHIPMENT_CAPTURE_COMPONENT_SERVICES' | translate}}">
+                <div class="ui-g fluid ui-g-nopad">
+                    <div class="ui-g-12 ui-lg-4 shipment-capture-component_services">
+                        <p-panel header="Export">
+                            <p-checkbox [(ngModel)]="preCarriageCheck"
+                                        formControlName="preCarriage"
+                                        binary="true"
+                                        id="shipment-capture-component_services_pre-carriage"
+                            >
+                            </p-checkbox>
+                            <label>{{'SHIPMENT-RESOURCE_PRE-CARRIAGE' | translate}}</label>
+                            <br/>
+                            <p-checkbox [(ngModel)]="exportInsuranceCheck"
+                                        binary="true"
+                                        formControlName="exportInsurance"
+                                        id="shipment-capture-component_services_export-insurance"
+                            >
+                            </p-checkbox>
+                            <label>{{'SHIPMENT-RESOURCE_EXPORT-INSURANCE' | translate}}</label>
+                            <br/>
+                            <p-checkbox [(ngModel)]="exportClearanceCheck"
+                                        formControlName="exportCustomsClearance"
+                                        binary="true"
+                                        id="shipment-capture-component_services_export-clearance"
+                            >
+                            </p-checkbox>
+                            <label>{{'SHIPMENT-RESOURCE_EXPORT-CUSTOMS' | translate}}</label>
+                            <br/>
+                        </p-panel>
+                    </div>
+                    <div class="ui-g-12 ui-lg-4 shipment-capture-component_services">
+                        <p-panel header="Flight">
+                            <p-checkbox [(ngModel)]="flightCheck"
+                                        formControlName="flight"
+                                        binary="true"
+                                        id="shipment-capture-component_services_flight"
+                                        disabled="true"
+                            >
+                            </p-checkbox>
+                            <label>{{'SHIPMENT-RESOURCE_FLIGHT' | translate}}</label>
+                        </p-panel>
+                    </div>
+                    <div class="ui-g-12 ui-lg-4 shipment-capture-component_services">
+                        <p-panel header="Import">
+                            <p-checkbox [(ngModel)]="onCarriageCheck"
+                                        formControlName="onCarriage"
+                                        binary="true"
+                                        id="shipment-capture-component_services_on-carriage"
+                            >
+                            </p-checkbox>
+                            <label>{{'SHIPMENT-RESOURCE_ON-CARRIAGE' | translate}}</label>
+                            <br/>
+                            <p-checkbox [(ngModel)]="importInsuranceCheck"
+                                        formControlName="importInsurance"
+                                        binary="true"
+                                        id="shipment-capture-component_services_import-insurance"
+                            >
+                            </p-checkbox>
+                            <label>{{'SHIPMENT-RESOURCE_IMPORT-INSURANCE' | translate}} </label>
+                            <br/>
+                            <p-checkbox [(ngModel)]="importClearanceCheck"
+                                        formControlName="importCustomsClearance"
+                                        binary="true"
+                                        id="shipment-capture-component_services_import-clearance"
+                            >
+                            </p-checkbox>
+                            <label>{{'SHIPMENT-RESOURCE_IMPORT-CUSTOMS' | translate}} </label>
+                            <br/>
+                        </p-panel>
+                    </div>
+                </div>
+
+            </p-tabPanel>
+        </p-tabView>
+
         <div class="ui-g ui-fluid">
-            <div class="ui-g-12 ui-md-6">
-                <label class="ui-g-12 ui-md-3">{{'SHIPMENT-RESOURCE_CUSTOMER' | translate}}</label>
-                <input class="ui-g-12 ui-md-9" id="shipment-capture-component_customer" type="text" p-inputtext formControlName="customer">
+            <div class="ui-g-12 ui-md-4 ui-lg-8">
             </div>
-            <div class="ui-g-12 ui-md-6">
+            <div class="ui-g-12 ui-md-4 ui-lg-2">
+                <button pButton type="button" (click)="cancel()" label="{{'GENERIC_CANCEL' | translate}}"></button>
             </div>
-            <div class="ui-g-12 ui-md-6">
-                <label class="ui-g-12 ui-md-3">{{'SHIPMENT-RESOURCE_SENDER-ADDRESS' | translate}}</label>
-                <textarea class="ui-g-12 ui-md-9" id="shipment-capture-component_sender-address" p-intputtextarea formControlName="senderAddress"></textarea>
-            </div>
-            <div class="ui-g-12 ui-md-6">
-                <label class="ui-g-12 ui-md-3">{{'SHIPMENT-RESOURCE_RECEIVER-ADDRESS' | translate}}</label>
-                <textarea class="ui-g-12 ui-md-9" id="shipment-capture-component_receiver-address" p-intputtextarea formControlName="receiverAddress"></textarea>
+            <div class="ui-g-12 ui-md-4 ui-lg-2">
+                <button pButton type="button" (click)="createShipment()"
+                        label="{{'GENERIC_CREATE' | translate}}" [disabled]="!shipmentCaptureForm.valid"></button>
             </div>
         </div>
-    </p-panel>
-    <div class="ui-g ui-fluid">
-        <div class="ui-g-12 ui-md-6 ui-lg-8"></div>
-        <div class="ui-g-12 ui-md-3 ui-lg-2">
-            <button id="shipment-capture-component_cancel-button" pButton type="button" (click)="cancel()" label="{{'GENERIC_CANCEL' | translate}}" icon="fa-close"></button>
-        </div>
-        <div class="ui-g-12 ui-md-3 ui-lg-2">
-            <button id="shipment-capture-component_create-button" pButton type="button" (click)="createShipment()" label="{{'GENERIC_CREATE' | translate}}" icon="fa-check" [disabled]="!shipmentCaptureForm.valid"></button>
-        </div>
-    </div>
-</form>
+
+    </form>
+</div>
