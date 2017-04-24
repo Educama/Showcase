@@ -12,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.educama.shipment.model.Shipment;
+import org.educama.shipment.repository.ShipmentRepository;
 
 import java.util.List;
 
@@ -27,6 +29,9 @@ public class CustomerBoundaryServiceTest {
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private ShipmentRepository shipmentRepository;
 
     @Autowired
     private CustomerBoundaryService customerService;
@@ -49,6 +54,11 @@ public class CustomerBoundaryServiceTest {
     @After
     public void deleteTestData() {
         List<Customer> customers = customerRepository.findAll();
+        List<Shipment> shipments = shipmentRepository.findAll();
+        for (Shipment shipment : shipments) {
+            shipmentRepository.delete(shipment);
+        }
+
         for (Customer customer : customers) {
             customer.address = null;
             customerRepository.delete(customer);
