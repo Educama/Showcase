@@ -37,6 +37,6 @@ public class ShipmentsListSteps {
     @Step
     public void addOneShipment() {
         shipmentsListPage.openShipmentCapturePage();
-        shipmentCapturePage.createShipment();
+//        shipmentCapturePage.createShipment();
     }
 }

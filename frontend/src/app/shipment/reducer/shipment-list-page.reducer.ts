@@ -3,7 +3,7 @@ import * as actions from "./shipment-list-page.actions";
 import {ShipmentResource} from "../api/resources/shipment.resource";
 
 export interface ShipmentListSlice {
-    shipmentList: ShipmentResource[]
+    shipmentList: ShipmentResource[],
 }
 
 export const SHIPMENT_LIST_SLICE_INITIAL_STATE: ShipmentListSlice = {

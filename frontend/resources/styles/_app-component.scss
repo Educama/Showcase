@@ -24,13 +24,14 @@ h1 {
 
 .educama-header {
   background-color: $dark_blue;
-  height: 100px;
+  height: 70px;
   width: 100%;
   position: fixed;
   top: 0px;
   right: 0px;
   text-align: left;
   vertical-align: middle;
+  z-index: 3;
 
   .educama-title {
     margin: 20px 0 0 20px;
@@ -43,6 +44,21 @@ h1 {
   }
 }
 
+@media (max-width: 640px) {
+  .educama-header {
+
+    .educama-title {
+      margin: 20px 0 0 20px;
+
+      h1 {
+        color: white;
+        font-size: 16px;
+      }
+
+    }
+  }
+}
+
 .educama-content-wrapper {
-  margin-top: 120px;
+  margin-top: 140px;
 }
