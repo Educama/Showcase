@@ -67,7 +67,7 @@ export class CustomerService {
      * @return An observable array of customers
      */
     public findCustomerSuggestions(term: string, pageNumber?: number, pageSize?: number): Observable<CustomerSuggestionsResource> {
-        let pageNumberText = (pageNumber) ? "&page=" + pageNumber : "&page=1";
+        let pageNumberText = (pageNumber) ? "&page=" + pageNumber : "&page=0";
         let pageSizeText = (pageSize) ? "&size=" + pageSize : "&size=10";
         return this._restClientService.get(this.CUSTOMER_SUGGESTIONS_RESOURCE_PATH + "?term=" + term + pageNumberText + pageSizeText);
     }

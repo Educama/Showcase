@@ -35,14 +35,14 @@ public class ShipmentsListStepDefinitions extends GlobalStepDefinitions {
     /*
      * Caselist with one case
      */
-    @Given("There is 1 shipment")
-    public void givenThereIsOneShipment() {
-        user.openShipmentsListPage();
-        user.addOneShipment();
-    }
-
-    @Then("I see 1 shipment")
-    public void thenISeeOneShipment() {
-        user.checksTheShipmentListForOneShipment();
-    }
+//    @Given("There is 1 shipment")
+//    public void givenThereIsOneShipment() {
+//        user.openShipmentsListPage();
+//        user.addOneShipment();
+//    }
+//
+//    @Then("I see 1 shipment")
+//    public void thenISeeOneShipment() {
+//        user.checksTheShipmentListForOneShipment();
+//    }
 }
