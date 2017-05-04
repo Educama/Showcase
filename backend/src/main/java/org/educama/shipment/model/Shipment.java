@@ -1,12 +1,18 @@
 package org.educama.shipment.model;
 
-import org.hibernate.validator.constraints.NotBlank;
+import org.educama.customer.model.Customer;
+import org.educama.enums.ClientType;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
 /**
  * This represents the shipment entity used for database persistence.
@@ -19,12 +25,23 @@ public class Shipment extends AbstractPersistable<Long> {
     @Column(unique = true)
     public String trackingId;
 
-    @NotBlank
-    public String customer;
+    @NotNull
+    @OneToOne
+    public Customer sender;
 
-    @NotBlank
-    public String senderAddress;
+    @NotNull
+    @OneToOne
+    public Customer receiver;
 
-    @NotBlank
-    public String receiverAddress;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    public ClientType customerTypeEnum;
+
+    @Embedded
+    @NotNull
+    public Cargo shipmentCargo;
+
+    @Embedded
+    @NotNull
+    public Services shipmentServices;
 }

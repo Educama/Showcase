@@ -259,7 +259,8 @@ function generateDocs() {
     return gulp.src(["src/app/**/*.ts"])
         .pipe(typedoc({
             module: "commonjs",
-            target: "es5",
+            // "es6:" is a workaround for now to get typedoc running with type definition from @Types
+            target: "es6",
             experimentalDecorators: true,
             includeDeclarations: true,
             out: "docs/",
@@ -267,7 +268,7 @@ function generateDocs() {
             name: "Educama Angular Documentation",
             externalPattern: "src/**/*.spec.ts",
             excludeExternals: true,
-            excludePrivate: true,
+            excludeNotExported: true,
             mode: "file"
         }));
 }

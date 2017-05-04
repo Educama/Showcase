@@ -1,6 +1,6 @@
 import {Component, Input, Output, EventEmitter} from "@angular/core";
 import {CustomerResource} from "../api/resources/customer.resource";
-import {TranslateService} from "ng2-translate";
+import {TranslateService} from "ng2-translate/ng2-translate";
 import {LazyLoadEvent} from "primeng/components/common/api";
 
 @Component({
