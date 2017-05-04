@@ -1,6 +1,7 @@
 import {Component, Input, Output} from "@angular/core";
 import {ShipmentResource} from "../api/resources/shipment.resource";
-import {TranslateService} from "ng2-translate";
+import {TranslateService} from "ng2-translate/ng2-translate";
+import {ShipmentListRowModel} from "../container/shipment-list-page.model";
 
 @Component({
     selector: "educama-shipment-list",
@@ -9,7 +10,7 @@ import {TranslateService} from "ng2-translate";
 export class ShipmentListComponent {
 
     @Input()
-    public shipmentList: ShipmentResource[];
+    public shipmentList: ShipmentListRowModel[];
 
     @Output()
     public selectedShipment: ShipmentResource = new ShipmentResource();

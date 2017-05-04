@@ -4,17 +4,17 @@
         selectionMode="single"
         [(selection)]="selectedTask">
     <p-column field="createTime" header="{{'TASK-RESOURCE_DATE' | translate}}">
-        <ng-template let-col let-task="rowData" pTemplate="body">
+        <template let-col let-task="rowData" pTemplate="body">
             <span>
                 {{task[col.field] | educamaI18nDateFormat:"shortDate" }}
             </span>
-        </ng-template>
+        </template>
     </p-column>
     <p-column field="trackingId" header="{{'TASK-RESOURCE_INSTANCE_ID' | translate}}"></p-column>
     <p-column field="taskId" header="{{'TASK-RESOURCE_TASK-ID' | translate}}"></p-column>
     <p-column field="name" header="{{'TASK-RESOURCE_TASK-NAME' | translate}}"></p-column>
     <p-column field="description" header="{{'TASK-RESOURCE_DESCRIPTION' | translate}}"></p-column>
     <p-column field="assignee" header="{{'TASK-RESOURCE_ASSIGNEE' | translate}}"></p-column>
-    <p-column field="customer" header="{{'SHIPMENT-RESOURCE_CUSTOMER' | translate}}"></p-column>
-
+    <p-column field="senderAddress" header="{{'SHIPMENT-RESOURCE_SENDER' | translate}}"></p-column>
+    <p-column field="receiverAddress" header="{{'SHIPMENT-RESOURCE_RECEIVER' | translate}}"></p-column>
 </p-dataTable>

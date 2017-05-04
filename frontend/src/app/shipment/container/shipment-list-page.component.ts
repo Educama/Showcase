@@ -6,9 +6,13 @@ import * as actions from "../reducer/shipment-list-page.actions";
 import {ErrorService} from "../../common/error/services/error.service";
 import {ShipmentService} from "../api/shipment.service";
 import {ShipmentListSlice} from "../reducer/shipment-list-page.reducer";
-import {ShipmentListModel} from "./shipment-list-page.model";
+import {ShipmentListModel, ShipmentListRowModel} from "./shipment-list-page.model";
 import {State} from "../../app.reducers";
 import {ShipmentResource} from "../api/resources/shipment.resource";
+import {CustomerListPageModel} from "../../customer/container/customer-list-page.model";
+import {CustomerListSlice} from "../../customer/reducer/customer-list-page.reducer";
+import {CustomerListResource} from "../../customer/api/resources/customer-list.resource";
+import {Address} from "../../customer/api/datastructures/address.datastructure";
 
 @Component({
     selector: "educama-shipment-list-page",
@@ -81,6 +85,20 @@ export class ShipmentListPageComponent implements OnInit, OnDestroy {
     }
 
     private updateShipmentListModel(shipmentListSlice: ShipmentListSlice) {
-        this.shipmentListModel.shipmentList = shipmentListSlice.shipmentList;
+        this.shipmentListModel.shipmentList =
+            shipmentListSlice.shipmentList.map(
+                shipmentResource => new ShipmentListRowModel(
+                    shipmentResource.trackingId,
+                    this.formatAddress(shipmentResource.sender.address),
+                    this.formatAddress(shipmentResource.receiver.address))
+            )
+    }
+    private formatAddress(address: Address): string {
+        let formatedAddress: string = "";
+        formatedAddress += address.street + " ";
+        formatedAddress += address.streetNo + ", ";
+        formatedAddress += address.zipCode + " ";
+        formatedAddress += address.city;
+        return formatedAddress;
     }
 }
