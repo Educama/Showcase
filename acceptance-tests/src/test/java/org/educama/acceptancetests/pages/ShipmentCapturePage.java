@@ -27,9 +27,9 @@ public class ShipmentCapturePage extends PageObject {
     WebElement createButton;
 
     public void createShipment() {
-        formFieldCustomer.sendKeys("John Doe");
-        formFieldSenderAddress.sendKeys("Dummy Street, 12345 Dummy Sender Town");
-        formFieldReceiverAddress.sendKeys("Dummy Street, 12345 Dummy Receiver Town");
+//        formFieldCustomer.sendKeys("John Doe");
+//        formFieldSenderAddress.sendKeys("Dummy Street, 12345 Dummy Sender Town");
+//        formFieldReceiverAddress.sendKeys("Dummy Street, 12345 Dummy Receiver Town");
         clickOn(createButton);
     }
 }

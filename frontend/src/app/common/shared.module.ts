@@ -5,13 +5,13 @@ import {ErrorModule} from "./error/error.module";
 import {RestModule} from "./http/rest.module";
 import {TranslationModule} from "./translation/translation.module";
 import {UIModule} from "./ui/ui.module";
+import {BrowserModule} from "@angular/platform-browser";
 
 @NgModule({
     exports: [
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-
         ErrorModule,
         RestModule,
         TranslationModule,

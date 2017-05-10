@@ -1,5 +1,9 @@
 package org.educama.shipment.api.resource;
 
+import org.educama.enums.ClientType;
+import org.educama.shipment.api.datastructure.CargoDS;
+import org.educama.shipment.api.datastructure.PartyDS;
+import org.educama.shipment.api.datastructure.ServicesDS;
 import org.educama.shipment.model.Shipment;
 
 /**
@@ -8,9 +12,11 @@ import org.educama.shipment.model.Shipment;
 public class ShipmentResource {
 
     public String trackingId;
-    public String customer;
-    public String senderAddress;
-    public String receiverAddress;
+    public PartyDS sender;
+    public PartyDS receiver;
+    public CargoDS shipmentCargo;
+    public ServicesDS shipmentServices;
+    public ClientType customerTypeEnum;
 
     /**
      * Create a API-Model (Resource) instance from the internal data model.
@@ -20,25 +26,12 @@ public class ShipmentResource {
      */
     public ShipmentResource fromShipment(Shipment shipmentModel) {
         this.trackingId = shipmentModel.trackingId;
-        this.customer = shipmentModel.customer;
-        this.senderAddress = shipmentModel.senderAddress;
-        this.receiverAddress = shipmentModel.receiverAddress;
+        this.sender = new PartyDS(shipmentModel.sender);
+        this.receiver = new PartyDS(shipmentModel.receiver);
+        this.shipmentCargo = new CargoDS(shipmentModel.shipmentCargo);
+        this.shipmentServices = new ServicesDS(shipmentModel.shipmentServices);
+        this.customerTypeEnum = shipmentModel.customerTypeEnum;
 
         return this;
-    }
-
-    /**
-     * Convert this instance of API-Model (Resource) to the internal data model.
-     *
-     * @return the converted instance
-     */
-    public Shipment toShipment() {
-        Shipment toConvert = new Shipment();
-        toConvert.trackingId = trackingId;
-        toConvert.customer = customer;
-        toConvert.senderAddress = senderAddress;
-        toConvert.receiverAddress = receiverAddress;
-
-        return toConvert;
     }
 }
