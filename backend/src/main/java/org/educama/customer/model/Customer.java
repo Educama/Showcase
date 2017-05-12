@@ -1,8 +1,10 @@
 package org.educama.customer.model;
 
+import org.educama.common.UuidConverter;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.hateoas.Identifiable;
 
+import javax.persistence.Convert;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
@@ -16,6 +18,7 @@ import java.util.UUID;
 public class Customer extends AbstractPersistable<Long> implements Identifiable<Long> {
 
     @NotNull
+    @Convert(converter = UuidConverter.class)
     public UUID uuid;
 
     @NotNull

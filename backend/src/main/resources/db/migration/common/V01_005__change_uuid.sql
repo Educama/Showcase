@@ -1,0 +1,1 @@
+ALTER TABLE customer MODIFY COLUMN UUID varchar(255);
