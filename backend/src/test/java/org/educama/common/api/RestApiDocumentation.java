@@ -64,7 +64,7 @@ public class RestApiDocumentation {
 
     private RestDocumentationResultHandler documentationHandler;
 
-    private FieldDescriptor[] fieldDescriptorShipment;
+    private FieldDescriptor[] fieldDescriptorShipmentResource;
 
     private FieldDescriptor[] fieldDescriptorTask;
 
@@ -95,11 +95,40 @@ public class RestApiDocumentation {
 
         // Shipment Resource
 
-        fieldDescriptorShipment = new FieldDescriptor[]{
+        fieldDescriptorShipmentResource = new FieldDescriptor[]{
+
                 fieldWithPath("trackingId").description("The unique business key of the shipment"),
-                fieldWithPath("customer").description("The name of the customer"),
-                fieldWithPath("senderAddress").description("The address of the sender"),
-                fieldWithPath("receiverAddress").description("The address of the final receiver")};
+                fieldWithPath("sender").description("The sender of the shipment with address and name"),
+                fieldWithPath("sender.name").description("The name of the sender"),
+                fieldWithPath("sender.address").description("The address of the sender"),
+                fieldWithPath("sender.address.street").description("The street of the sender's address"),
+                fieldWithPath("sender.address.streetNo").description("The street number of the sender's address"),
+                fieldWithPath("sender.address.zipCode").description("The zip code of the sender's address"),
+                fieldWithPath("sender.address.city").description("The city of the sender's address"),
+                fieldWithPath("receiver").description("The receiver of the shipment with address and name"),
+                fieldWithPath("receiver.name").description("The name of the receiver"),
+                fieldWithPath("receiver.address").description("The address of the receiver"),
+                fieldWithPath("receiver.address.street").description("The street of the receiver's address"),
+                fieldWithPath("receiver.address.streetNo").description("The street number of the receiver's address"),
+                fieldWithPath("receiver.address.zipCode").description("The zip code of the receiver's address"),
+                fieldWithPath("receiver.address.city").description("The city of the receiver's address"),
+                fieldWithPath("customerTypeEnum").description("Tells wether the sender or receiver is the customer of the shipment"),
+                fieldWithPath("shipmentCargo").description("Includes cargo information about the shipment"),
+                fieldWithPath("shipmentCargo.numberPackages").description("The number of packages of the cargo"),
+                fieldWithPath("shipmentCargo.totalWeight").description("The total weight of the cargo"),
+                fieldWithPath("shipmentCargo.totalCapacity").description("The total capacity of cargo"),
+                fieldWithPath("shipmentCargo.cargoDescription").description("The description of the cargo"),
+                fieldWithPath("shipmentCargo.dangerousGoods").description("Is true if the cargo includes dangerous goods"),
+                fieldWithPath("shipmentServices").description("Includes information about the Services of the shipment"),
+                fieldWithPath("shipmentServices.preCarriage").description("Is true if additional actions have to take place before the shipment"),
+                fieldWithPath("shipmentServices.exportInsurance").description("Is true if the shipment has export insurance"),
+                fieldWithPath("shipmentServices.exportCustomsClearance").description("Is true if the shipment has to pay customs for export"),
+                fieldWithPath("shipmentServices.flight").description("Is true if the shipment includes a flight"),
+                fieldWithPath("shipmentServices.importInsurance").description("Is true if the shipment has import insurance"),
+                fieldWithPath("shipmentServices.importCustomsClearance").description("Is true if the shipment has to pay customs for import"),
+                fieldWithPath("shipmentServices.onCarriage").description("Is true if additional actions have to take place after the shipment")
+        };
+
 
         // Task Resource
 
@@ -110,7 +139,20 @@ public class RestApiDocumentation {
                 fieldWithPath("name").description("The task name"),
                 fieldWithPath("description").description("The task description"),
                 fieldWithPath("assignee").description("The assignee of the task"),
-                fieldWithPath("customer").description("The shipments customer name") };
+                fieldWithPath("sender").description("The sender of the assigned shipment with address and name"),
+                fieldWithPath("sender.name").description("The name of the sender"),
+                fieldWithPath("sender.address").description("The address of the sender"),
+                fieldWithPath("sender.address.street").description("The street of the sender's address"),
+                fieldWithPath("sender.address.streetNo").description("The street number of the sender's address"),
+                fieldWithPath("sender.address.zipCode").description("The zip code of the sender's address"),
+                fieldWithPath("sender.address.city").description("The city of the sender's address"),
+                fieldWithPath("receiver").description("The receiver of the shipment with address and name"),
+                fieldWithPath("receiver.name").description("The name of the receiver"),
+                fieldWithPath("receiver.address").description("The address of the receiver"),
+                fieldWithPath("receiver.address.street").description("The street of the receiver's address"),
+                fieldWithPath("receiver.address.streetNo").description("The street number of the receiver's address"),
+                fieldWithPath("receiver.address.zipCode").description("The zip code of the receiver's address"),
+                fieldWithPath("receiver.address.city").description("The city of the receiver's address")};
 
         // Customer Resource
 
@@ -143,13 +185,39 @@ public class RestApiDocumentation {
         createShipment()
         .andExpect(status().isCreated()).andDo(
                 this.documentationHandler.document(
-                        requestFields(fieldWithPath("customer").description("The name of the customer"),
-                                fieldWithPath("senderAddress").description("The address of the sender"),
-                                fieldWithPath("receiverAddress")
-                                        .description("The address of the final receiver")),
-                        responseFields(fieldDescriptorShipment)));
-    }
-
+                        requestFields(fieldWithPath("uuidSender").description("the UUID of the sender"),
+                                fieldWithPath("uuidReceiver").description("the UUID of the receiver"),
+                                fieldWithPath("sender").description("The sender of the shipment with address and name"),
+                                fieldWithPath("sender.name").description("The name of the sender"),
+                                fieldWithPath("sender.address").description("The address of the sender"),
+                                fieldWithPath("sender.address.street").description("The street of the sender's address"),
+                                fieldWithPath("sender.address.streetNo").description("The street number of the sender's address"),
+                                fieldWithPath("sender.address.zipCode").description("The zip code of the sender's address"),
+                                fieldWithPath("sender.address.city").description("The city of the sender's address"),
+                                fieldWithPath("receiver").description("The receiver of the shipment with address and name"),
+                                fieldWithPath("receiver.name").description("The name of the receiver"),
+                                fieldWithPath("receiver.address").description("The address of the receiver"),
+                                fieldWithPath("receiver.address.street").description("The street of the receiver's address"),
+                                fieldWithPath("receiver.address.streetNo").description("The street number of the receiver's address"),
+                                fieldWithPath("receiver.address.zipCode").description("The zip code of the receiver's address"),
+                                fieldWithPath("receiver.address.city").description("The city of the receiver's address"),
+                                fieldWithPath("customerTypeEnum").description("Tells wether the sender or receiver is the customer of the shipment"),
+                                fieldWithPath("shipmentCargo").description("Includes cargo information about the shipment"),
+                                fieldWithPath("shipmentCargo.numberPackages").description("The number of packages of the cargo"),
+                                fieldWithPath("shipmentCargo.totalWeight").description("The total weight of the cargo"),
+                                fieldWithPath("shipmentCargo.totalCapacity").description("The total capacity of cargo"),
+                                fieldWithPath("shipmentCargo.cargoDescription").description("The description of the cargo"),
+                                fieldWithPath("shipmentCargo.dangerousGoods").description("Is true if the cargo includes dangerous goods"),
+                                fieldWithPath("shipmentServices").description("Includes information about the Services of the shipment"),
+                                fieldWithPath("shipmentServices.preCarriage").description("Is true if additional actions have to take place before the shipment"),
+                                fieldWithPath("shipmentServices.exportInsurance").description("Is true if the shipment has export insurance"),
+                                fieldWithPath("shipmentServices.exportCustomsClearance").description("Is true if the shipment has to pay customs for export"),
+                                fieldWithPath("shipmentServices.flight").description("Is true if the shipment includes a flight"),
+                                fieldWithPath("shipmentServices.importInsurance").description("Is true if the shipment has import insurance"),
+                                fieldWithPath("shipmentServices.importCustomsClearance").description("Is true if the shipment has to pay customs for import"),
+                                fieldWithPath("shipmentServices.onCarriage").description("Is true if additional actions have to take place after the shipment")),
+                        responseFields(fieldDescriptorShipmentResource)));
+}
     @Test
     public void listShipmentTest() throws Exception {
         createShipment();
@@ -157,7 +225,7 @@ public class RestApiDocumentation {
         this.mockMvc.perform(get(ShipmentController.SHIPMENT_RESOURCE_PATH)).andExpect(status().isOk())
                 .andDo(this.documentationHandler.document(
                         responseFields(fieldWithPath("shipments[]").description("An array of shipment objects"))
-                                .andWithPrefix("shipments[].", fieldDescriptorShipment)));
+                                .andWithPrefix("shipments[].", fieldDescriptorShipmentResource)));
 
     }
 
@@ -253,17 +321,13 @@ public class RestApiDocumentation {
     }
 
     private ResultActions createShipment() throws Exception {
-        Map<String, String> shipment = new LinkedHashMap<>();
-        shipment.put("customer", "NovaTec Consulting GmbH");
-        shipment.put("senderAddress", "Dieselstr. 18/1, 70771 Leinfelden-Echterdingen, Germany");
-        shipment.put("receiverAddress", "Santa Claus Main Post Office, FI-96930 Arctic Circle, Finland");
 
         return this.mockMvc.perform(post(ShipmentController.SHIPMENT_RESOURCE_PATH).contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsBytes(shipment)));
+                .content(objectMapper.writeValueAsBytes(this.createShipmentResourceHashMap())));
 
     }
 
-    private String createCustomer(String name) throws  Exception {
+    private String createCustomer(String name) throws Exception {
         MvcResult result = this.mockMvc
                 .perform(post(CustomerController.CUSTOMER_RESOURCE_PATH)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -275,7 +339,7 @@ public class RestApiDocumentation {
         return jsonResult.getString("uuid");
     }
 
-    private Map<String, Object>  createCustomerResourceHashMap(String name) {
+    private Map<String, Object> createCustomerResourceHashMap(String name) {
         Map<String, Object> customer = new LinkedHashMap<>();
         customer.put("name", name);
         Map<String, String> address = new LinkedHashMap<>();
@@ -285,6 +349,39 @@ public class RestApiDocumentation {
         address.put("city", "Nowhere");
         customer.put("address", address);
         return customer;
+    }
+
+    private Map<String, Object>  createShipmentResourceHashMap() throws Exception {
+        Map<String, Object> sender = createCustomerResourceHashMap("Hans Kümmerle");
+        Map<String, Object> receiver = createCustomerResourceHashMap("Albert Stein");
+        String uuidSender = createCustomer("Herbert Hollig");
+        String uuidReceiver = createCustomer("Herbert Hollig");
+        Map<String, Object> shipment = new LinkedHashMap<>();
+        shipment.put("uuidSender", uuidSender);
+        shipment.put("uuidReceiver", uuidReceiver);
+        shipment.put("sender", sender);
+        shipment.put("receiver", receiver);
+        shipment.put("customerTypeEnum", "RECEIVER");
+
+        Map<String, Object> cargo = new LinkedHashMap<>();
+        cargo.put("numberPackages", "5");
+        cargo.put("totalWeight", "40");
+        cargo.put("totalCapacity", "32.5");
+        cargo.put("cargoDescription", "this cargo includes pens and other writing articles");
+        cargo.put("dangerousGoods", false);
+        shipment.put("shipmentCargo", cargo);
+
+        Map<String, Object> services = new LinkedHashMap<>();
+        services.put("preCarriage", true);
+        services.put("exportInsurance", false);
+        services.put("exportCustomsClearance", true);
+        services.put("flight", true);
+        services.put("importInsurance", true);
+        services.put("importCustomsClearance", false);
+        services.put("onCarriage", true);
+        shipment.put("shipmentServices", services);
+
+        return shipment;
     }
 
     private String createPathExtension(Customer customer) {

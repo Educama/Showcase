@@ -5,9 +5,10 @@ import * as actions from "../reducer/task-list-page.actions";
 import {ErrorService} from "../../common/error/services/error.service";
 import {TaskService} from "../api/task.service";
 import {TaskListSlice} from "../reducer/task-list-page.reducer";
-import {TaskListModel} from "./task-list-page.model";
+import {TaskListModel, TaskListRowModel} from "./task-list-page.model";
 import {State} from "../../app.reducers";
 import {TaskResource} from "../api/resources/task.resource";
+import {Address} from "../../customer/api/datastructures/address.datastructure";
 
 @Component({
     selector: "educama-task-list-page",
@@ -65,6 +66,25 @@ export class TaskListPageComponent implements OnInit, OnDestroy{
     }
 
     private updateTaskListModel(taskListSlice: TaskListSlice) {
-        this.taskListModel.taskList = taskListSlice.taskList;
+        this.taskListModel.taskList =
+            taskListSlice.taskList.map(
+                taskResource => new TaskListRowModel(
+                    taskResource.createTime,
+                    taskResource.trackingId,
+                    taskResource.taskId,
+                    taskResource.name,
+                    taskResource.description,
+                    taskResource.assignee,
+                    this.formatAddress(taskResource.sender.address),
+                    this.formatAddress(taskResource.receiver.address))
+            )
+    }
+    private formatAddress(address: Address): string {
+        let formatedAddress: string = "";
+        formatedAddress += address.street + " ";
+        formatedAddress += address.streetNo + ", ";
+        formatedAddress += address.zipCode + " ";
+        formatedAddress += address.city;
+        return formatedAddress;
     }
 }
