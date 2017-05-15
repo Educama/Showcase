@@ -1,0 +1,4 @@
+---
+applications:
+- name: EventService
+  command: node server.js
