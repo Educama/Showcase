@@ -1,0 +1,11 @@
+<div class="container">
+    <h1>Event Form</h1>
+    <form (ngSubmit)="onSubmit()" #eventForm="ngForm">
+        <div class="form-group">
+            <label for="id">Event Id</label>
+            <input type="text" class="form-control" id="id" required [(ngModel)]="model.id" name="id" #id="ngModel">
+            <div [hidden]="id.valid || id.pristine" class="alert alert-danger">Id is required</div>
+        </div>
+        <button type="submit" class="btn btn-success" [disabled]="!eventForm.form.valid" (click)="sendEvent(); eventForm.reset()">Submit event</button>
+    </form>
+</div>
