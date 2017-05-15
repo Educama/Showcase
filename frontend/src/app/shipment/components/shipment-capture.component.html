@@ -1,0 +1,29 @@
+<form name="form" [formGroup]="shipmentCaptureForm" class="shipment-capture-form">
+    <p-panel header="{{'SHIPMENT_CAPTURE_COMPONENT-PANEL_SENDER_RECEIVER_ADDRESS' | translate}}">
+        <div class="ui-g ui-fluid">
+            <div class="ui-g-12 ui-md-6">
+                <label class="ui-g-12 ui-md-3">{{'SHIPMENT-RESOURCE_CUSTOMER' | translate}}</label>
+                <input class="ui-g-12 ui-md-9" id="shipment-capture-component_customer" type="text" p-inputtext formControlName="customer">
+            </div>
+            <div class="ui-g-12 ui-md-6">
+            </div>
+            <div class="ui-g-12 ui-md-6">
+                <label class="ui-g-12 ui-md-3">{{'SHIPMENT-RESOURCE_SENDER-ADDRESS' | translate}}</label>
+                <textarea class="ui-g-12 ui-md-9" id="shipment-capture-component_sender-address" p-intputtextarea formControlName="senderAddress"></textarea>
+            </div>
+            <div class="ui-g-12 ui-md-6">
+                <label class="ui-g-12 ui-md-3">{{'SHIPMENT-RESOURCE_RECEIVER-ADDRESS' | translate}}</label>
+                <textarea class="ui-g-12 ui-md-9" id="shipment-capture-component_receiver-address" p-intputtextarea formControlName="receiverAddress"></textarea>
+            </div>
+        </div>
+    </p-panel>
+    <div class="ui-g ui-fluid">
+        <div class="ui-g-12 ui-md-6 ui-lg-8"></div>
+        <div class="ui-g-12 ui-md-3 ui-lg-2">
+            <button id="shipment-capture-component_cancel-button" pButton type="button" (click)="cancel()" label="{{'GENERIC_CANCEL' | translate}}" icon="fa-close"></button>
+        </div>
+        <div class="ui-g-12 ui-md-3 ui-lg-2">
+            <button id="shipment-capture-component_create-button" pButton type="button" (click)="createShipment()" label="{{'GENERIC_CREATE' | translate}}" icon="fa-check" [disabled]="!shipmentCaptureForm.valid"></button>
+        </div>
+    </div>
+</form>

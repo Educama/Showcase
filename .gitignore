@@ -1,0 +1,19 @@
+# Note this file contains global git ignores. The direct subdirectories may also contain an additional .gitignore file.
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# Maven Wrapper
+.mvn/
+
+# Maven
+target/
+
+# Eclipse
+.settings/
+.classpath
+.project
+
+# IntelliJ
+.idea/
+*.iml

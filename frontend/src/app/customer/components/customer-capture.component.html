@@ -1,0 +1,67 @@
+<h1 *ngIf="editorMode === 0">{{'CUSTOMER-CAPTURE-COMPONENT_TITLE-CREATE' | translate}}</h1>
+<h1 *ngIf="editorMode === 1">{{'CUSTOMER-CAPTURE-COMPONENT_TITLE-UPDATE' | translate}}</h1>
+
+<div class="customer-capture-component">
+
+    <form name="form" [formGroup]="customerCaptureForm" class="customer-capture-form">
+
+        <p-panel class="panel-customer" header="{{'CUSTOMER-RESOURCE' | translate}}">
+            <div class="ui-g ui-fluid">
+                <div class="ui-g-12 ui-md-6">
+                    <label class="ui-g-12 ui-md-3">{{'CUSTOMER-RESOURCE_NAME' | translate}}</label>
+                    <input class="ui-g-12 ui-md-9" id="customer-capture-component_customer-name" type="text" p-inputtext
+                           formControlName="name">
+                </div>
+                <div class="ui-g-12 ui-md-6">
+                    <label class="ui-g-12 ui-md-3">{{'GENERIC_ID' | translate}}</label>
+                    <input class="ui-g-12 ui-md-9" id="customer-capture-component_customer-id" type="text" p-inputtext
+                           formControlName="uuid">
+                </div>
+            </div>
+        </p-panel>
+
+        <p-panel class="panel-address" header="{{'CUSTOMER-RESOURCE_ADDRESS' | translate}}">
+            <div class="ui-g ui-fluid">
+                <div class="ui-g-12 ui-md-6">
+                    <label class="ui-g-12 ui-md-3">{{'CUSTOMER-RESOURCE_ADDRESS-STREET' | translate}}</label>
+                    <input class="ui-g-12 ui-md-9" id="customer-capture-component_address-street" type="text"
+                           p-inputtext
+                           formControlName="street">
+                </div>
+                <div class="ui-g-12 ui-md-6">
+                    <label class="ui-g-12 ui-md-3">{{'CUSTOMER-RESOURCE_ADDRESS-HOUSE-NUMBER' | translate}}</label>
+                    <input class="ui-g-12 ui-md-9" id="customer-capture-component_address-house-number" type="text"
+                           p-inputtext formControlName="housenumber">
+                </div>
+                <div class="ui-g-12 ui-md-6">
+                    <label class="ui-g-12 ui-md-3">{{'CUSTOMER-RESOURCE_ADDRESS-POSTAL-CODE' | translate}}</label>
+                    <input class="ui-g-12 ui-md-9" id="customer-capture-component_address-postal-code" type="text"
+                           p-inputtext formControlName="postalcode">
+                </div>
+                <div class="ui-g-12 ui-md-6">
+                    <label class="ui-g-12 ui-md-3">{{'CUSTOMER-RESOURCE_ADDRESS-CITY' | translate}}</label>
+                    <input class="ui-g-12 ui-md-9" id="customer-capture-component_address-city" type="text" p-inputtext
+                           formControlName="city">
+                </div>
+            </div>
+        </p-panel>
+
+        <div class="ui-g ui-fluid">
+            <div class="ui-g-12 ui-md-6 ui-lg-8"></div>
+            <div class="ui-g-12 ui-md-3 ui-lg-2">
+                <button id="customer-capture-component_cancel-button" pButton type="button" (click)="cancel()"
+                        label="{{'GENERIC_CANCEL' | translate}}" icon="fa-close"></button>
+            </div>
+            <div class="ui-g-12 ui-md-3 ui-lg-2" *ngIf="editorMode === 1">
+                <button id="customer-capture-component_save-button" pButton type="button" (click)="createCustomer()"
+                        label="{{'GENERIC_SAVE' | translate}}" icon="fa-check"
+                        [disabled]="!customerCaptureForm.valid"></button>
+            </div>
+            <div class="ui-g-12 ui-md-3 ui-lg-2" *ngIf="editorMode === 0">
+                <button id="customer-capture-component_create-button" pButton type="button" (click)="createCustomer()"
+                        label="{{'GENERIC_CREATE' | translate}}" icon="fa-check"
+                        [disabled]="!customerCaptureForm.valid"></button>
+            </div>
+        </div>
+    </form>
+</div>

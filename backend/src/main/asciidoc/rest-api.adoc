@@ -1,0 +1,201 @@
+// Quick Reference for Asciidoc: http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/
+
+= Educama RESTful API Documentation
+educama.org;
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+
+= Overview
+
+== HTTP verbs
+
+The Educama RESTful API tries to adhere as closely as possible to standard HTTP and REST conventions in its
+use of HTTP verbs.
+
+|===
+| Verb | Usage
+
+| `GET`
+| Used to retrieve a resource
+
+| `POST`
+| Used to create a new resource
+
+| `PUT`
+| Used to update an resource
+
+| `DELETE`
+| Used to delete a resource
+|===
+
+[[overview-http-status-codes]]
+== HTTP status codes
+
+The Educama RESTful API tries to adhere as closely as possible to standard HTTP and REST conventions in its
+use of HTTP status codes.
+
+|===
+| Status code | Usage
+
+| `200 OK`
+| The request completed successfully.
+
+| `201 Created`
+| A new resource has been created successfully.
+
+| `204 No Content`
+| An update to an existing resource has been applied successfully.
+
+| `400 Bad Request`
+| The request was malformed. The response body will include an error providing further information.
+
+| `404 Not Found`
+| The requested resource did not exist.
+
+| `409 Precondition Failed`
+| A precondition for the status transition of the resource was not met
+
+| `500 Internal server error`
+| An error has occurred on the server.
+|===
+
+= Resources
+
+== Shipments
+
+This resource provides the entry point with shipments.
+
+=== Create Shipment
+
+A `POST` request is used to create a shipment.
+
+==== Example Request
+include::{snippets}/createShipmentTest/http-request.adoc[]
+
+==== Request structure
+include::{snippets}/createShipmentTest/request-fields.adoc[]
+
+==== Example Response
+include::{snippets}/createShipmentTest/http-response.adoc[]
+
+==== Response structure
+include::{snippets}/createShipmentTest/response-fields.adoc[]
+
+=== List of Shipments
+
+A `GET` request is used to get a list of shipments.
+
+==== Example Request
+include::{snippets}/listShipmentTest/http-request.adoc[]
+
+==== Example Response
+include::{snippets}/listShipmentTest/http-response.adoc[]
+
+==== Response structure
+include::{snippets}/listShipmentTest/response-fields.adoc[]
+
+== Tasks
+
+This resource provides the entry point for tasks.
+
+=== List of Tasks
+
+A `GET` request is used to get a list of tasks.
+
+==== Example Request
+include::{snippets}/listTasksTest/http-request.adoc[]
+
+==== Example Response
+include::{snippets}/listTasksTest/http-response.adoc[]
+
+==== Response structure
+include::{snippets}/listTasksTest/response-fields.adoc[]
+
+== Customer
+
+This resource provides the entry point for customers.
+
+=== Create a Customer
+
+A `POST` request is used to create a customer.
+
+==== Example Request
+include::{snippets}/createCustomerTest/http-request.adoc[]
+
+==== Request structure
+include::{snippets}/createCustomerTest/request-fields.adoc[]
+
+==== Example Response
+include::{snippets}/createCustomerTest/http-response.adoc[]
+
+==== Response structure
+include::{snippets}/createCustomerTest/response-fields.adoc[]
+
+=== Update a Customer
+
+A `PUT` request is used to update a customer.
+
+==== Example Request
+include::{snippets}/updateCustomerTest/http-request.adoc[]
+
+==== Request structure
+include::{snippets}/updateCustomerTest/request-fields.adoc[]
+
+==== Example Response
+include::{snippets}/updateCustomerTest/http-response.adoc[]
+
+==== Response structure
+include::{snippets}/updateCustomerTest/response-fields.adoc[]
+
+=== Delete a Customer
+
+A `DELETE` request is used to delete a single customer.
+
+==== Example Request
+include::{snippets}/deleteCustomerTest/http-request.adoc[]
+
+==== Example Response
+include::{snippets}/deleteCustomerTest/http-response.adoc[]
+
+=== Get a single customer by identifier
+
+A `GET` request is used to get a single customer.
+
+==== Example Request
+include::{snippets}/getSingleCustomerTest/http-request.adoc[]
+
+==== Example Response
+include::{snippets}/getSingleCustomerTest/http-response.adoc[]
+
+==== Response structure
+include::{snippets}/getSingleCustomerTest/response-fields.adoc[]
+
+=== Get a (paged) list of Customers
+
+A `GET` request is used to get a list of customers.
+
+==== Example Request
+include::{snippets}/listCustomersTest/http-request.adoc[]
+
+==== Example Response
+include::{snippets}/listCustomersTest/http-response.adoc[]
+
+==== Response structure
+include::{snippets}/listCustomersTest/response-fields.adoc[]
+
+=== Get suggestions for Customers (by search term)
+
+A `GET` request is used to get suggestions for customers based on a search term.
+
+==== Example Request
+include::{snippets}/suggestCustomersTest/http-request.adoc[]
+
+==== Example Response
+include::{snippets}/suggestCustomersTest/http-response.adoc[]
+
+==== Response structure
+include::{snippets}/suggestCustomersTest/response-fields.adoc[]

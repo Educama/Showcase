@@ -1,0 +1,21 @@
+<div class="customer-list-page">
+    <h1>{{'CUSTOMER-LIST-COMPONENT_TITLE' | translate}}</h1>
+    <educama-customer-list
+        [customerList]="customerListModel.customerList"
+        [pageNumber]="customerListModel.pageNumber"
+        [pageSize]="customerListModel.pageSize"
+        [totalPages]="customerListModel.totalPages"
+        (customerSelectedEvent)="onCustomerSelectedEvent($event)"
+        (loadUsersEvent)="onLoadCustomersPageEvent($event)"
+    >
+    </educama-customer-list>
+    <div class="ui-g ui-fluid">
+        <div class="ui-g-12 ui-md-6 ui-lg-8"></div>
+        <div class="ui-g-12 ui-md-3 ui-lg-2">
+            <button id="customer-list-page_new-button" pButton type="button" (click)="onButtonNew()" label="{{'GENERIC_NEW' | translate}}"></button>
+        </div>
+        <div class="ui-g-12 ui-md-3 ui-lg-2">
+            <button id="customer-list-page_refresh-button" pButton type="button" (click)="onButtonRefresh()" label="{{'GENERIC_REFRESH' | translate}}" icon="fa-repeat"></button>
+        </div>
+    </div>
+</div>

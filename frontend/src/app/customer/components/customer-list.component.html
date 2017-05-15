@@ -1,0 +1,23 @@
+<p-dataTable
+        id="customer-list-component_customer-table"
+        [emptyMessage]="emptyListMessage"
+        [lazy]="true"
+        [pageLinks]="3"
+        [paginator]="true"
+        [responsive] = true
+        [rows]="pageSize"
+        [rowsPerPageOptions]="[5,10,20]"
+        selectionMode="single"
+        [(selection)]="selectedCustomer"
+        [totalRecords]="totalPages*pageSize"
+        [value]="customerList"
+        (onLazyLoad)="loadCustomersLazy($event)"
+        (onRowSelect)="onRowSelect($event)"
+>
+    <p-column field="uuid" header="{{'GENERIC_ID' | translate}}"></p-column>
+    <p-column field="name" header="{{'CUSTOMER-RESOURCE_NAME' | translate}}"></p-column>
+    <p-column field="address.street" header="{{'CUSTOMER-RESOURCE_ADDRESS-STREET' | translate}}"></p-column>
+    <p-column field="address.streetNo" header="{{'CUSTOMER-RESOURCE_ADDRESS-HOUSE-NUMBER' | translate}}"></p-column>
+    <p-column field="address.zipCode" header="{{'CUSTOMER-RESOURCE_ADDRESS-POSTAL-CODE' | translate}}"></p-column>
+    <p-column field="address.city" header="{{'CUSTOMER-RESOURCE_ADDRESS-CITY' | translate}}"></p-column>
+</p-dataTable>

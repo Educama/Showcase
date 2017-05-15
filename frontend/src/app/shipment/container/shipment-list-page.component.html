@@ -1,0 +1,16 @@
+<div class="shipment-list-page">
+    <h1>{{'SHIPMENT-LIST-COMPONENT_TITLE' | translate}}</h1>
+    <educama-shipment-list
+        [shipmentList]="shipmentListModel.shipmentList"
+    >
+    </educama-shipment-list>
+    <div class="ui-g ui-fluid">
+        <div class="ui-g-12 ui-md-6 ui-lg-8"></div>
+        <div class="ui-g-12 ui-md-3 ui-lg-2">
+            <button id="shipment-list-page_new-button" pButton type="button" (click)="onButtonNew()" label="{{'GENERIC_NEW' | translate}}"></button>
+        </div>
+        <div class="ui-g-12 ui-md-3 ui-lg-2">
+            <button id="shipment-list-page_refresh-button" pButton type="button" (click)="onButtonRefresh()" label="{{'GENERIC_REFRESH' | translate}}" icon="fa-repeat"></button>
+        </div>
+    </div>
+</div>

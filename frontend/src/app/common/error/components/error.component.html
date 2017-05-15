@@ -1,0 +1,8 @@
+<p-dialog id="dialog-error" [modal]="true" class="overflow-visible" header="{{'ERROR-COMPONENT_TITLE' | translate}}" [(visible)]="errorVisible" [closable]="false">
+    {{errorMessage | translate}}
+    <footer class="ui-dialog-single-button">
+        <div align="center" class="ui-toolbar">
+            <button class="ghost-button-regular" id="error-button" pButton label="{{ 'GENERIC_OK' | translate }}" (click)="hideError()"></button>
+        </div>
+    </footer>
+</p-dialog>

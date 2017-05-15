@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.educama</groupId>
+	<artifactId>educama-acceptance-tests</artifactId>
+	<version>0.0.2-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<description>Acceptance tests of Educama</description>
+
+	<parent>
+		<!-- This version must be derived and identical to the one in the backend. -->
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.4.2.RELEASE</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>
+		<educama.backend.version>0.0.2-SNAPSHOT</educama.backend.version>
+		<serenity.version>1.2.2</serenity.version>
+		<serenity.maven.version>1.2.2</serenity.maven.version>
+		<webdriver.driver>firefox</webdriver.driver>
+		<!-- using version 1.6.0 because with any newer version (tested up to 1.13.0)
+			the acceptance tests would not start -->
+		<serenity.jbehave.version>1.6.0</serenity.jbehave.version>
+		<jetty.version>9.3.12.v20160915</jetty.version>
+	</properties>
+
+	<dependencies>
+		<!-- Dependency to backend -->
+		<dependency>
+			<groupId>org.educama</groupId>
+			<artifactId>educama-backend</artifactId>
+			<version>${educama.backend.version}</version>
+		</dependency>
+		<!-- Serenity test dependencies -->
+		<dependency>
+			<groupId>net.serenity-bdd</groupId>
+			<artifactId>serenity-core</artifactId>
+			<version>${serenity.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.serenity-bdd</groupId>
+			<artifactId>serenity-jbehave</artifactId>
+			<version>${serenity.jbehave.version}</version>
+			<scope>test</scope>
+			<!-- Excluding the serenity-core dependency because in the used version
+				a rc is used for which the pom is missing. serenity-core is part of the project
+				anyway in a stable version -->
+			<exclusions>
+				<exclusion>
+					<groupId>net.serenity-bdd</groupId>
+					<artifactId>serenity-core</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>net.serenity-bdd</groupId>
+			<artifactId>serenity-junit</artifactId>
+			<version>${serenity.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- Remove default Spring Boot dependency to Tomcat and replace it with
+			Jetty because it can be configured with a directory outside of the project -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jersey</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jetty</artifactId>
+		</dependency>
+	</dependencies>
+
+	<scm>
+		<url>https://github.com/Educama/Showcase</url>
+		<connection>scm:git:git@github.com:Educama/Showcase.git</connection>
+		<developerConnection>scm:git:git@github.com:Educama/Showcase.git</developerConnection>
+		<tag>HEAD</tag>
+	</scm>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>org.educama.EducamaApplication</mainClass>
+				</configuration>
+				<executions>
+					<execution>
+						<id>pre-integration-test</id>
+						<goals>
+							<goal>start</goal>
+						</goals>
+						<configuration>
+							<wait>1000</wait>
+							<maxAttempts>60</maxAttempts>
+							<arguments>
+								<argument>--server.port=8091</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>post-integration-test</id>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Use Jetty Server to host the frontend during integration tests. Documentation:
+				www.eclipse.org/jetty/documentation/current/jetty-maven-plugin.html -->
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>${jetty.version}</version>
+				<configuration>
+					<stopKey>STOP</stopKey>
+					<stopPort>9999</stopPort>
+					<stopWait>5</stopWait>
+					<webAppSourceDirectory>${basedir}/../frontend</webAppSourceDirectory>
+					<jettyConfig>${project.basedir}/config/jetty/jetty.xml,${project.basedir}/config/jetty/jetty-rewrite.xml</jettyConfig>
+					<httpConnector>
+						<port>8090</port>
+					</httpConnector>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.eclipse.jetty</groupId>
+						<artifactId>jetty-rewrite</artifactId>
+						<version>${jetty.version}</version>
+						<type>jar</type>
+						<scope>runtime</scope>
+					</dependency>
+					<dependency>
+						<groupId>org.eclipse.jetty</groupId>
+						<artifactId>jetty-http</artifactId>
+						<version>${jetty.version}</version>
+						<type>jar</type>
+						<scope>runtime</scope>
+					</dependency>
+					<dependency>
+						<groupId>org.eclipse.jetty</groupId>
+						<artifactId>jetty-server</artifactId>
+						<version>${jetty.version}</version>
+						<scope>runtime</scope>
+					</dependency>
+				</dependencies>
+				<executions>
+					<execution>
+						<id>start-jetty</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>start</goal>
+						</goals>
+						<configuration>
+							<daemon>true</daemon>
+						</configuration>
+					</execution>
+					<execution>
+						<id>stop-jetty</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>net.serenity-bdd.maven.plugins</groupId>
+				<artifactId>serenity-maven-plugin</artifactId>
+				<version>${serenity.maven.version}</version>
+				<dependencies>
+					<dependency>
+						<groupId>net.serenity-bdd</groupId>
+						<artifactId>serenity-core</artifactId>
+						<version>${serenity.version}</version>
+					</dependency>
+				</dependencies>
+				<executions>
+					<execution>
+						<id>serenity-reports</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>aggregate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<executions>
+					<!-- Disable execution of maven-surefire-plugin already included in the parent pom because it binds to phases and prevents the Jetty from starting. -->
+					<execution>
+						<id>default-test</id>
+						<phase>non-phase</phase>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>integration-test</id>
+						<goals>
+							<goal>integration-test</goal>
+						</goals>
+						<configuration>
+							<includes>
+								<include>**/*AcceptanceTests.java</include>
+							</includes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>2.17</version>
+				<executions>
+					<execution>
+						<id>validate</id>
+						<phase>validate</phase>
+						<configuration>
+							<configLocation>../backend/checkstyle.xml</configLocation>
+							<encoding>UTF-8</encoding>
+							<consoleOutput>true</consoleOutput>
+							<failsOnError>true</failsOnError>
+							<failOnViolation>true</failOnViolation>
+							<includeTestSourceDirectory>true</includeTestSourceDirectory>
+						</configuration>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

@@ -1,0 +1,1 @@
+create table customer (id bigint not null auto_increment, city varchar(255), street varchar(255), street_no varchar(255), zip_code varchar(255), name varchar(255) not null, uuid binary(255) not null, primary key (id));

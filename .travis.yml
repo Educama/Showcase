@@ -1,0 +1,33 @@
+# Configuration file for Travis CI, see https://docs.travis-ci.com
+language: java
+jdk:
+- oraclejdk8
+env:
+  global:
+  - NODE_VERSION: 6
+before_script:
+  - export DISPLAY=:99.0 && sh -e /etc/init.d/xvfb start #start xvfb so that we can start Firefox, see https://docs.travis-ci.com/user/gui-and-headless-browsers/#Using-xvfb-to-Run-Tests-That-Require-a-GUI
+before_install:
+- nvm install $NODE_VERSION
+script:
+- (cd backend && ./build.sh)
+  && (cd frontend && ./build.sh)
+  && (cd acceptance-tests && ./build.sh && ./upload-serenity-reports.sh)
+addons:
+  #Browser is used by the acceptance tests
+  firefox: '42.0'
+cache:
+  timeout: 604800 #1 week
+  directories:
+  - "$HOME/.m2"
+deploy:
+  edge: true
+  provider: cloudfoundry
+  username: martin.schmollinger@reutlingen-university.de
+  password:
+    secure: x2yoq+kg0F+saISgFjfSWqQW9FLKnV8N+mvotXodISF+g0p+nZD+awtb8DPlTPE+0TEXjluZNy/QNrNMEMZGkW8gKT2Zfal+sD0QGs/aFOTRV8f+N5wHJCQFUYywK0q7zrT/FIU8GsezDorZep62U8QwiZHDoJMpHGjU3WiXJsGeTnphp1KcgOObyPT7LTG8ZPdkmZ50rI8ZVf0n+2vNGvwCY40Nz2OmZ85dL+H2ocrRoUWnGNqGiKdkcIzvFC13J+BSYxblzyNkknO8UTN+mw4zsOmrJIxMQHT057OKkw1nV2lB2iV0XUmX13wVNzZfTBvUwFza8i26TMsiPZg3GhcQqo841mojSUZPD53JNba5yiLK3MHiGfy0nd9gRN4Ekd11t60oMHYi3rDBzqVSXQxAP8HlPE07WgklQ6UaDFdWBfjBeWfVT8OdDvPt+ci4RuwnbxxWQAK66L0+jkNsnErASCyEZjsdNivcvJml+axf9huG/PFT3tKQGK5uVoVeQrtGENw+R+xOUGg6bGlUMbabLwUe2q4uHceGbNHpk2Z9A57uhCUh4HfTOPeQsnokhZ3pobJbk7jwequasM7UeNYTOfP6hSlqpyqWrzMi++jL+vhyaVeLxXWCDYlYVLPW1qKsF+y3Ri/NMt3zCUIXojniCsfcgO3PHwEdKevv4Vs=
+  api: https://api.ng.bluemix.net
+  organization: Educama
+  space: dev
+  on:
+    repo: Educama/Showcase
