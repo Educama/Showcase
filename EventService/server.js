@@ -10,7 +10,7 @@ var cors = require('cors');
 // AMQP -- RabbitMQ
 var amqp = require('amqplib/callback_api');
 var amqpURLService = "amqp://jvunsmmp:4kq4FLfj77caAqsJbMtAeccZC6qJgaI5@lark.rmq.cloudamqp.com/jvunsmmp";
-var amqpURLPivotal = appEnv.getServiceURL('MyQueue');
+var amqpURLPivotal = appEnv.getServiceURL('EducamaRabbitMQ');
 
 if(amqpURLPivotal === null) {     // Local or not found
     var amqpURL = amqpURLService;
@@ -26,7 +26,7 @@ var options = {
   server: { sslCA: certFileBuf }
 };
 var mongoURLService = "mongodb://admin:8BcpUzy2mAtXUNtv@SG-NovaTecCluster-10062.servers.mongodirector.com:27017/admin?ssl=true";
-var mongoURLPivotal = appEnv.getServiceURL('MyMongo');
+var mongoURLPivotal = appEnv.getServiceURL('EducamaMongoDB');
 
 if(mongoURLPivotal === null) {      // Local or not found
     var mongoURL = mongoURLService;
