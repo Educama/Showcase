@@ -1,14 +1,14 @@
-import {Component, OnInit, OnDestroy} from "@angular/core";
+import {Component, OnDestroy, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
 import {Store} from "@ngrx/store";
 import {Observable, Subscription} from "rxjs";
 import * as actions from "../reducer/shipment-list-page.actions";
-import {ErrorService} from "../../common/error/services/error.service";
 import {ShipmentService} from "../api/shipment.service";
 import {ShipmentListSlice} from "../reducer/shipment-list-page.reducer";
-import {ShipmentListModel} from "./shipment-list-page.model";
+import {ShipmentListModel, ShipmentListRowModel} from "./shipment-list-page.model";
 import {State} from "../../app.reducers";
 import {ShipmentResource} from "../api/resources/shipment.resource";
+import {Address} from "../../customer/api/datastructures/address.datastructure";
 
 @Component({
     selector: "educama-shipment-list-page",
@@ -25,8 +25,7 @@ export class ShipmentListPageComponent implements OnInit, OnDestroy {
 
     public selectedShipment: ShipmentResource = new ShipmentResource();
 
-    constructor(private _errorService: ErrorService,
-                private _router: Router,
+    constructor(private _router: Router,
                 private _shipmentService: ShipmentService,
                 private _store: Store<State>) {
 
@@ -46,13 +45,6 @@ export class ShipmentListPageComponent implements OnInit, OnDestroy {
     // ***************************************************
     // Event Handler
     // ***************************************************
-
-    /*
-     * Handles the error events from components
-     */
-    public onErrorEvent(errorMessage: string) {
-        this._errorService.showError(errorMessage);
-    }
 
     /*
      * Navigate to the shipment capture page
@@ -81,6 +73,20 @@ export class ShipmentListPageComponent implements OnInit, OnDestroy {
     }
 
     private updateShipmentListModel(shipmentListSlice: ShipmentListSlice) {
-        this.shipmentListModel.shipmentList = shipmentListSlice.shipmentList;
+        this.shipmentListModel.shipmentList =
+            shipmentListSlice.shipmentList.map(
+                shipmentResource => new ShipmentListRowModel(
+                    shipmentResource.trackingId,
+                    this.formatAddress(shipmentResource.sender.address),
+                    this.formatAddress(shipmentResource.receiver.address))
+            )
+    }
+    private formatAddress(address: Address): string {
+        let formatedAddress: string = "";
+        formatedAddress += address.street + " ";
+        formatedAddress += address.streetNo + ", ";
+        formatedAddress += address.zipCode + " ";
+        formatedAddress += address.city;
+        return formatedAddress;
     }
 }

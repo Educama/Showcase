@@ -13,6 +13,7 @@ script:
 - (cd backend && ./build.sh)
   && (cd frontend && ./build.sh)
   && (cd acceptance-tests && ./build.sh && ./upload-serenity-reports.sh)
+  && (cd services/flightinformation && ./build.sh)
 addons:
   #Browser is used by the acceptance tests
   firefox: '42.0'
@@ -21,13 +22,12 @@ cache:
   directories:
   - "$HOME/.m2"
 deploy:
-  edge: true
   provider: cloudfoundry
-  username: martin.schmollinger@reutlingen-university.de
+  username: educama-core@novatec-gmbh.de
   password:
-    secure: x2yoq+kg0F+saISgFjfSWqQW9FLKnV8N+mvotXodISF+g0p+nZD+awtb8DPlTPE+0TEXjluZNy/QNrNMEMZGkW8gKT2Zfal+sD0QGs/aFOTRV8f+N5wHJCQFUYywK0q7zrT/FIU8GsezDorZep62U8QwiZHDoJMpHGjU3WiXJsGeTnphp1KcgOObyPT7LTG8ZPdkmZ50rI8ZVf0n+2vNGvwCY40Nz2OmZ85dL+H2ocrRoUWnGNqGiKdkcIzvFC13J+BSYxblzyNkknO8UTN+mw4zsOmrJIxMQHT057OKkw1nV2lB2iV0XUmX13wVNzZfTBvUwFza8i26TMsiPZg3GhcQqo841mojSUZPD53JNba5yiLK3MHiGfy0nd9gRN4Ekd11t60oMHYi3rDBzqVSXQxAP8HlPE07WgklQ6UaDFdWBfjBeWfVT8OdDvPt+ci4RuwnbxxWQAK66L0+jkNsnErASCyEZjsdNivcvJml+axf9huG/PFT3tKQGK5uVoVeQrtGENw+R+xOUGg6bGlUMbabLwUe2q4uHceGbNHpk2Z9A57uhCUh4HfTOPeQsnokhZ3pobJbk7jwequasM7UeNYTOfP6hSlqpyqWrzMi++jL+vhyaVeLxXWCDYlYVLPW1qKsF+y3Ri/NMt3zCUIXojniCsfcgO3PHwEdKevv4Vs=
+    secure: T3gblw+Bikg+4ELFsqHxSV96RngijEJqkfhsjkrprU4xff0YGiKgGWTcWmemAYxdlKogL3u6FT0TcFP95hdYDXUWggtzZKZGq6LLALJHRjITDaIXfq1xvDhaC8Q54t28UKM+mH8aO7XxnUOjrlHSScJNvVFDtJKorvf7KJsz/0rzEc7km7b0Yrnonj2QlPwycBPMBYTgo5XDuPMMskJ/fJG4Fi/MYLYlEUeyb/QCJawmKcbrjItDoMxVtmZnsHKE5Dyej+aGQj906dPCUTMN1cS4bi/vpQBhtGgo9FqD5QQm3fvYlmmZsjvMUHh1jLO8peBvuRpcUkBuZ/naLYy9mXmy1KfgbyPPczG1wNq3sl7mgvxdbypQuhiedgJGY6j66FEL9BQPJdPdoQ4u2faBwCY27mQBcI0DfEwfqzpYyv2Ke7zmv5O6eobSNj9i/W7+EhackWqEZEf8Hxh89/UrGYw00qLP6mUPI3IRub6Ds6kQYHOcmV4KPK3iRNb9+mFQYgftHzyHIuZUmskbE5ccsMXRm813ommeOq25XH/DbO1LvOavf3KQUoEc3+k6fLlp4B3OU07+dlhPhPXa76nGESofgXKtswGrXx17ypKfNNBpBqsenn7VeZUU2blgCn/bfAreRsCKvCxx5FmFoyt/+oeamHrw5oh/6Uz+qdO3yHk=
   api: https://api.ng.bluemix.net
-  organization: Educama
-  space: dev
+  organization: '"NovaTec Consulting GmbH"'
+  space: Educama-Development
   on:
     repo: Educama/Showcase

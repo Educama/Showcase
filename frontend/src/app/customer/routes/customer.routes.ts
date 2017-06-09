@@ -1,6 +1,6 @@
 import {Routes, RouterModule} from "@angular/router";
-import {CustomerListPageComponent} from "../container/customer-list-page.component";
-import {CustomerCapturePageComponent} from "../container/customer-capture-page.component";
+import {CustomerListPageComponent} from "../customer-list/container/customer-list-page.component";
+import {CustomerCapturePageComponent} from "../customer-capture/container/customer-capture-page.component";
 
 /*
  * Router configuration for the component task

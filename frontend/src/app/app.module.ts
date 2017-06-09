@@ -2,8 +2,9 @@
 import {NgModule} from "@angular/core";
 import {APP_BASE_HREF} from "@angular/common";
 import {BrowserModule} from "@angular/platform-browser";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
-// ngrx modules
+// ngrx module
 import {StoreModule} from "@ngrx/store";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 
@@ -20,6 +21,7 @@ import {ShipmentModule} from "./shipment/shipment.module";
 
 @NgModule({
     imports: [
+        BrowserAnimationsModule,
         BrowserModule,
         CustomerModule,
         NavigationModule,

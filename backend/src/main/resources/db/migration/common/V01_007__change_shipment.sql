@@ -1,0 +1,12 @@
+alter table shipment modify number_packages integer null;
+alter table shipment modify total_capacity double precision null;
+alter table shipment modify total_weight double precision null;
+alter table shipment modify dangerous_goods bit null;
+alter table shipment modify cargo_description varchar(255) null;
+alter table shipment modify export_customs_clearance bit null;
+alter table shipment modify export_insurance bit null;
+alter table shipment modify flight bit null;
+alter table shipment modify import_customs_clearance bit null;
+alter table shipment modify import_insurance bit null;
+alter table shipment modify on_carriage bit null;
+alter table shipment modify pre_carriage bit null;

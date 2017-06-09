@@ -3,6 +3,7 @@ package org.educama.customer.model;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.hateoas.Identifiable;
 
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
@@ -16,6 +17,7 @@ import java.util.UUID;
 public class Customer extends AbstractPersistable<Long> implements Identifiable<Long> {
 
     @NotNull
+    @Column(columnDefinition = "Binary(16)")
     public UUID uuid;
 
     @NotNull

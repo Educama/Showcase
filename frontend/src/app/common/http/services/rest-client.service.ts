@@ -7,7 +7,10 @@ import "rxjs/add/operator/map";
 import "rxjs/add/observable/throw";
 
 import {HttpHelper} from "../helper/http.helper";
-import {ErrorService} from "../../error/services/error.service";
+import {Store} from "@ngrx/store";
+import {State} from "../../../app.reducers";
+import {AddErrorWithKeyAction, AddErrorWithTextAction} from "../../error/store/error.actions";
+import * as _ from "lodash";
 
 /*
  * Service to wrap REST HTTP calls and to provide a HAL-based API
@@ -18,13 +21,14 @@ export class RestClientService {
     private _baseUrl: string;
     private _headers: Headers;
 
-    constructor(private _http: Http, private _httpHelper: HttpHelper,
-                private _errorService: ErrorService) {
+    constructor(private _http: Http,
+                private _httpHelper: HttpHelper,
+                private _store: Store<State>) {
         this._baseUrl = this._httpHelper.getRestApiBaseUrl();
         this._headers = new Headers();
     }
 
-    /*
+    /**
      * Wrapper for HTTP GET operation
      */
     public get(url: string, paramsMap?: Map<any,any>): Observable<any> {
@@ -43,7 +47,7 @@ export class RestClientService {
             .catch(error => this.handleError(error));
     }
 
-    /*
+    /**
      * Wrapper for HTTP POST operation
      */
     public post(url: string, body?: string): Observable<any> {
@@ -56,7 +60,7 @@ export class RestClientService {
             .catch(error => this.handleError(error));
     }
 
-    /*
+    /**
      * Wrapper for HTTP PUT operation
      */
     public put(url: string, body?: string): Observable<any> {
@@ -70,23 +74,25 @@ export class RestClientService {
         return response;
     }
 
-    /*
-     * Generic response mapper. Handles http errors or maps the JSON response. Since JSON is the object
-     * representation in java script, the mappers returns type any. The invoker can cast the response.
+    /**
+     * Generic response mapper. Since JSON is the object representation in java script,
+     * the mappers returns type any. The invoker can cast the response.
      */
     private mapResponse(res: Response): any {
-        if (res.status < 200 || res.status >= 400) {
-            throw new Error("REST-CLIENT-SERVICE_ERROR-SERVER-UNREACHABLE");
-        }
-        return res.json() || {};
+        let body: any = res.json();
+        return body || {};
     }
 
-    /*
-     * Method is used to handle errors from mapping
-     */
     private handleError(error: any) {
-        let errMsg = error.message || "REST-CLIENT-SERVICE_ERROR-SERVER-UNREACHABLE";
-        this._errorService.showError(errMsg);
+        let errMsg: string
+        if (error.status === 0) {
+            errMsg = "REST-CLIENT-SERVICE_ERROR-SERVER-UNREACHABLE";
+            this._store.dispatch(new AddErrorWithKeyAction(errMsg));
+        } else {
+            errMsg = error._body;
+            this._store.dispatch(new AddErrorWithTextAction(errMsg));
+        }
         return Observable.throw(errMsg);
     }
+
 }

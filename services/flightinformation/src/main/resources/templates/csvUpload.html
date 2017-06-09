@@ -1,0 +1,54 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<style>
+.chart{
+    margin: 10px 10px 10px 10px;
+    padding: 10px 50px 50px 10px;
+	width:25%;
+	border-style:solid;
+	border-color: #595978;
+	border-width:1px;
+	float:both;
+
+
+}
+.main{
+float: left;
+margin: 10px 0 0 10px;
+width:100%;
+}
+</style>
+<body>
+<div class="main">
+	<div>
+		This is a little snippet for uploading csv file to the flightinfo service.
+	</div>
+
+
+	<div class="chart">
+		<h2>Upload Airports Data</h2>
+		The csv is posted as multipart data form to:<i> /airports/import/csv</i>
+		<form method="POST" enctype="multipart/form-data" action="airports/import/csv">
+			<table>
+				<tr>Please select the csv file</tr>
+				<tr><td><input type="file" name="file" /></td></tr>
+				<tr><td><input type="submit" value="Upload" /></td></tr>
+			</table>
+		</form>
+	</div>
+
+
+	<div class="chart">
+		<h2>Upload Airlines Data</h2>
+		The csv is posted as multipart data form to:<i> /airlines/import/csv</i>
+		<form method="POST" enctype="multipart/form-data" action="airlines/import/csv">
+			<table>
+				<tr>Please select the csv file</tr>
+				<tr><td><input type="file" name="file" /></td></tr>
+				<tr><td><input type="submit" value="Upload" /></td></tr>
+			</table>
+		</form>
+	</div>
+</div>
+
+</body>
+</html>

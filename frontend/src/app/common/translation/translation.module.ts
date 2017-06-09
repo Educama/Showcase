@@ -5,7 +5,7 @@ import {
     TranslateLoader,
     TranslateStaticLoader,
     MissingTranslationHandler, TranslatePipe
-} from "ng2-translate/ng2-translate";
+} from "ng2-translate";
 import {I18nDatePipe} from "./pipes/i18n-date.pipe";
 import {TimeAgoPipe} from "./pipes/time-ago.pipe";
 import {EducamaMissingTranslationHandler} from "./helper/educama-missing-translation-handler.helper";

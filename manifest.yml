@@ -9,9 +9,16 @@ applications:
     SPRING_H2_CONSOLE_ENABLED: false
     FLYWAY_LOCATIONS: classpath:db/migration/common,classpath:db/migration/mysql
   services:
-   - backend-db
+   - educama-mysql-db
 - name: educama
   path: frontend/dist/educama-frontend.zip
   buildpack: https://github.com/cloudfoundry/staticfile-buildpack.git#v1.3.16
   memory: 64M
   disk_quota: 64M
+- name: flightservice
+  path: services/flightinformation/target/flightinformation-0.0.1-SNAPSHOT.jar
+  buildpack: https://github.com/cloudfoundry/java-buildpack.git#v3.10
+  memory: 512M
+  disk_quota: 256M
+  services:
+   - Educama_AtlasMongoDB

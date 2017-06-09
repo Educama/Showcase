@@ -1,6 +1,6 @@
 import {Component, Input, Output} from "@angular/core";
 import {ShipmentResource} from "../api/resources/shipment.resource";
-import {TranslateService} from "ng2-translate/ng2-translate";
+import {TranslateService} from "ng2-translate";
 
 @Component({
     selector: "educama-shipment-list",
