@@ -21,4 +21,4 @@ the upload interface is reached by replacing the localhost by the corresponding 
 For connecting against the Atlas MongoDB, create an User Provided Service(if not happend). 
 First complete the File UserProvidedService.json (The Credentials can be found in Confluence under the Flight Service)
 Then create the User Provided Service with 
-						cf cups Educama_AtlasMongoDB -p UserProvidedService.json
+						cf cups flight-service-database -p UserProvidedService.json

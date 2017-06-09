@@ -21,4 +21,4 @@ applications:
   memory: 512M
   disk_quota: 256M
   services:
-   - Educama_AtlasMongoDB
+   - flight-service-database
