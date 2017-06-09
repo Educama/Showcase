@@ -1,0 +1,9 @@
+---
+applications:
+- name: SupplierSimulatorBackend
+  command: node server.js
+  memory:  128M
+  services:
+      - supplier-simulator-queue
+      - supplier-simulator-database
+ # buildpack: https://github.com/cloudfoundry/nodejs-buildpack
