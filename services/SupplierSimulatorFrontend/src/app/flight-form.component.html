@@ -1,0 +1,31 @@
+<div class="container">
+    <h1>Airline booking</h1>
+    <form (ngSubmit)="onSubmit()" #flightForm="ngForm">
+        <div class="form-group">
+            <label for="trackingNumber">Tracking number</label>
+            <input type="text" class="form-control" id="trackingNumber" required [(ngModel)]="model.trackingNumber" name="trackingNumber" #id="ngModel">
+            <div [hidden]="id.valid || id.pristine" class="alert alert-danger">Tracking number is required</div>
+        </div>
+        <div class="form-group">
+            <label for="airline">Airline</label>
+            <input type="text" class="form-control" id="airline" required [(ngModel)]="model.airline" name="airline" #id="ngModel">
+            <div [hidden]="id.valid || id.pristine" class="alert alert-danger">Airline is required</div>
+        </div>
+        <div class="form-group">
+            <label for="flightNumber">Flight number</label>
+            <input type="text" class="form-control" id="flightNumber" required [(ngModel)]="model.flightNumber" name="flightNumber" #id="ngModel">
+            <div [hidden]="id.valid || id.pristine" class="alert alert-danger">Flight number is required</div>
+        </div>
+        <div class="form-group">
+            <label for="origin">From</label>
+            <input type="text" class="form-control" id="origin" required [(ngModel)]="model.origin" name="origin" #id="ngModel">
+            <div [hidden]="id.valid || id.pristine" class="alert alert-danger">Origin is required</div>
+        </div>
+        <div class="form-group">
+            <label for="destination">To</label>
+            <input type="text" class="form-control" id="destination" required [(ngModel)]="model.destination" name="destination" #id="ngModel">
+            <div [hidden]="id.valid || id.pristine" class="alert alert-danger">Destination is required</div>
+        </div>
+        <button type="submit" class="btn btn-success" [disabled]="!flightForm.form.valid" (click)="sendEvent(); flightForm.reset()">Submit airline booking</button>
+    </form>
+</div>

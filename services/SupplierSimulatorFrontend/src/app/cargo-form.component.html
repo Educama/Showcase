@@ -1,0 +1,26 @@
+<div class="container">
+    <h1>Haulier booking</h1>
+    <form (ngSubmit)="onSubmit()" #cargoForm="ngForm">
+        <div class="form-group">
+            <label for="trackingNumber">Tracking number</label>
+            <input type="text" class="form-control" id="trackingNumber" required [(ngModel)]="model.trackingNumber" name="trackingNumber" #id="ngModel">
+            <div [hidden]="id.valid || id.pristine" class="alert alert-danger">Tracking number is required</div>
+        </div>
+        <div class="form-group">
+            <label for="supplierID">Supplier ID</label>
+            <input type="text" class="form-control" id="supplierID" required [(ngModel)]="model.supplierID" name="supplierID" #id="ngModel">
+            <div [hidden]="id.valid || id.pristine" class="alert alert-danger">Supplier ID is required</div>
+        </div>
+        <div class="form-group">
+            <label for="origin">From</label>
+            <input type="text" class="form-control" id="origin" required [(ngModel)]="model.origin" name="origin" #id="ngModel">
+            <div [hidden]="id.valid || id.pristine" class="alert alert-danger">Origin is required</div>
+        </div>
+        <div class="form-group">
+            <label for="destination">To</label>
+            <input type="text" class="form-control" id="destination" required [(ngModel)]="model.destination" name="destination" #id="ngModel">
+            <div [hidden]="id.valid || id.pristine" class="alert alert-danger">Destination is required</div>
+        </div>
+        <button type="submit" class="btn btn-success" [disabled]="!cargoForm.form.valid" (click)="sendEvent(); cargoForm.reset()">Submit haulier booking</button>
+    </form>
+</div>
