@@ -5,7 +5,12 @@ START_TIME=$SECONDS
 
 echo -n "Java Version: " && java -version
 echo -n "Javac Version: " javac -version
-./mvnw install
+
+echo "Copy settings.xml:"
+cp ../settings.xml $HOME/.m2/settings.xml
+
+echo "Start maven:"
+./mvnw install -P enterprise 
 
 echo "Directory content after build:"
 ls -al
