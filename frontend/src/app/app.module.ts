@@ -18,12 +18,14 @@ import {SharedModule} from "./common/shared.module";
 import {CustomerModule} from "./customer/customer.module";
 import {NavigationModule} from "./navigation/navigation.module";
 import {ShipmentModule} from "./shipment/shipment.module";
+import {FlightsModule} from "./flights/flights.module";
 
 @NgModule({
     imports: [
         BrowserAnimationsModule,
         BrowserModule,
         CustomerModule,
+        FlightsModule,
         NavigationModule,
         ROUTING,
         SharedModule.forRoot(),

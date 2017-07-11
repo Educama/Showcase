@@ -1,0 +1,9 @@
+# Configuration file for Cloud Foundry, see https://docs.cloudfoundry.org/devguide/deploy-apps/manifest.html
+applications:
+- name: educama-supplier-simulator-frontend
+  host: educama-supplier-simulator-frontend-sandbox
+  path: ../../services/educama-supplier-simulator-frontend/dist
+  buildpack: staticfile_buildpack
+  disk_quota: 64M
+  memory: 64M
+

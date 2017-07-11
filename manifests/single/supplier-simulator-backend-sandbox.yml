@@ -1,0 +1,13 @@
+# Configuration file for Cloud Foundry, see https://docs.cloudfoundry.org/devguide/deploy-apps/manifest.html
+applications:
+- name: educama-supplier-simulator-backend
+  host: educama-supplier-simulator-backend-sandbox
+  path: ../../services/educama-supplier-simulator-backend
+  buildpack: https://github.com/cloudfoundry/nodejs-buildpack  
+  command: node server.js
+  memory:  128M
+  services:
+   - supplier-simulator-queue
+   - supplier-simulator-database
+
+
