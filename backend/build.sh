@@ -5,7 +5,7 @@ START_TIME=$SECONDS
 
 echo -n "Java Version: " && java -version
 echo -n "Javac Version: " javac -version
-./mvnw install
+./mvnw install -P enterprise --settings ../settings.xml
 
 echo "Directory content after build:"
 ls -al
