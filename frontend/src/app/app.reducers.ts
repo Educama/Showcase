@@ -19,9 +19,13 @@ import {ERROR_REDUCER} from "./common/error/store/error.reducer";
 import {ERROR_SLICE_INITIAL_STATE} from "./common/error/store/error.initial-state";
 import {ErrorSlice} from "./common/error/store/error.slice";
 import {
+    SHIPMENT_CAPTURE_PAGE_REDUCER,
     SHIPMENT_CAPTURE_SLICE_INITIAL_STATE,
-    SHIPMENT_CAPTURE_PAGE_REDUCER, ShipmentCaptureSlice
-} from "./shipment/reducer/shipment-capture-page.reducer"
+    ShipmentCaptureSlice
+} from "./shipment/reducer/shipment-capture-page.reducer";
+import {AirportListSlice} from "./flights/airport-list/store/airport-list-page.slice";
+import {AIRPORT_LIST_SLICE_INITIAL_STATE} from "./flights/airport-list/store/airport-list-page.initial-state";
+import {AIRPORT_LIST_PAGE_REDUCER} from "./flights/airport-list/store/airport-list-page.reducer";
 
 export interface State {
     shipmentListSlice: ShipmentListSlice;
@@ -30,6 +34,7 @@ export interface State {
     customerCaptureSlice: CustomerCaptureSlice;
     errorSlice: ErrorSlice;
     shipmentCaptureSlice: ShipmentCaptureSlice;
+    airportListSlice: AirportListSlice;
 }
 
 export const INITIAL_STATE = {
@@ -38,7 +43,8 @@ export const INITIAL_STATE = {
     customerListSlice: CUSTOMER_LIST_SLICE_INITIAL_STATE,
     customerCaptureSlice: CUSTOMER_CAPTURE_SLICE_INITIAL_STATE,
     errorSlice: ERROR_SLICE_INITIAL_STATE,
-    shipmentCaptureSlice: SHIPMENT_CAPTURE_SLICE_INITIAL_STATE
+    shipmentCaptureSlice: SHIPMENT_CAPTURE_SLICE_INITIAL_STATE,
+    airportListSlice: AIRPORT_LIST_SLICE_INITIAL_STATE
 };
 
 const reducers = {
@@ -48,6 +54,7 @@ const reducers = {
     customerCaptureSlice: CUSTOMER_CAPTURE_PAGE_REDUCER,
     errorSlice: ERROR_REDUCER,
     shipmentCaptureSlice: SHIPMENT_CAPTURE_PAGE_REDUCER,
+    airportListSlice: AIRPORT_LIST_PAGE_REDUCER
 };
 
 export const REDUCER: ActionReducer<State> = combineReducers(reducers);
