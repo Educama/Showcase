@@ -4,7 +4,9 @@ jdk:
 - oraclejdk8
 env:
   global:
-  - NODE_VERSION: 6
+  - NODE_VERSION=6
+  - secure: "u6vGL5QSemXl3iX1XQ8aJaCLdgkqwiMjl6+iurl2h10FSc8HVHv4hrdfp9LTa9/ASrHVUBDEmthJ0mBxL79wZMh6Q1d6tfu3/LcA7hmogKL4MRZpVcKEVSpRk+yePhIveubyxrGlbm13/GD00AR0WG0mZRxOzV3AWxchIHCvBPSPBvvpBVwodocUqJzM8pqe00e85eJluVE9R/g72tbBIL/aBOxWbWGQXChsk83aNU70mix6Q7xJVYBiMv9LfCuj6DW7Sb5RJ/6ZwkHUXlzdei1kUBGPoMspne1fTcrg09N4ZajBMEPzklQlE+Gct8ANaVhjcTVpEFHm7++WKxRCbKjkTV2wo0yZ7wkJYRrbwkESBlOxVJG91Jy8HD5Dijx/FjkNsh8XwIMXsA81IDy9fkFImYyjWrcNuODhh5HBfRy7zYNNOyxidniTKcA1+t9wY5Civ6FOS9H0esUxJC3CZh9G0S3fbYjnCbhy/AbFNuAIxR8At9iWOVLkYARzXvNhmqJnVnHGCWl/fbYhbpKPt+aNdNpXB3k9DN6ORkh3UgbqFQEefurKQlo9USKBmP4a3sjeHP9bEymy5F2iv7rc79V1/gBUxjnicwuia1/1uCliK3sZlOc6+yqpBiZgk/1Kd27AnUa1Jro6ezdeH1djIetlpDS1ZUdzDOv2J5iNhnk="
+  - secure: "e3xpozVvlrbDwvobmsQ7nAPzTlu+ix4Th0jm/u3VEuCFr6l66b4T0yHNEJ9RTMGeTwb3iU0+sYkc+8nQM0CNem+OAU/Vfqllnh6vBghinXA9rZzcI9emUvAbHHXzI9h5QeS5gOnTc0gQGGHjqvXCb79A03aZ4DB1qejpVpfQWnw9V6PpA+XlngMdkQG/20AnqZQGBPpzmU056DS5ibjAKKvWQ4oT+9YPuQ8w9kk6De6Msq3bbQtqmiCTC0BxAgYpt1GRiKuFc7Xhi0msYWN7juogfQSnInoRyrRiSrWpQOzkwSp9SdPNHx3MX6byKO4/fFwPTpGvoBPq7QizxnluehQWz5kNyoF4Rtu92lhD4+JHS12StORe2NU4HvJpeg4OrNYek8lfeptK4YR1JJsBLv/sHTlRpz056h0A70dxO0SI+Z0uw9+NvFxMvspWhiq3X3EsBiXg0o8hWT6+WnAWKdXjqfZTiXtZV8/rlgSVaRJdrzoyV44+QGgXpuELM6JPXfaB1eU5bWcm7oKu51ik02vrHBAHSGN0/CFk8dSQFXisaUOCSTnSF/68FrA98fk1LFWU8eoAZYB30XTgwKIHRo4UrxNSeP/fzHXszu4OJesd0zRK17tld8sUcJL0UiTgfEEu4IeveJPU9c4LO6HOR2hDnNIxPAzHS6A+NNqZs6o="
 before_script:
   - export DISPLAY=:99.0 && sh -e /etc/init.d/xvfb start #start xvfb so that we can start Firefox, see https://docs.travis-ci.com/user/gui-and-headless-browsers/#Using-xvfb-to-Run-Tests-That-Require-a-GUI
   - npm install -g @angular/cli@1.0.3
