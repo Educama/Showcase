@@ -58,9 +58,7 @@ ribbon:
   eureka:
     enabled: false
 
-# Configuration of Spring Boot enpoints. Security is switched of for now.
-endpoints:
-  actuator:
-    sensitive: false
-  trace:
-    sensitive: false
+# Configuration of Spring Boot endpoints. Security is switched of for now.
+management:
+  security:
+    enabled: false

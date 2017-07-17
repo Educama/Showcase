@@ -1,6 +1,16 @@
 # Configuration file for Cloud Foundry, see https://docs.cloudfoundry.org/devguide/deploy-apps/manifest.html
 applications:
-- name: educama-backend-sandbox
+- name: educama-api-gateway
+  host: educama-api-gateway-sandbox
+  path: ../api/target/api-0.0.1-SNAPSHOT.jar
+  buildpack: https://github.com/cloudfoundry/java-buildpack.git#v3.10
+  memory: 512M
+  disk_quota: 256M
+  env:
+    EDUCAMA_BACKEND_URL: http://educama-backend-sandbox.mybluemix.net
+    EDUCAMA_FLIGHTSERVICE_URL: http://educama-flight-service-sandbox.mybluemix.net    
+- name: educama-backend
+  host: educama-backend-sandbox
   path: ../backend/target/educama-backend-exec.jar
   buildpack: https://github.com/cloudfoundry/java-buildpack.git#v3.10
   memory: 768M
@@ -11,19 +21,22 @@ applications:
     FLYWAY_LOCATIONS: classpath:db/migration/common,classpath:db/migration/mysql
   services:
    - educama-mysql-db
-- name: educama-sandbox
+- name: educama-frontend
+  host: educama-sandbox
   path: ../frontend/dist/educama-frontend.zip
   buildpack: https://github.com/cloudfoundry/staticfile-buildpack.git#v1.3.16
   memory: 64M
   disk_quota: 64M
-- name: educama-flight-service-sandbox
+- name: educama-flight-service
+  host: educama-flight-service-sandbox
   path: ../services/flightinformation/target/flightinformation-0.0.1-SNAPSHOT.jar
   buildpack: https://github.com/cloudfoundry/java-buildpack.git#v3.10
   memory: 512M
   disk_quota: 256M
   services:
    - flight-service-database
-- name: educama-supplier-simulator-backend-sandbox
+- name: educama-supplier-simulator-backend
+  host: educama-supplier-simulator-backend-sandbox
   path: ../services/educama-supplier-simulator-backend
   buildpack: https://github.com/cloudfoundry/nodejs-buildpack  
   command: node server.js
@@ -31,7 +44,8 @@ applications:
   services:
    - supplier-simulator-queue
    - supplier-simulator-database
-- name: educama-supplier-simulator-frontend-sandbox
+- name: educama-supplier-simulator-frontend
+  host: educama-supplier-simulator-frontend-sandbox
   path: ../services/educama-supplier-simulator-frontend/dist
   buildpack: staticfile_buildpack
   disk_quota: 64M
