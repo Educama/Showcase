@@ -11,7 +11,9 @@ import {AirportListEffect} from "./airport-list/efffects/airport-list.effect";
     imports: [
         SharedModule,
         FLIGHTS_ROUTING,
-        EffectsModule.run(AirportListEffect)
+        EffectsModule.forFeature([
+          AirportListEffect
+        ])
     ],
     declarations: [AirportsListPageComponent, AirportListComponent],
     exports: [AirportsListPageComponent],

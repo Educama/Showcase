@@ -39,7 +39,7 @@ export class AirportListEffect {
         .switchMap((airportListSlice: AirportListSlice) => {
             return this._airportService.findAirports(
                 airportListSlice.pageNumber, airportListSlice.pageSize,
-                airportListSlice.sortBy, airportListSlice.sortOrder)
+                airportListSlice.sortBy, airportListSlice.sortOrder);
         })
         .map(taskListResource => new RequestAirportsSuccessfulAction(taskListResource))
         .catch(() => Observable.of(new RequestAirportsFailedAction()));

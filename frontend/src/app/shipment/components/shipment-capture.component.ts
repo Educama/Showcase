@@ -1,10 +1,9 @@
-import {Component, Output, OnInit, EventEmitter, DoCheck, Input} from "@angular/core";
+import {Component, Output, OnInit, EventEmitter, DoCheck, Input, ViewEncapsulation} from "@angular/core";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {CustomerService} from "../../customer/api/customer.service";
 import {CustomerResource} from "../../customer/api/resources/customer.resource";
-import {Router, ActivatedRoute} from "@angular/router";
+import {Router} from "@angular/router";
 import {ShipmentResource} from "../api/resources/shipment.resource";
-import {ShipmentService} from "../api/shipment.service";
 import {Cargo} from "../api/datastructures/cargo.datastructure";
 import {ShipmentServices} from "../api/datastructures/services.datastructure";
 import {EditorMode} from "../../common/ui/enums/editor-mode.enum";
@@ -12,7 +11,9 @@ import {SaveShipmentEvent} from "./events/save-shipment.event";
 
 @Component({
     selector: "educama-shipment-capture",
-    templateUrl: "./shipment-capture.component.html"
+    templateUrl: "./shipment-capture.component.html",
+    styleUrls: ["./shipment-capture.component.scss"],
+    encapsulation: ViewEncapsulation.None
 })
 export class ShipmentCaptureComponent implements OnInit, DoCheck {
 
@@ -29,7 +30,7 @@ export class ShipmentCaptureComponent implements OnInit, DoCheck {
     public customerSuggestions: CustomerResource[];
 
     public editorMode: EditorMode;
-    private _isInitialized:boolean = false;
+    private _isInitialized = false;
 
     public senderStreet: string;
     public senderStreetNo: string;
@@ -44,17 +45,15 @@ export class ShipmentCaptureComponent implements OnInit, DoCheck {
     public receiverCity: string;
     public receiverUUID: string;
 
-    public dangerousCheck: boolean = false;
-    public exportInsuranceCheck: boolean = false;
-    public exportClearanceCheck: boolean = false;
-    public preCarriageCheck: boolean = false;
-    public flightCheck: boolean = true;
-    public onCarriageCheck: boolean = false;
-    public importInsuranceCheck: boolean = false;
-    public importClearanceCheck: boolean = false;
-    public senderIsCustomerCheck: boolean = false;
-    public receiverIsCustomerCheck: boolean = false;
-    public customerTypeEnum: string = "SENDER";
+    public dangerousCheck = false;
+    public exportInsuranceCheck = false;
+    public exportClearanceCheck = false;
+    public preCarriageCheck = false;
+    public flightCheck = true;
+    public onCarriageCheck = false;
+    public importInsuranceCheck = false;
+    public importClearanceCheck = false;
+    public customerTypeEnum = "SENDER";
 
     constructor(private _formBuilder: FormBuilder,
                 private _customerService: CustomerService,
@@ -156,9 +155,9 @@ export class ShipmentCaptureComponent implements OnInit, DoCheck {
 
     public createShipment() {
 
-        let shipment = new ShipmentResource();
+        const shipment = new ShipmentResource();
 
-        let shipmentCargo = new Cargo(
+        const shipmentCargo = new Cargo(
             this.shipmentCaptureForm.get("cargoDescription").value,
             this.shipmentCaptureForm.get("totalWeight").value,
             this.shipmentCaptureForm.get("totalCapacity").value,
@@ -166,7 +165,7 @@ export class ShipmentCaptureComponent implements OnInit, DoCheck {
             this.shipmentCaptureForm.get("numberPackages").value,
         );
 
-        let shipmentServices = new ShipmentServices(
+        const shipmentServices = new ShipmentServices(
             this.shipmentCaptureForm.get("preCarriage").value,
             this.shipmentCaptureForm.get("exportInsurance").value,
             this.shipmentCaptureForm.get("exportCustomsClearance").value,

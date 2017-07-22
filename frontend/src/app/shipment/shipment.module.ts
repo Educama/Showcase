@@ -12,8 +12,14 @@ import {ShipmentCapturePageComponent} from "./container/shipment-capture-page.co
 
 @NgModule({
     imports: [SharedModule, SHIPMENT_ROUTING],
-    declarations: [ShipmentCaptureComponent,
-        ShipmentListPageComponent, ShipmentListComponent, TaskListPageComponent, TaskListComponent, ShipmentCapturePageComponent],
+    declarations: [
+        ShipmentCaptureComponent,
+        ShipmentCapturePageComponent,
+        ShipmentListPageComponent,
+        ShipmentListComponent,
+        TaskListComponent,
+        TaskListPageComponent
+        ],
     exports: [ShipmentListPageComponent, ShipmentCapturePageComponent],
     providers: [ShipmentService, TaskService]
 })

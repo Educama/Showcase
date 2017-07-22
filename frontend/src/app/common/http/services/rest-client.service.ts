@@ -31,11 +31,11 @@ export class RestClientService {
     /**
      * Wrapper for HTTP GET operation
      */
-    public get(url: string, paramsMap?: Map<any,any>): Observable<any> {
+    public get(url: string, paramsMap?: Map<any, any>): Observable<any> {
         this._headers.set("Cache-Control", "no-cache");
         let options = new RequestOptions({headers: this._headers});
         if (paramsMap) {
-            let requestParams: URLSearchParams = new URLSearchParams();
+            const requestParams: URLSearchParams = new URLSearchParams();
             paramsMap.forEach((key, value) => {
                 requestParams.set(key, value);
             });
@@ -52,8 +52,10 @@ export class RestClientService {
      */
     public post(url: string, body?: string): Observable<any> {
         this._headers.set("Content-Type", "application/json");
-        let options = new RequestOptions({headers: this._headers});
-        if (body === null) body = "";
+        const options = new RequestOptions({headers: this._headers});
+        if (body === null) {
+          body = "";
+        }
         return this._http
             .post(this._baseUrl + url, body, options)
             .map(response => this.mapResponse(response))
@@ -65,13 +67,14 @@ export class RestClientService {
      */
     public put(url: string, body?: string): Observable<any> {
         this._headers.set("Content-Type", "application/json");
-        let options = new RequestOptions({headers: this._headers});
-        if (body === null) body = "";
-        let response = this._http
+        const options = new RequestOptions({headers: this._headers});
+        if (body === null) {
+          body = "";
+        }
+        return this._http
             .put(this._baseUrl + url, body, options)
             .map(response => this.mapResponse(response))
             .catch(error => this.handleError(error));
-        return response;
     }
 
     /**
@@ -79,12 +82,12 @@ export class RestClientService {
      * the mappers returns type any. The invoker can cast the response.
      */
     private mapResponse(res: Response): any {
-        let body: any = res.json();
+        const body: any = res.json();
         return body || {};
     }
 
     private handleError(error: any) {
-        let errMsg: string
+        let errMsg: string;
         if (error.status === 0) {
             errMsg = "REST-CLIENT-SERVICE_ERROR-SERVER-UNREACHABLE";
             this._store.dispatch(new AddErrorWithKeyAction(errMsg));

@@ -14,7 +14,7 @@ import {Router} from "@angular/router";
     selector: "educama-task-list-page",
     templateUrl: `./task-list-page.component.html`
 })
-export class TaskListPageComponent implements OnInit, OnDestroy{
+export class TaskListPageComponent implements OnInit, OnDestroy {
 
     // relevant slice of store and subscription for this slice
     public taskListSlice: Observable<TaskListSlice>;
@@ -31,7 +31,7 @@ export class TaskListPageComponent implements OnInit, OnDestroy{
 
         this.taskListSlice = this._store.select(state => state.taskListSlice);
         this.taskListSliceSubscription = this.taskListSlice
-            .subscribe(taskListSlice => this.updateTaskListModel(taskListSlice))
+            .subscribe(taskListSlice => this.updateTaskListModel(taskListSlice));
     }
 
     public ngOnInit() {
@@ -74,10 +74,10 @@ export class TaskListPageComponent implements OnInit, OnDestroy{
                     taskResource.assignee,
                     this.formatAddress(taskResource.sender.address),
                     this.formatAddress(taskResource.receiver.address))
-            )
+            );
     }
     private formatAddress(address: Address): string {
-        let formatedAddress: string = "";
+        let formatedAddress = "";
         formatedAddress += address.street + " ";
         formatedAddress += address.streetNo + ", ";
         formatedAddress += address.zipCode + " ";

@@ -14,8 +14,8 @@ import {SortOrder} from "../../../common/enums/sort-order.enum";
 @Injectable()
 export class AirportService {
 
-    private AIRPORTS_RESOURCE_PATH:string = "airports";
-    private AIRPORT_SUGGESTIONS_RESOURCE_PATH:string = this.AIRPORTS_RESOURCE_PATH + "/suggestions";
+    private AIRPORTS_RESOURCE_PATH = "airports";
+    private AIRPORT_SUGGESTIONS_RESOURCE_PATH: string = this.AIRPORTS_RESOURCE_PATH + "/suggestions";
 
     constructor(private _restClientService: RestClientService) {
     }
@@ -26,8 +26,8 @@ export class AirportService {
      * @return An observable array of airports
      */
     public findAirports(pageNumber: number, pageSize: number, sortBy?: string, sortOder?: SortOrder): Observable<AirportListResource> {
-        let pageNumberText = "page=" + pageNumber;
-        let pageSizeText = "size=" + pageSize;
+        const pageNumberText = "page=" + pageNumber;
+        const pageSizeText = "size=" + pageSize;
         let sortText = "sort=" + sortBy;
         sortText = sortOder === SortOrder.ascending ? sortText + ",asc" : sortText;
         sortText = sortOder === SortOrder.desending ? sortText + ",desc" : sortText;

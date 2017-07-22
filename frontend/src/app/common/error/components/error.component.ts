@@ -15,9 +15,9 @@ import {InitializeErrorSliceAction} from "../store/error.actions";
 })
 export class ErrorComponent implements OnInit, OnDestroy {
 
-    public messageKey:string;
-    public messageText:string;
-    public errorVisible:boolean = false;
+    public messageKey: string;
+    public messageText: string;
+    public errorVisible = false;
 
     private subscription: Subscription;
 
@@ -34,7 +34,7 @@ export class ErrorComponent implements OnInit, OnDestroy {
         this.subscription.unsubscribe();
     }
 
-    private hideError() {
+    public hideError() {
         this._store.dispatch(new InitializeErrorSliceAction);
     }
 

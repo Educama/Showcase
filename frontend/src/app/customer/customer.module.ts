@@ -11,14 +11,18 @@ import {CustomerListEffect} from "./customer-list/effects/customer-list.effect";
 import {CustomerCaptureEffect} from "./customer-capture/effects/customer-capture.effects";
 
 @NgModule({
-    imports: [SharedModule,
-        CUSTOMER_ROUTING,
-        EffectsModule.run(CustomerListEffect),
-        EffectsModule.run(CustomerCaptureEffect)],
-    declarations: [CustomerCapturePageComponent, CustomerCaptureComponent,
-        CustomerListPageComponent, CustomerListComponent],
-    exports: [CustomerListPageComponent, CustomerCapturePageComponent],
-    providers: [CustomerService]
+  imports: [
+    SharedModule,
+    CUSTOMER_ROUTING,
+    EffectsModule.forFeature([
+      CustomerListEffect,
+      CustomerCaptureEffect
+    ])
+  ],
+  declarations: [CustomerCapturePageComponent, CustomerCaptureComponent,
+    CustomerListPageComponent, CustomerListComponent],
+  exports: [CustomerListPageComponent, CustomerCapturePageComponent],
+  providers: [CustomerService]
 })
 export class CustomerModule {
 }

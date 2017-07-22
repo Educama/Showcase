@@ -1,4 +1,5 @@
 import {Injectable} from "@angular/core";
+import {environment} from "../../../../environments/environment";
 
 /*
  * Helper Class for HTTP related support functions
@@ -8,23 +9,22 @@ export class HttpHelper {
 
     static readonly BACKEND_RESOURCE_PATH = "/educama/v1/";
 
-    /*
+    /**
      * Provides the base URL used for Rest API calls to the backend.
      */
     public getRestApiBaseUrl(): string {
-        let _location: Location = window.location;
-        return this.getRestApiBaseUrlFromLocation(_location);
+        const _location: Location = window.location;
+        return environment.apiBaseUrl !== "" ?
+          environment.apiBaseUrl + HttpHelper.BACKEND_RESOURCE_PATH :
+          this.determineApiBaseUrlBasedOnFrontendUrl(_location);
     }
 
-    /*
-     * Provides the base URL (depending on the front end URL) for the REST API calls to the backend.
+    /**
+     * Determines the base URL from the front end URL
      */
-    public getRestApiBaseUrlFromLocation(location: Location): string {
-        if(location.host.includes("localhost")) {
-            return location.protocol + "//localhost:" + (parseInt(location.port) + 1) + "/educama/v1/"
-        } else {
-            // Assuming cloud deployment
-            return location.protocol + "//" + location.host.replace("educama", "educama-api-gateway") + HttpHelper.BACKEND_RESOURCE_PATH;
-        }
+    public determineApiBaseUrlBasedOnFrontendUrl(location: Location): string {
+        return location.host.includes("localhost") ?
+          location.protocol + "//localhost:" + (parseInt(location.port, 10) + 1) + "/educama/v1/" :
+          location.protocol + "//" + location.host.replace("educama", "educama-api-gateway") + HttpHelper.BACKEND_RESOURCE_PATH;
     }
 }

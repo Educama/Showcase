@@ -20,7 +20,7 @@ export class AirportListComponent implements OnInit, OnDestroy {
     public pageNumber: number;
     public pageSize: number;
     public totalPages: number;
-    public airportsLoading:boolean;
+    public airportsLoading: boolean;
 
     // relevant slice of store and subscription for this slice
     public airportListSliceSubscription: Subscription;
@@ -52,7 +52,7 @@ export class AirportListComponent implements OnInit, OnDestroy {
             pageSize: event.rows
         }));
         if (!_.isUndefined(event.sortField)) {
-            let sortOrder: SortOrder = event.sortOrder === 1 ? SortOrder.ascending : SortOrder.desending;
+            const sortOrder: SortOrder = event.sortOrder === 1 ? SortOrder.ascending : SortOrder.desending;
             this._store.dispatch(new ChangeAirportsSortingAction({sortBy: event.sortField, sortOrder: sortOrder}));
         }
     }

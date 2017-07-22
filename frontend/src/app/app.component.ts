@@ -1,11 +1,12 @@
 import {Component} from "@angular/core";
 import {TranslateService} from "ng2-translate";
 
-import {TranslationNotifierService} from "./common/translation/services/translation-notifier.service"
+import {TranslationNotifierService} from "./common/translation/services/translation-notifier.service";
 
 @Component({
     selector: "educama-app",
-    templateUrl: "./app.component.html"
+    templateUrl: "./app.component.html",
+    styleUrls: ["./app.component.scss"]
 })
 export class AppComponent {
 
@@ -23,7 +24,7 @@ export class AppComponent {
             () => {
                 this._translationNotifierService.publishTranslationsLoaded();
             }
-        )
+        );
     }
 
 }

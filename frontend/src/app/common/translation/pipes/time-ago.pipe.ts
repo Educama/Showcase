@@ -20,8 +20,8 @@ export class TimeAgoPipe implements PipeTransform {
         if (!value) {
             return "";
         }
-        let date = new Date(value);
-        let momentInstance = momentConstructor(date);
+        const date = new Date(value);
+        const momentInstance = momentConstructor(date);
         if (date instanceof Date) {
             momentInstance.locale(new BrowserLanguage().getShortBrowserLanguage());
             return momentInstance.fromNow();

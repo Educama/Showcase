@@ -14,17 +14,18 @@ export class ShipmentListComponent {
     @Output()
     public selectedShipment: ShipmentResource = new ShipmentResource();
 
+    @Output()
+    public shipmentSelectedEvent: EventEmitter<string> = new EventEmitter();
+
     public emptyListMessage: string;
 
     constructor(_translateService: TranslateService) {
         _translateService.get("GENERIC_NO-RECORDS-FOUND")
             .subscribe(value => this.emptyListMessage = value);
     }
+
     public onRowSelect(event: Event) {
         this.shipmentSelectedEvent.emit(this.selectedShipment.trackingId);
     }
-
-    @Output()
-    public shipmentSelectedEvent: EventEmitter<string> = new EventEmitter();
 
 }

@@ -36,7 +36,7 @@ export class CustomerListEffect {
         .ofType(actions.REQUEST_CUSTOMERS)
         .withLatestFrom(this._store, (action, state) => state.customerListSlice)
         .switchMap((customerListSlice: CustomerListSlice) => {
-            return this._customerService.findCustomers(customerListSlice.pageNumber, customerListSlice.pageSize)
+            return this._customerService.findCustomers(customerListSlice.pageNumber, customerListSlice.pageSize);
         })
         .map(taskListResource => new RequestCustomersSuccessfulAction(taskListResource))
         .catch(() => Observable.of(new RequestCustomersFailedAction()));

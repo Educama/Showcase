@@ -9,7 +9,7 @@ export class BrowserLanguage {
      */
     private getBrowserLanguage() {
         this._fullBrowserLanguage = navigator.language;
-        this._shortBrowserLanguage = this._fullBrowserLanguage.split("-")[0];// use navigator lang if available
+        this._shortBrowserLanguage = this._fullBrowserLanguage.split("-")[0]; // use navigator lang if available
         if (!/(de|en)/gi.test(this._shortBrowserLanguage)) {
             this._fullBrowserLanguage = "en-US";
             this._shortBrowserLanguage = "en";

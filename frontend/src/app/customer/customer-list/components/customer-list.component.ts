@@ -19,7 +19,7 @@ export class CustomerListComponent implements OnInit, OnDestroy {
     public pageNumber: number;
     public pageSize: number;
     public totalPages: number;
-    public customersLoading:boolean;
+    public customersLoading: boolean;
 
     // relevant slice of store and subscription for this slice
     public customerListSliceSubscription: Subscription;

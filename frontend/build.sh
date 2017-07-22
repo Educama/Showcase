@@ -6,9 +6,7 @@ START_TIME=$SECONDS
 echo -n "NPM Version: " && npm --version
 echo -n "Node Version: " && node --version
 
-npm install
-gulp build
-gulp test
+npm run all
 
 echo "Directory content after build:"
 ls -al

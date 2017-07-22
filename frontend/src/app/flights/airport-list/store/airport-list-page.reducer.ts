@@ -3,22 +3,24 @@ import * as actions from "./airport-list-page.actions";
 import {AIRPORT_LIST_SLICE_INITIAL_STATE} from "./airport-list-page.initial-state";
 import {AirportListSlice} from "./airport-list-page.slice";
 
-export const AIRPORT_LIST_PAGE_REDUCER: ActionReducer<AirportListSlice> = (state: AirportListSlice = AIRPORT_LIST_SLICE_INITIAL_STATE, action: Action) => {
+export function airportListPageReducer(state: AirportListSlice = AIRPORT_LIST_SLICE_INITIAL_STATE, action: Action) {
     switch (action.type) {
 
         case actions.INITIALIZE_AIRPORT_LIST:
             return AIRPORT_LIST_SLICE_INITIAL_STATE;
 
         case actions.CHANGE_AIRPORTS_PAGE:
+            const changeAirportsPageAction = action as actions.ChangeAirportsPageAction;
             return Object.assign({}, state, {
-                pageSize: action.payload.pageSize,
-                pageNumber: action.payload.pageNumber
+                pageSize: changeAirportsPageAction.payload.pageSize,
+                pageNumber: changeAirportsPageAction.payload.pageNumber
             });
 
         case actions.CHANGE_AIRPORTS_SORTING:
+            const changeAirportsSortingAction = action as actions.ChangeAirportsSortingAction;
             return Object.assign({}, state, {
-                sortBy: action.payload.sortBy,
-                sortOrder: action.payload.sortOrder
+                sortBy: changeAirportsSortingAction.payload.sortBy,
+                sortOrder: changeAirportsSortingAction.payload.sortOrder
             });
 
         case actions.REQUEST_AIRPORTS:
@@ -27,9 +29,10 @@ export const AIRPORT_LIST_PAGE_REDUCER: ActionReducer<AirportListSlice> = (state
             });
 
         case actions.REQUEST_AIRPORTS_SUCCESSFUL:
+            const requestAirportsSuccessfulAction = action as actions.RequestAirportsSuccessfulAction;
             return Object.assign({}, state, {
-                airportList: action.payload.content,
-                totalPages: action.payload.totalPages,
+                airportList: requestAirportsSuccessfulAction.payload.content,
+                totalPages: requestAirportsSuccessfulAction.payload.totalPages,
                 loading: false
             });
 
@@ -41,4 +44,6 @@ export const AIRPORT_LIST_PAGE_REDUCER: ActionReducer<AirportListSlice> = (state
         default:
             return state;
     }
-};
+}
+
+export const AIRPORT_LIST_PAGE_REDUCER: ActionReducer<AirportListSlice> = airportListPageReducer;

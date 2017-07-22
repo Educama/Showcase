@@ -31,7 +31,7 @@ export class ShipmentListPageComponent implements OnInit, OnDestroy {
 
         this.shipmentListSlice = this._store.select(state => state.shipmentListSlice);
         this.shipmentListSliceSubscription = this.shipmentListSlice
-            .subscribe(shipmentListSlice => this.updateShipmentListModel(shipmentListSlice))
+            .subscribe(shipmentListSlice => this.updateShipmentListModel(shipmentListSlice));
     }
 
     public ngOnInit() {
@@ -79,10 +79,10 @@ export class ShipmentListPageComponent implements OnInit, OnDestroy {
                     shipmentResource.trackingId,
                     this.formatAddress(shipmentResource.sender.address),
                     this.formatAddress(shipmentResource.receiver.address))
-            )
+            );
     }
     private formatAddress(address: Address): string {
-        let formatedAddress: string = "";
+        let formatedAddress = "";
         formatedAddress += address.street + " ";
         formatedAddress += address.streetNo + ", ";
         formatedAddress += address.zipCode + " ";

@@ -15,8 +15,8 @@ import {CustomerSuggestionsResource} from "./resources/customer-suggestions.reso
 export class CustomerService {
 
     // private CUSTOMER_RESOURCE_PATH:string = "customers";
-    private CUSTOMER_RESOURCE_PATH:string = "customers";
-    private CUSTOMER_SUGGESTIONS_RESOURCE_PATH:string = this.CUSTOMER_RESOURCE_PATH + "/suggestions";
+    private CUSTOMER_RESOURCE_PATH = "customers";
+    private CUSTOMER_SUGGESTIONS_RESOURCE_PATH: string = this.CUSTOMER_RESOURCE_PATH + "/suggestions";
 
     constructor(private _restClientService: RestClientService) {
     }
@@ -56,8 +56,8 @@ export class CustomerService {
      * @return An observable array of customers
      */
     public findCustomers(pageNumber: number, pageSize: number): Observable<CustomerListResource> {
-        let pageNumberText = "page=" + pageNumber;
-        let pageSizeText = "size=" + pageSize;
+        const pageNumberText = "page=" + pageNumber;
+        const pageSizeText = "size=" + pageSize;
         return this._restClientService.get(this.CUSTOMER_RESOURCE_PATH + "?" + pageNumberText + "&" + pageSizeText);
     }
 
@@ -67,8 +67,8 @@ export class CustomerService {
      * @return An observable array of customers
      */
     public findCustomerSuggestions(term: string, pageNumber?: number, pageSize?: number): Observable<CustomerSuggestionsResource> {
-        let pageNumberText = (pageNumber) ? "&page=" + pageNumber : "&page=0";
-        let pageSizeText = (pageSize) ? "&size=" + pageSize : "&size=10";
+        const pageNumberText = (pageNumber) ? "&page=" + pageNumber : "&page=0";
+        const pageSizeText = (pageSize) ? "&size=" + pageSize : "&size=10";
         return this._restClientService.get(this.CUSTOMER_SUGGESTIONS_RESOURCE_PATH + "?term=" + term + pageNumberText + pageSizeText);
     }
 }

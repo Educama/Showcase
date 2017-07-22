@@ -15,7 +15,7 @@ import * as _ from "lodash";
 
 @Component({
     selector: "educama-shipment-capture-page",
-    templateUrl: "shipment-capture-page.component.html",
+    templateUrl: "./shipment-capture-page.component.html",
 })
 export class ShipmentCapturePageComponent implements OnInit, OnDestroy {
 
@@ -64,9 +64,8 @@ export class ShipmentCapturePageComponent implements OnInit, OnDestroy {
             this._shipmentService.createShipment(this.mapShipmentFromSaveShipmentEvent(saveShipmentEvent))
                 .subscribe(shipment => {
                     this._router.navigate(["/shipments"]);
-                })
-        }
-        else {
+                });
+        } else {
             this._activatedRoute.params.subscribe(params => {
 
                 saveShipmentEvent.trackingId = params["id"];
@@ -105,7 +104,7 @@ export class ShipmentCapturePageComponent implements OnInit, OnDestroy {
     }
 
     private mapShipmentFromSaveShipmentEvent(saveShipmentEvent: SaveShipmentEvent): ShipmentResource {
-        let shipment = new ShipmentResource();
+        const shipment = new ShipmentResource();
         shipment.uuidSender = saveShipmentEvent.uuidSender;
         shipment.uuidReceiver = saveShipmentEvent.uuidReceiver;
         shipment.customerTypeEnum = saveShipmentEvent.customerTypeEnum;

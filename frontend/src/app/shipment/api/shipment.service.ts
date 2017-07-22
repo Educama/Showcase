@@ -13,7 +13,7 @@ import {ShipmentResource} from "./resources/shipment.resource";
 @Injectable()
 export class ShipmentService {
 
-    private SHIPMENT_RESOURCE_PATH:string = "shipments";
+    private SHIPMENT_RESOURCE_PATH = "shipments";
 
     constructor(private _restClientService: RestClientService) {
     }

@@ -5,7 +5,8 @@ import {TranslationNotifierService} from "../../common/translation/services/tran
 
 @Component({
     selector: "educama-navigation-bar",
-    templateUrl: "navigation-bar.component.html"
+    templateUrl: "./navigation-bar.component.html",
+    styleUrls: ["./navigation-bar.component.scss"]
 })
 export class NavigationBarComponent {
 
@@ -19,7 +20,7 @@ export class NavigationBarComponent {
             () => {
                 this.initMenuItems();
             }
-        )
+        );
 
     }
 

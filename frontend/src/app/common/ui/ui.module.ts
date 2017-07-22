@@ -35,10 +35,11 @@ import {
     ]
 })
 export class UIModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: UIModule,
-            providers: []
-        };
-    }
+  public static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: UIModule,
+      providers: []
+    };
+  }
 }
+

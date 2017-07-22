@@ -1,4 +1,7 @@
 # Configuration file for Travis CI, see https://docs.travis-ci.com
+# sudo is required for chrome installation. A different approach without sudo will be done later.
+sudo: required
+dist: trusty
 language: java
 jdk:
 - oraclejdk8
@@ -6,6 +9,7 @@ env:
   global:
   - NODE_VERSION: 6
 before_script:
+  - export CHROME_BIN=chromium-browser
   - export DISPLAY=:99.0 && sh -e /etc/init.d/xvfb start #start xvfb so that we can start Firefox, see https://docs.travis-ci.com/user/gui-and-headless-browsers/#Using-xvfb-to-Run-Tests-That-Require-a-GUI
   - npm install -g @angular/cli@1.0.3
 before_install:
@@ -20,6 +24,8 @@ script:
 addons:
   #Browser is used by the acceptance tests
   firefox: '42.0'
+  #Browser is used for angular unit tests
+  chrome: stable
 cache:
   timeout: 604800 #1 week
   directories:

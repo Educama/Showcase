@@ -13,6 +13,7 @@ import {CustomerCaptureSlice} from "../reducer/customer-capture-page.slice";
 @Component({
     selector: "educama-customer-capture",
     templateUrl: "./customer-capture.component.html",
+    styleUrls: ["./customer-capture.component.scss"]
 })
 export class CustomerCaptureComponent implements OnInit, DoCheck, OnDestroy {
 
@@ -23,9 +24,9 @@ export class CustomerCaptureComponent implements OnInit, DoCheck, OnDestroy {
     public editorMode: EditorMode;
 
     public customer: CustomerResource;
-    public saving: boolean = false;
+    public saving = false;
 
-    private _isInitialized:boolean = false;
+    private _isInitialized = false;
 
     constructor(private _formBuilder: FormBuilder,
                 private _router: Router,
@@ -81,7 +82,7 @@ export class CustomerCaptureComponent implements OnInit, DoCheck, OnDestroy {
     }
 
     public saveCustomer() {
-        let customer = new CustomerResource();
+        const customer = new CustomerResource();
         customer.uuid = this.customerCaptureForm.get("uuid").value;
         customer.name = this.customerCaptureForm.get("name").value,
         customer.address = new Address(

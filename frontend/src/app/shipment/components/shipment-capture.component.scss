@@ -1,0 +1,19 @@
+.shipment-capture-component {
+
+  .ui-tabview-nav.ui-widget-header {
+    border: transparent;
+  }
+
+  .ui-tabview-panels {
+    .ui-tabview-panel.ui-widget-content {
+      border: 1px solid #d5d5d5;
+    }
+  }
+
+  .shipment-capture-component_services {
+    .ui-panel-content-wrapper {
+      height: 80px;
+    }
+  }
+
+}

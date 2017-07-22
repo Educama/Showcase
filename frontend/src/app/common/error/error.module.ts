@@ -5,14 +5,16 @@ import {UIModule} from "../ui/ui.module";
 import {ErrorComponent} from "./components/error.component";
 
 @NgModule({
-    imports: [CommonModule, TranslationModule, UIModule],
-    declarations: [ErrorComponent],
-    exports: [ErrorComponent],
+  imports: [CommonModule, TranslationModule, UIModule],
+  declarations: [ErrorComponent],
+  exports: [ErrorComponent],
 })
 export class ErrorModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: ErrorModule
-        };
-    }
+  public static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: ErrorModule
+    };
+  }
 }
+
+

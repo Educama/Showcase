@@ -2,16 +2,18 @@
 import {NgModule} from "@angular/core";
 import {APP_BASE_HREF} from "@angular/common";
 import {BrowserModule} from "@angular/platform-browser";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 // ngrx module
+import {EffectsModule} from "@ngrx/effects";
 import {StoreModule} from "@ngrx/store";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 
 // global app parts
 import {AppComponent} from "./app.component";
-import {ROUTING, APP_ROUTING_PROVIDERS} from "./app.routes";
-import {REDUCER, INITIAL_STATE} from "./app.reducers";
+import {APP_ROUTING_PROVIDERS, ROUTING} from "./app.routes";
+import {INITIAL_STATE, reducers} from "./app.reducers";
+import {environment} from "../environments/environment";
 
 // shared module and feature modules
 import {SharedModule} from "./common/shared.module";
@@ -20,18 +22,20 @@ import {NavigationModule} from "./navigation/navigation.module";
 import {ShipmentModule} from "./shipment/shipment.module";
 import {FlightsModule} from "./flights/flights.module";
 
+
 @NgModule({
     imports: [
         BrowserAnimationsModule,
         BrowserModule,
         CustomerModule,
+        EffectsModule.forRoot([]),
         FlightsModule,
         NavigationModule,
         ROUTING,
         SharedModule.forRoot(),
         ShipmentModule,
-        StoreModule.provideStore(REDUCER, INITIAL_STATE),
-        StoreDevtoolsModule.instrumentOnlyWithExtension()
+        StoreModule.forRoot(reducers, {initialState: INITIAL_STATE}),
+        !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 50 }) : []
     ],
     declarations: [AppComponent],
     providers: [

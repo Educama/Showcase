@@ -1,0 +1,56 @@
+$dark_blue: #00639a;
+
+.loading-spinner {
+  font-size: 3em;
+  color: $dark_blue;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+/*************************/
+/* HEADER                 */
+/*************************/
+
+.educama-header {
+  background-color: $dark_blue;
+  height: 70px;
+  width: 100%;
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  text-align: left;
+  vertical-align: middle;
+  z-index: 3;
+
+  .educama-title {
+    margin: 20px 0 0 20px;
+
+    h1 {
+      color: white;
+      font-size: 24px;
+    }
+
+  }
+}
+
+@media (max-width: 640px) {
+  .educama-header {
+
+    .educama-title {
+      margin: 20px 0 0 20px;
+
+      h1 {
+        color: white;
+        font-size: 16px;
+      }
+
+    }
+  }
+}
+
+.educama-content-wrapper {
+  margin-top: 140px;
+}

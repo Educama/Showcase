@@ -5,7 +5,6 @@ import {ErrorModule} from "./error/error.module";
 import {RestModule} from "./http/rest.module";
 import {TranslationModule} from "./translation/translation.module";
 import {UIModule} from "./ui/ui.module";
-import {BrowserModule} from "@angular/platform-browser";
 
 @NgModule({
     exports: [
@@ -19,14 +18,16 @@ import {BrowserModule} from "@angular/platform-browser";
     ]
 })
 export class SharedModule {
-    static forRoot(): Array<ModuleWithProviders> {
-        let modules: Array<ModuleWithProviders | Array<ModuleWithProviders>> =
-            [
-                ErrorModule.forRoot(),
-                RestModule.forRoot(),
-                TranslationModule.forRoot(),
-                UIModule.forRoot()
-            ]
-        return [].concat(...modules);
-    }
+  public static forRoot(): Array<ModuleWithProviders> {
+    return [
+      ErrorModule.forRoot(),
+      RestModule.forRoot(),
+      UIModule.forRoot(),
+      ...TranslationModule.forRoot()
+    ];
+  }
 }
+
+
+
+

@@ -3,7 +3,7 @@ export class Cargo {
     public totalWeight: number;
     public totalCapacity: number;
     public dangerousGoods: boolean;
-    public numberPackages: number
+    public numberPackages: number;
 
     constructor(cargoDescription: string, totalWeight: number, totalCapacity: number, dangerousGoods: boolean, numberPackages: number) {
         this.cargoDescription = cargoDescription;

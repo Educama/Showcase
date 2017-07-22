@@ -1,4 +1,4 @@
-import {ActionReducer, combineReducers} from "@ngrx/store";
+import {ActionReducer, ActionReducerMap, combineReducers} from "@ngrx/store";
 import {
     SHIPMENT_LIST_PAGE_REDUCER,
     SHIPMENT_LIST_SLICE_INITIAL_STATE,
@@ -47,7 +47,7 @@ export const INITIAL_STATE = {
     airportListSlice: AIRPORT_LIST_SLICE_INITIAL_STATE
 };
 
-const reducers = {
+export const reducers: ActionReducerMap<State> = {
     shipmentListSlice: SHIPMENT_LIST_PAGE_REDUCER,
     taskListSlice: TASK_LIST_PAGE_REDUCER,
     customerListSlice: CUSTOMER_LIST_PAGE_REDUCER,
@@ -56,5 +56,3 @@ const reducers = {
     shipmentCaptureSlice: SHIPMENT_CAPTURE_PAGE_REDUCER,
     airportListSlice: AIRPORT_LIST_PAGE_REDUCER
 };
-
-export const REDUCER: ActionReducer<State> = combineReducers(reducers);

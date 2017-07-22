@@ -17,22 +17,26 @@ import {TranslationNotifierService} from "./services/translation-notifier.servic
     exports: [TranslateModule, I18nDatePipe, TimeAgoPipe],
 })
 export class TranslationModule {
-    static forRoot(): Array<ModuleWithProviders> {
-        let modules: Array<ModuleWithProviders> =
-            [
-                {
-                    ngModule: TranslationModule,
-                    providers: [
-                        {provide: MissingTranslationHandler, useClass: EducamaMissingTranslationHandler},
-                        TranslationNotifierService
-                    ]
-                },
-                TranslateModule.forRoot({
-                    provide: TranslateLoader,
-                    useFactory: (http: Http) => new TranslateStaticLoader(http, "resources/i18n", ".json"),
-                    deps: [Http]
-                })
-            ];
-        return modules;
-    }
+  public static forRoot(): Array<ModuleWithProviders> {
+    return [
+      {
+        ngModule: TranslationModule,
+        providers: [
+          {provide: MissingTranslationHandler, useClass: EducamaMissingTranslationHandler},
+          TranslationNotifierService
+        ]
+      },
+      TranslateModule.forRoot({
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [Http]
+      })
+    ];
+  }
 }
+
+export function createTranslateLoader(http: Http) {
+  return new TranslateStaticLoader(http, "./assets/i18n", ".json");
+}
+
+

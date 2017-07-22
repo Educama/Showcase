@@ -3,18 +3,20 @@ import * as actions from "./error.actions";
 import {ERROR_SLICE_INITIAL_STATE} from "./error.initial-state";
 import {ErrorSlice} from "./error.slice";
 
-export const ERROR_REDUCER: ActionReducer<ErrorSlice> = (state: ErrorSlice = ERROR_SLICE_INITIAL_STATE, action: Action) => {
+export function errorReducer(state: ErrorSlice = ERROR_SLICE_INITIAL_STATE, action: Action) {
     switch (action.type) {
 
         case actions.ADD_ERROR_WITH_KEY:
+            const addErrorWithKeyAction = action as actions.AddErrorWithKeyAction;
             return Object.assign({}, state, {
-                messageKey: action.payload,
+                messageKey: addErrorWithKeyAction.payload,
                 visible: true
             });
 
         case actions.ADD_ERROR_WITH_TEXT:
+            const addErrorWithText = action as actions.AddErrorWithTextAction;
             return Object.assign({}, state, {
-                messageText: action.payload,
+                messageText: addErrorWithText.payload,
                 visible: true
             });
 
@@ -24,4 +26,6 @@ export const ERROR_REDUCER: ActionReducer<ErrorSlice> = (state: ErrorSlice = ERR
         default:
             return state;
     }
-};
+}
+
+export const ERROR_REDUCER: ActionReducer<ErrorSlice> = errorReducer;

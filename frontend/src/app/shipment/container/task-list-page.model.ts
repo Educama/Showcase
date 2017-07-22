@@ -14,7 +14,14 @@ export class TaskListRowModel {
     public senderAddress: string;
     public receiverAddress: string;
 
-    constructor(createTime: Date, trackingId: string, taskId: string, name: string, description:string, assignee:string, senderAddress: string, receiverAddress: string) {
+    constructor(createTime: Date,
+                trackingId: string,
+                taskId: string,
+                name: string,
+                description: string,
+                assignee: string,
+                senderAddress: string,
+                receiverAddress: string) {
         this.createTime = createTime;
         this.trackingId = trackingId;
         this.taskId = taskId;
