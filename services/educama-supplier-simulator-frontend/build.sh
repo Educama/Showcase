@@ -7,7 +7,7 @@ echo -n "NPM Version: " && npm --version
 echo -n "Node Version: " && node --version
 
 npm install
-ng build -prod
+npm run build
 #ng test
 
 echo "Directory content after build:"
