@@ -1,4 +1,4 @@
-package org.educama.configuration;
+package org.educama.api.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,6 +1,16 @@
 # Configuration file for Cloud Foundry, see https://docs.cloudfoundry.org/devguide/deploy-apps/manifest.html
 applications:
+- name: educama-api-gateway
+  host: educama-api-gateway
+  path: ../api/target/api-0.0.1-SNAPSHOT.jar
+  buildpack: https://github.com/cloudfoundry/java-buildpack.git#v3.10
+  memory: 512M
+  disk_quota: 256M
+  env:
+    EDUCAMA_BACKEND_URL: http://educama-backend.mybluemix.net
+    EDUCAMA_FLIGHTSERVICE_URL: http://educama-flight-service.mybluemix.net  
 - name: educama-backend
+  host: educama-backend
   path: ../backend/target/educama-backend-exec.jar
   buildpack: https://github.com/cloudfoundry/java-buildpack.git#v3.18
   memory: 768M
@@ -11,12 +21,14 @@ applications:
     FLYWAY_LOCATIONS: classpath:db/migration/common,classpath:db/migration/mysql
   services:
    - educama-mysql-db
-- name: educama
+- name: educama-frontend
+  host: educama
   path: ../frontend/dist/educama-frontend.zip
   buildpack: https://github.com/cloudfoundry/staticfile-buildpack.git#v1.3.16
   memory: 64M
   disk_quota: 64M
 - name: educama-flight-service
+  host: educama-flight-service
   path: ../services/flightinformation/target/flightinformation-0.0.1-SNAPSHOT.jar
   buildpack: https://github.com/cloudfoundry/java-buildpack.git#v3.10
   memory: 512M
@@ -24,6 +36,7 @@ applications:
   services:
    - flight-service-database
 - name: educama-supplier-simulator-backend
+  host: educama-supplier-simulator-backend
   path: ../services/educama-supplier-simulator-backend
   buildpack: https://github.com/cloudfoundry/nodejs-buildpack
   command: node server.js
@@ -32,6 +45,7 @@ applications:
    - supplier-simulator-queue
    - supplier-simulator-database
 - name: educama-supplier-simulator-frontend
+  host: educama-supplier-simulator-frontend
   path: ../services/educama-supplier-simulator-frontend/dist
   buildpack: staticfile_buildpack
   disk_quota: 64M

@@ -1,0 +1,8 @@
+# Configuration file for Cloud Foundry, see https://docs.cloudfoundry.org/devguide/deploy-apps/manifest.html
+applications:
+- name: educama-frontend
+  host: educama-sandbox
+  path: ../../frontend/dist/educama-frontend.zip
+  buildpack: https://github.com/cloudfoundry/staticfile-buildpack.git#v1.3.16
+  memory: 64M
+  disk_quota: 64M
