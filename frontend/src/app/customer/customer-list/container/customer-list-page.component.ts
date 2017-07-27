@@ -2,7 +2,7 @@ import {Component, OnDestroy} from "@angular/core";
 import {Router} from "@angular/router";
 import {Store} from "@ngrx/store";
 import "rxjs/add/operator/distinctUntilChanged";
-import {InitializeCustomerListAction, RequestCustomersAction} from "../store/customer-list-page.actions";
+import {InitializeCustomerListAction, RequestCustomersAction} from "../../customer-common/store/customer-list-page.actions";
 import {State} from "../../../app.reducers";
 
 @Component({

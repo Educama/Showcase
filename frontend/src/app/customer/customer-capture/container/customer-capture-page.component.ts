@@ -1,9 +1,9 @@
 import {Component, OnDestroy, OnInit} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {Store} from "@ngrx/store";
-import {CustomerService} from "../../api/customer.service";
+import {CustomerService} from "../../customer-common/api/customer.service";
 import {State} from "../../../app.reducers";
-import * as actions from "../reducer/customer-capture-page.actions";
+import * as actions from "../../customer-common/store/customer-capture-page.actions";
 
 @Component({
     selector: "educama-customer-capture-page",

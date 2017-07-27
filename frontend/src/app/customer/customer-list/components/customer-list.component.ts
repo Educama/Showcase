@@ -1,13 +1,13 @@
 import {Component, Input, Output, EventEmitter, OnDestroy, OnInit} from "@angular/core";
-import {CustomerResource} from "../../api/resources/customer.resource";
+import {CustomerResource} from "../../customer-common/api/resources/customer.resource";
 import {TranslateService} from "ng2-translate";
 import {LazyLoadEvent} from "primeng/components/common/api";
 import {Store} from "@ngrx/store";
 import {State} from "../../../app.reducers";
-import {ChangeCustomersPageAction} from "../store/customer-list-page.actions";
+import {ChangeCustomersPageAction} from "../../customer-common/store/customer-list-page.actions";
 import {Subscription} from "rxjs/Subscription";
 import {Router} from "@angular/router";
-import {CustomerListSlice} from "../store/customer-list-page.slice";
+import {CustomerListSlice} from "../../customer-common/store/customer-list-page.slice";
 
 @Component({
     selector: "educama-customer-list",

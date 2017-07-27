@@ -1,23 +1,19 @@
 import {NgModule} from "@angular/core";
 import {SharedModule} from "../common/shared.module";
-import {FLIGHTS_ROUTING} from "./routes/flights.routes";
-import {AirportsListPageComponent} from "./airport-list/container/airports-list-page.component";
-import {AirportService} from "./api/airports/airport.service";
-import {AirportListComponent} from "./airport-list/presentationals/airport-list.component";
-import {EffectsModule} from "@ngrx/effects";
-import {AirportListEffect} from "./airport-list/efffects/airport-list.effect";
+import {FLIGHTS_ROUTING} from "./flights-common/routes/flights.routes";
+import {AirportService} from "./flights-common/api/airports/airport.service";
+import {AirportListModule} from "./airport-list/airport-list.module";
+import {FlightsCommonModule} from "./flights-common/flights-common.module";
 
 @NgModule({
     imports: [
-        SharedModule,
-        FLIGHTS_ROUTING,
-        EffectsModule.forFeature([
-          AirportListEffect
-        ])
+        AirportListModule,
+        FlightsCommonModule,
+        FLIGHTS_ROUTING
     ],
-    declarations: [AirportsListPageComponent, AirportListComponent],
-    exports: [AirportsListPageComponent],
-    providers: [AirportService]
+    providers: [
+      AirportService
+    ]
 })
 export class FlightsModule {
 }

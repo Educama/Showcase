@@ -1,12 +1,12 @@
 import {Component, OnDestroy, OnInit} from "@angular/core";
-import {AirportResource} from "../../api/airports/airport.resource";
+import {AirportResource} from "../../flights-common/api/airports/airport.resource";
 import {TranslateService} from "ng2-translate";
 import {LazyLoadEvent} from "primeng/components/common/api";
 import {Store} from "@ngrx/store";
 import {State} from "../../../app.reducers";
-import {ChangeAirportsPageAction, ChangeAirportsSortingAction} from "../store/airport-list-page.actions";
+import {ChangeAirportsPageAction, ChangeAirportsSortingAction} from "../../flights-common/store/airport-list-page.actions";
 import {Subscription} from "rxjs/Subscription";
-import {AirportListSlice} from "../store/airport-list-page.slice";
+import {AirportListSlice} from "../../flights-common/store/airport-list-page.slice";
 import * as _ from "lodash";
 import {SortOrder} from "../../../common/enums/sort-order.enum";
 
