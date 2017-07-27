@@ -1,0 +1,66 @@
+# Spring Configuration
+spring:
+  application:
+    name: api
+
+# Tomcat Configuration
+server:
+  port: 8081
+
+# Default paths to services. Can be overwritten in manifests.
+educama:
+  backend:
+    url: http://localhost:8082
+
+  flightservice:
+    url: https://educama-flight-service.mybluemix.net
+
+# API Gateway Configuration
+zuul:
+  #Do not route any request to a service unless it it specified below.
+  ignoredServices: '*'
+
+  #Ignore some urls to be routed to backend-services e.g. /h2-console/**
+  ignoredPatterns:
+
+  routes:
+    customers:
+      path: /educama/v1/customers/**
+      url: ${educama.backend.url}
+      stripPrefix: false
+
+    shipments:
+      path: /educama/v1/shipments/**
+      url: ${educama.backend.url}
+      stripPrefix: false
+
+    tasks:
+      path: /educama/v1/tasks/**
+      url: ${educama.backend.url}
+      stripPrefix: false
+
+    airports:
+      path: /educama/v1/airports/**
+      url: ${educama.flightservice.url}/airports
+      stripPrefix: true
+
+    airlines:
+      path: /educama/v1/airlines/**
+      url: ${educama.flightservice.url}/airlines
+      stripPrefix: true
+
+    flights:
+      path: /educama/v1/flights/**
+      url: ${educama.flightservice.url}/connections
+      stripPrefix: true
+
+ribbon:
+  eureka:
+    enabled: false
+
+# Configuration of Spring Boot enpoints. Security is switched of for now.
+endpoints:
+  actuator:
+    sensitive: false
+  trace:
+    sensitive: false

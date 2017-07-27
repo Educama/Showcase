@@ -24,7 +24,7 @@ export class HttpHelper {
             return location.protocol + "//localhost:" + (parseInt(location.port) + 1) + "/educama/v1/"
         } else {
             // Assuming cloud deployment
-            return location.protocol + "//" + location.host.replace("educama", "educama-backend") + HttpHelper.BACKEND_RESOURCE_PATH;
+            return location.protocol + "//" + location.host.replace("educama", "educama-api-gateway") + HttpHelper.BACKEND_RESOURCE_PATH;
         }
     }
 }

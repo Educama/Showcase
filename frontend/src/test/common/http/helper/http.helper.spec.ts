@@ -19,10 +19,10 @@ describe("HttpHelper", () => {
         location.port="8090";
         expect(_httpHelper.getRestApiBaseUrlFromLocation(location)).toEqual("http://localhost:8091/educama/v1/");
     });
-    it("Generates REST Api Url for http://educama-backend.mybluemix.net/educama/v1/", () => {
+    it("Generates REST Api Url for http://educama-api-gateway.mybluemix.net/educama/v1/", () => {
         let location: Location = new MockLocation();
         location.protocol = "http:";
         location.host = "educama.mybluemix.net";
-        expect(_httpHelper.getRestApiBaseUrlFromLocation(location)).toEqual("http://educama-backend.mybluemix.net/educama/v1/");
+        expect(_httpHelper.getRestApiBaseUrlFromLocation(location)).toEqual("http://educama-api-gateway.mybluemix.net/educama/v1/");
     });
 });

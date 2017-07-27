@@ -1,4 +1,4 @@
-package org.educama.configuration;
+package org.educama.api.config;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
