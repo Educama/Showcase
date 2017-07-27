@@ -1,14 +1,12 @@
 import {Component, OnDestroy, OnInit} from "@angular/core";
 import {Store} from "@ngrx/store";
 import {Observable, Subscription} from "rxjs";
-import * as actions from "../../shipment-common/store/tasks/task-list-page.actions";
-import {TaskService} from "../../shipment-common/api/task.service";
 import {TaskListModel, TaskListRowModel} from "./task-list-page.model";
 import {State} from "../../../app.reducers";
-import {TaskResource} from "../../shipment-common/api/resources/task.resource";
 import {Address} from "../../../customer/customer-common/api/datastructures/address.datastructure";
 import {Router} from "@angular/router";
 import {TaskListSlice} from "../../shipment-common/store/tasks/task-list-page.slice";
+import {InitializeTaskListAction, RequestTasksAction} from "../../shipment-common/store/tasks/task-list-page.actions";
 
 @Component({
     selector: "educama-task-list-page",
@@ -23,10 +21,7 @@ export class TaskListPageComponent implements OnInit, OnDestroy {
     // model for the page
     public taskListModel: TaskListModel = new TaskListModel();
 
-    public selectedTask: TaskResource = new TaskResource();
-
-    constructor(private _taskService: TaskService,
-                private _router: Router,
+    constructor(private _router: Router,
                 private _store: Store<State>) {
 
         this.taskListSlice = this._store.select(state => state.taskListSlice);
@@ -35,10 +30,11 @@ export class TaskListPageComponent implements OnInit, OnDestroy {
     }
 
     public ngOnInit() {
-        this.loadTasks();
+        this._store.dispatch(new RequestTasksAction());
     }
 
     public ngOnDestroy() {
+        this._store.dispatch(new InitializeTaskListAction());
         this.taskListSliceSubscription.unsubscribe();
     }
 
@@ -53,14 +49,6 @@ export class TaskListPageComponent implements OnInit, OnDestroy {
     // ***************************************************
     // Data Retrieval
     // ***************************************************
-
-    private loadTasks() {
-        this._taskService.findTasks()
-            .subscribe(
-                taskListResource => this._store.dispatch(new actions.LoadTasksAction(taskListResource.tasks)),
-                null
-            );
-    }
 
     private updateTaskListModel(taskListSlice: TaskListSlice) {
         this.taskListModel.taskList =

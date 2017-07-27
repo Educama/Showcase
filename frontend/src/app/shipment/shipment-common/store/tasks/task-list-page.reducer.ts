@@ -6,10 +6,21 @@ import {TaskListSlice} from "./task-list-page.slice";
 export function taskListPageReducer(state: TaskListSlice = TASK_LIST_SLICE_INITIAL_STATE,
                                     action: Action): TaskListSlice {
     switch (action.type) {
-      case actions.LOAD_TASKS:
-        const loadTasksAction = action as actions.LoadTasksAction;
+      case actions.INITIALIZE_TASK_LIST:
+        return TASK_LIST_SLICE_INITIAL_STATE;
+      case actions.REQUEST_TASKS:
         return Object.assign({}, state, {
-          taskList: loadTasksAction.payload
+          loading: true
+        });
+      case actions.REQUEST_TASKS_SUCCESSFUL:
+        const requestTasksSuccessfulAction = action as actions.RequestTasksSuccessfulAction;
+        return Object.assign({}, state, {
+          taskList: requestTasksSuccessfulAction.payload.tasks,
+          loading: false
+        });
+      case actions.REQUEST_TASKS_FAILED:
+        return Object.assign({}, state, {
+          loading: false
         });
       default:
         return state;

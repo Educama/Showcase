@@ -41,7 +41,7 @@ export class AirportListEffect {
                 airportListSlice.pageNumber, airportListSlice.pageSize,
                 airportListSlice.sortBy, airportListSlice.sortOrder);
         })
-        .map(taskListResource => new RequestAirportsSuccessfulAction(taskListResource))
+        .map(airportListResource => new RequestAirportsSuccessfulAction(airportListResource))
         .catch(() => Observable.of(new RequestAirportsFailedAction()));
 
 }

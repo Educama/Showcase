@@ -2,13 +2,11 @@ import {Component, OnDestroy, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
 import {Store} from "@ngrx/store";
 import {Observable, Subscription} from "rxjs";
-import * as actions from "../../shipment-common/store/shipments/shipment-list-page.actions";
-import {ShipmentService} from "../../shipment-common/api/shipment.service";
 import {ShipmentListModel, ShipmentListRowModel} from "./shipment-list-page.model";
 import {State} from "../../../app.reducers";
-import {ShipmentResource} from "../../shipment-common/api/resources/shipment.resource";
 import {Address} from "../../../customer/customer-common/api/datastructures/address.datastructure";
 import {ShipmentListSlice} from "../../shipment-common/store/shipments/shipment-list-page.slice";
+import {InitializeShipmentListAction, RequestShipmentsAction} from "../../shipment-common/store/shipments/shipment-list-page.actions";
 
 @Component({
     selector: "educama-shipment-list-page",
@@ -23,10 +21,7 @@ export class ShipmentListPageComponent implements OnInit, OnDestroy {
     // model for the page
     public shipmentListModel: ShipmentListModel = new ShipmentListModel();
 
-    public selectedShipment: ShipmentResource = new ShipmentResource();
-
     constructor(private _router: Router,
-                private _shipmentService: ShipmentService,
                 private _store: Store<State>) {
 
         this.shipmentListSlice = this._store.select(state => state.shipmentListSlice);
@@ -35,10 +30,11 @@ export class ShipmentListPageComponent implements OnInit, OnDestroy {
     }
 
     public ngOnInit() {
-        this.loadShipments();
+        this._store.dispatch(new RequestShipmentsAction());
     }
 
     public ngOnDestroy() {
+        this._store.dispatch(new InitializeShipmentListAction());
         this.shipmentListSliceSubscription.unsubscribe();
     }
 
@@ -57,20 +53,12 @@ export class ShipmentListPageComponent implements OnInit, OnDestroy {
      * Refresh the task list by re-loading the tasks from the server
      */
     public onButtonRefresh(): void {
-        this.loadShipments();
+        this._store.dispatch(new RequestShipmentsAction());
     }
 
     // ***************************************************
     // Data Retrieval
     // ***************************************************
-
-    private loadShipments() {
-        this._shipmentService.findShipments()
-            .subscribe(
-                shipmentListResource => this._store.dispatch(new actions.LoadShipmentsAction(shipmentListResource.shipments)),
-                null
-            );
-    }
 
     private updateShipmentListModel(shipmentListSlice: ShipmentListSlice) {
         this.shipmentListModel.shipmentList =
@@ -81,6 +69,7 @@ export class ShipmentListPageComponent implements OnInit, OnDestroy {
                     this.formatAddress(shipmentResource.receiver.address))
             );
     }
+
     private formatAddress(address: Address): string {
         let formatedAddress = "";
         formatedAddress += address.street + " ";
