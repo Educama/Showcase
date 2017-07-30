@@ -1,25 +1,12 @@
 #!/bin/bash
+set -e # Exit with nonzero exit code if anything fails
 
-cd backend
-./build.sh
-cd ..
+(cd backend && ./build.sh)
 
-cd frontend 
-./build.sh
-cd ..
+(cd frontend && ./build.sh)
 
-cd services/flightinformation 
-./build.sh 
-cd ..
+(cd services/flightinformation &&./build.sh)
 
-cd services
+(cd services/educama-supplier-simulator-backend && ./build.sh)
 
-cd educama-supplier-simulator-backend 
-./build.sh
-cd ..
-
-cd educama-supplier-simulator-frontend 
-./build.sh
-cd ..
-
-cd ..
+(cd services/educama-supplier-simulator-frontend && ./build.sh)
