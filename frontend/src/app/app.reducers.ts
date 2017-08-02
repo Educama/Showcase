@@ -7,9 +7,9 @@ import {CustomerListSlice} from "./customer/customer-common/store/customer-list-
 import {CUSTOMER_LIST_SLICE_INITIAL_STATE} from "./customer/customer-common/store/customer-list-page.initial-state";
 import {CustomerCaptureSlice} from "./customer/customer-common/store/customer-capture-page.slice";
 import {CUSTOMER_CAPTURE_SLICE_INITIAL_STATE} from "./customer/customer-common/store/customer-capture-page.initial-state";
-import {ERROR_REDUCER} from "./common/error/store/error.reducer";
-import {ERROR_SLICE_INITIAL_STATE} from "./common/error/store/error.initial-state";
-import {ErrorSlice} from "./common/error/store/error.slice";
+import {ERROR_REDUCER} from "./shared/error/store/error.reducer";
+import {ERROR_SLICE_INITIAL_STATE} from "./shared/error/store/error.initial-state";
+import {ErrorSlice} from "./shared/error/store/error.slice";
 import {SHIPMENT_CAPTURE_PAGE_REDUCER} from "./shipment/shipment-common/store/shipments/shipment-capture-page.reducer";
 import {AirportListSlice} from "./flights/flights-common/store/airport-list-page.slice";
 import {AIRPORT_LIST_SLICE_INITIAL_STATE} from "./flights/flights-common/store/airport-list-page.initial-state";

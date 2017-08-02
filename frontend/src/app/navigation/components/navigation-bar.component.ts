@@ -1,7 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {MenuItem} from "primeng/primeng";
 import {TranslateService} from "ng2-translate";
-import {TranslationNotifierService} from "../../common/translation/services/translation-notifier.service";
+import {TranslationNotifierService} from "../../shared/translation/services/translation-notifier.service";
 
 @Component({
     selector: "educama-navigation-bar",

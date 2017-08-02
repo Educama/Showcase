@@ -1,5 +1,5 @@
 import {NgModule} from "@angular/core";
-import {SharedModule} from "../common/shared.module";
+import {SharedModule} from "../shared/shared.module";
 import {FLIGHTS_ROUTING} from "./flights-common/routes/flights.routes";
 import {AirportService} from "./flights-common/api/airports/airport.service";
 import {AirportListModule} from "./airport-list/airport-list.module";

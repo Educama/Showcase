@@ -2,7 +2,7 @@ import {Component, DoCheck, OnDestroy, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Address} from "../../customer-common/api/datastructures/address.datastructure";
 import {CustomerResource} from "../../customer-common/api/resources/customer.resource";
-import {EditorMode} from "../../../common/ui/enums/editor-mode.enum";
+import {EditorMode} from "../../../shared/ui/enums/editor-mode.enum";
 import {Subscription} from "rxjs/Subscription";
 import {Store} from "@ngrx/store";
 import {State} from "../../../app.reducers";

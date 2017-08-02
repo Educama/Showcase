@@ -1,5 +1,5 @@
 import {NgModule} from "@angular/core";
-import {SharedModule} from "../../common/shared.module";
+import {SharedModule} from "../../shared/shared.module";
 import {CustomerCapturePageComponent} from "./container/customer-capture-page.component";
 import {CustomerCaptureComponent} from "./presentationals/customer-capture.component";
 

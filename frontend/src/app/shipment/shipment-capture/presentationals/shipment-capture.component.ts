@@ -6,7 +6,7 @@ import {Router} from "@angular/router";
 import {ShipmentResource} from "../../shipment-common/api/resources/shipment.resource";
 import {Cargo} from "../../shipment-common/api/datastructures/cargo.datastructure";
 import {ShipmentServices} from "../../shipment-common/api/datastructures/services.datastructure";
-import {EditorMode} from "../../../common/ui/enums/editor-mode.enum";
+import {EditorMode} from "../../../shared/ui/enums/editor-mode.enum";
 import {SaveShipmentEvent} from "./events/save-shipment.event";
 
 @Component({

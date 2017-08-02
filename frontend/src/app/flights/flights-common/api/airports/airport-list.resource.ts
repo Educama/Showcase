@@ -1,4 +1,4 @@
-import {AbstractListResource} from "../../../../common/api/resources/abstract-list.resource";
+import {AbstractListResource} from "../../../../shared/api/resources/abstract-list.resource";
 import {AirportResource} from "./airport.resource";
 
 export class AirportListResource extends AbstractListResource {

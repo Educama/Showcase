@@ -16,7 +16,7 @@ import {INITIAL_STATE, reducers} from "./app.reducers";
 import {environment} from "../environments/environment";
 
 // shared module and feature modules
-import {SharedModule} from "./common/shared.module";
+import {SharedModule} from "./shared/shared.module";
 import {CustomerModule} from "./customer/customer.module";
 import {NavigationModule} from "./navigation/navigation.module";
 import {ShipmentModule} from "./shipment/shipment.module";

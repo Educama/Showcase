@@ -1,5 +1,5 @@
 import {NgModule} from "@angular/core";
-import {SharedModule} from "../../common/shared.module";
+import {SharedModule} from "../../shared/shared.module";
 import {ShipmentService} from "./api/shipment.service";
 import {TaskService} from "./api/task.service";
 import {SHIPMENT_ROUTING} from "./routes/shipment.routes";

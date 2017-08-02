@@ -1,5 +1,5 @@
 import {NgModule} from "@angular/core";
-import {SharedModule} from "../../common/shared.module";
+import {SharedModule} from "../../shared/shared.module";
 import {ShipmentListPageComponent} from "./container/shipment-list-page.component";
 import {ShipmentListComponent} from "./presentationals/shipment-list.component";
 

@@ -1,5 +1,5 @@
 import {NgModule} from "@angular/core";
-import {SharedModule} from "../../common/shared.module";
+import {SharedModule} from "../../shared/shared.module";
 import {CUSTOMER_ROUTING} from "./routes/customer.routes";
 import {EffectsModule} from "@ngrx/effects";
 import {CustomerListEffect} from "./effects/customer-list.effect";

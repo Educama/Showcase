@@ -1,6 +1,6 @@
 import {AirportResource} from "../api/airports/airport.resource";
 import {AirportListSlice} from "./airport-list-page.slice";
-import {SortOrder} from "../../../common/enums/sort-order.enum";
+import {SortOrder} from "../../../shared/enums/sort-order.enum";
 
 export const AIRPORT_LIST_SLICE_INITIAL_STATE: AirportListSlice = {
     pageNumber: 0,

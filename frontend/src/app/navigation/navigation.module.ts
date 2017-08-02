@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
 import {NavigationBarComponent} from "./components/navigation-bar.component";
-import {SharedModule} from "../common/shared.module";
+import {SharedModule} from "../shared/shared.module";
 
 @NgModule({
     imports: [

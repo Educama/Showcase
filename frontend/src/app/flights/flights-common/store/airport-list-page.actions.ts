@@ -1,6 +1,6 @@
 import {Action} from "@ngrx/store";
 import {AirportListResource} from "../api/airports/airport-list.resource";
-import {SortOrder} from "../../../common/enums/sort-order.enum";
+import {SortOrder} from "../../../shared/enums/sort-order.enum";
 
 // Initialize Actions
 export const INITIALIZE_AIRPORT_LIST = "INITIALIZE_AIRPORT_LIST";

@@ -3,10 +3,10 @@ import {Observable} from "rxjs/Observable";
 import "rxjs/add/operator/catch";
 import "rxjs/add/operator/map";
 import "rxjs/add/observable/throw";
-import {RestClientService} from "../../../../common/http/services/rest-client.service";
+import {RestClientService} from "../../../../shared/http/services/rest-client.service";
 import {AirportListResource} from "./airport-list.resource";
 import {AirportSuggestionsResource} from "./airport-suggestions.resource";
-import {SortOrder} from "../../../../common/enums/sort-order.enum";
+import {SortOrder} from "../../../../shared/enums/sort-order.enum";
 
 /*
  * Service to communicate with Customer Resource

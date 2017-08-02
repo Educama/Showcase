@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {RestClientService} from "../../../common/http/services/rest-client.service";
+import {RestClientService} from "../../../shared/http/services/rest-client.service";
 import {Observable} from "rxjs/Observable";
 import "rxjs/add/operator/catch";
 import "rxjs/add/operator/map";

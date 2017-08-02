@@ -1,5 +1,5 @@
 import {NgModule} from "@angular/core";
-import {SharedModule} from "../../common/shared.module";
+import {SharedModule} from "../../shared/shared.module";
 import {EffectsModule} from "@ngrx/effects";
 import {AirportService} from "./api/airports/airport.service";
 import {AirportListEffect} from "./efffects/airport-list.effect";

@@ -8,7 +8,7 @@ import {ChangeAirportsPageAction, ChangeAirportsSortingAction} from "../../fligh
 import {Subscription} from "rxjs/Subscription";
 import {AirportListSlice} from "../../flights-common/store/airport-list-page.slice";
 import * as _ from "lodash";
-import {SortOrder} from "../../../common/enums/sort-order.enum";
+import {SortOrder} from "../../../shared/enums/sort-order.enum";
 
 @Component({
     selector: "educama-airport-list",
