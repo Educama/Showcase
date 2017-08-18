@@ -1,0 +1,24 @@
+<div class="container">
+    <h3>Events</h3>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Booking Type</th>
+        <th>Booking Information</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+    <tbody>
+      <tr>
+        <option *ngFor="let flight of flights">
+          <td>{{ flight.trackingNumber }}</td>
+          <td>{{ flight.airline }}</td>
+          <td>{{ flight.airline }}</td>
+        </option>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

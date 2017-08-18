@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CargoForm }    from './cargo-form';
+import { Cargo }    from './cargo';
 import { CargoFormService } from './cargo-form.service';
 
 import { Observable } from 'rxjs/Observable';
@@ -7,13 +7,13 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 @Component({
-  selector: 'cargo-form',
+  selector: 'cargo',
   templateUrl: './cargo-form.component.html',
 })
 
 export class CargoFormComponent implements OnInit  {
 
-    model: CargoForm;
+    model: Cargo;
     submitted = false;
 
     constructor(private cargoFormService: CargoFormService) {}
@@ -21,7 +21,7 @@ export class CargoFormComponent implements OnInit  {
     onSubmit() { this.submitted = true; }
 
     ngOnInit() {
-        this.model = new CargoForm();
+        this.model = new Cargo();
     }
 
     sendEvent() {

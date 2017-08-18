@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FlightForm }    from './flight-form';
+import { Flight }    from './flight';
 import { FlightFormService } from './flight-form.service';
 
 import { Observable } from 'rxjs/Observable';
@@ -7,13 +7,13 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 @Component({
-  selector: 'flight-form',
+  selector: 'flight',
   templateUrl: './flight-form.component.html',
 })
 
 export class FlightFormComponent implements OnInit  {
 
-    model: FlightForm;
+    model: Flight;
     submitted = false;
 
     constructor(private flightFormService: FlightFormService) {}
@@ -21,7 +21,7 @@ export class FlightFormComponent implements OnInit  {
     onSubmit() { this.submitted = true; }
 
     ngOnInit() {
-        this.model = new FlightForm();
+        this.model = new Flight();
     }
 
     sendEvent() {
