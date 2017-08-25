@@ -1,4 +1,5 @@
 export class Flight {
+    _id: string;
     trackingNumber: string;
     airline: string;
     flightNumber: string;

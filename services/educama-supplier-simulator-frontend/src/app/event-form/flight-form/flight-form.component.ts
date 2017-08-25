@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Flight }    from './flight';
+import { Flight }    from '../../models/flight';
 import { FlightFormService } from './flight-form.service';
 
 import { Observable } from 'rxjs/Observable';
@@ -7,7 +7,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 @Component({
-  selector: 'flight',
+  selector: 'flight-form',
   templateUrl: './flight-form.component.html',
 })
 

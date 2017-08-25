@@ -1,4 +1,5 @@
 export class Cargo {
+    _id: string;
     trackingNumber: string;
     supplierID: string;
     origin: string;

@@ -1,0 +1,15 @@
+.row-bordered {
+    padding-top : 1em;
+}
+
+.row-bordered:after {
+    content: "";
+    display: block;
+    border-bottom: 1px solid #1F7FA9;
+    margin: 0 15px;
+}
+
+.btn {
+    margin: 0.2em;
+    width: 10em;
+}

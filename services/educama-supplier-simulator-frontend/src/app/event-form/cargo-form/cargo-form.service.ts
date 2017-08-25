@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { Flight }    from './flight';
+import { Cargo }    from '../../models/cargo';
 
 @Injectable()
-export class FlightFormService {
-  private url = 'https://educama-supplier-simulator-backend.mybluemix.net/api/flights';
+export class CargoFormService {
+  private url = 'https://educama-supplier-simulator-backend.mybluemix.net/api/cargos';
 
   constructor(private http: Http) { }
 
-  sendEvent(event: Flight) : Observable<any> {
+  sendEvent(event: Cargo) : Observable<any> {
     return this.http.post(this.url, event).map(res => res.json());
   }
 

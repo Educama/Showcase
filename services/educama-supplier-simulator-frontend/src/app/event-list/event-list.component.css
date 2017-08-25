@@ -1,0 +1,15 @@
+.title {
+    padding-bottom: 1.5em;
+    color: steelblue;
+}
+
+.row-bordered:after {
+    content: "";
+    display: block;
+    border-bottom: 1px solid steelblue;
+    margin: 0 15px;
+}
+
+.loading {
+  color: #a94442;
+}
