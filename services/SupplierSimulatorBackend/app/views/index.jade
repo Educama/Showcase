@@ -1,0 +1,145 @@
+html
+    head
+        title Supplier Simulator Backend
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        meta(http-equiv='refresh', content='5')
+        
+        link(href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.0/flatly/bootstrap.min.css", rel="stylesheet")
+        script(src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous")
+        script(type="text/javascript" src='/js/airlineBookingFunctions.js')
+        script(type="text/javascript" src='/js/haulierBookingFunctions.js')
+    body
+        .container.pan
+            .jumbotron
+                h2 SupplierSimulatorBackend - Educama
+                
+            div.content
+                table.table.table-striped
+                    thead
+                        tr: th
+                                h3  Events
+                    tbody
+                            tr
+                                td  Booking Type
+                                td  Booking Information
+                                td  Status
+                                td  Actions
+                                
+                        each airlineBooking, i in airlineBookingEvents
+                            if (airlineBooking.status === "Requested")
+                                tr
+                                    td  Airline Booking
+                                    td  
+                                        div Tracking number: #{airlineBooking.trackingNumber}
+                                        div Airline: #{airlineBooking.airline}
+                                        div Flight Number: #{airlineBooking.flightNumber}
+                                        div Origin: #{airlineBooking.origin}
+                                        div Destination: #{airlineBooking.destination}
+                                    td  Requested
+                                    td  
+                                        div
+                                            input(type='button', class="btn btn-success" value='Confirm', onclick='confirmAirlineBooking(\"#{airlineBooking._id}\")')
+                                        div 
+                                            input(type='button', class="btn btn-danger" value='Decline', onclick='declineAirlineBooking(\"#{airlineBooking._id}\")')                      
+                            else if (airlineBooking.status === "Declined")
+                                tr
+                                    td  Airline Booking
+                                    td  
+                                        div Tracking number: #{airlineBooking.trackingNumber}
+                                        div Airline: #{airlineBooking.airline}
+                                    td  Declined
+                                    td  
+                            else if (airlineBooking.status === "Confirmed")
+                                tr
+                                    td  Airline Booking
+                                    td  
+                                        div Tracking number: #{airlineBooking.trackingNumber}
+                                        div Airline: #{airlineBooking.airline}
+                                    td  Confirmed
+                                    td  
+                                        div
+                                            input(type='button', class="btn btn-success" value='Departed', onclick='departedFlight(\"#{airlineBooking._id}\")')
+                            else if (airlineBooking.status === "Departed")
+                                tr
+                                    td  Airline Booking
+                                    td  
+                                        div Airline: #{airlineBooking.airline}
+                                        div Flight Number: #{airlineBooking.flightNumber}
+                                        div Airport: #{airlineBooking.origin}
+                                        div Date/Time: #{airlineBooking.departedTime}
+                                    td  Departed
+                                    td  
+                                        div
+                                            input(type='button', class="btn btn-success" value='Arrived', onclick='arrivedFlight(\"#{airlineBooking._id}\")')
+                            else if (airlineBooking.status === "Arrived")
+                                tr
+                                    td  Airline Booking
+                                    td  
+                                        div Airline: #{airlineBooking.airline}
+                                        div Flight Number: #{airlineBooking.flightNumber}
+                                        div Airport: #{airlineBooking.destination}
+                                        div Date/Time: #{airlineBooking.arrivedTime}
+                                    td  Arrived
+                                    td  
+
+                        each haulierBooking, i in haulierBookingEvents
+                            if (haulierBooking.status === "Requested")
+                                tr
+                                    td  Haulier Booking
+                                    td  
+                                        div Tracking number: #{haulierBooking.trackingNumber}
+                                        div Supplier ID: #{haulierBooking.supplierID}
+                                        div Origin: #{haulierBooking.origin}
+                                        div Destination: #{haulierBooking.destination}
+                                    td  Requested
+                                    td  
+                                            div
+                                                input(type='button', class="btn btn-success" value='Confirm', onclick='confirmHaulierBooking(\"#{haulierBooking._id}\")')
+                                            div 
+                                                input(type='button', class="btn btn-danger" value='Decline', onclick='declineHaulierBooking(\"#{haulierBooking._id}\")')
+                            else if (haulierBooking.status === "Declined")
+                                tr
+                                    td  Haulier Booking
+                                    td  
+                                        div Tracking number: #{haulierBooking.trackingNumber}
+                                        div Supplier ID: #{haulierBooking.supplierID}
+                                    td  Declined
+                                    td  
+                            else if (haulierBooking.status === "Confirmed")
+                                tr
+                                    td  Haulier Booking
+                                    td  
+                                        div Tracking number: #{haulierBooking.trackingNumber}
+                                        div Supplier ID: #{haulierBooking.supplierID}
+                                    td  Confirmed
+                                    td  
+                                        div
+                                            input(type='button', class="btn btn-success" value='Picked Up', onclick='pickedUpCargo(\"#{haulierBooking._id}\")')
+                            else if (haulierBooking.status === "PickedUp")
+                                tr
+                                    td  Haulier Booking
+                                    td  
+                                        div Tracking Number: #{haulierBooking.trackingNumber}
+                                        div Supplier ID: #{haulierBooking.supplierID}
+                                        div Address: #{haulierBooking.origin}
+                                        div Date/Time: #{haulierBooking.pickedUpTime}
+                                    td  Picked Up
+                                    td  
+                                        div
+                                            input(type='button', class="btn btn-success" value='Delivered', onclick='deliveredCargo(\"#{haulierBooking._id}\")')
+                            else if (haulierBooking.status === "Delivered")
+                                tr
+                                    td  Haulier Booking
+                                    td  
+                                        div Tracking Number: #{haulierBooking.trackingNumber}
+                                        div Supplier ID: #{haulierBooking.supplierId}
+                                        div Address: #{haulierBooking.destination}
+                                        div Date/Time: #{haulierBooking.deliveredTime}
+                                    td  Delivered
+                                    td  
+                                        
+            h3 Instructions
+            p - Create an airline booking event (accessed at POST https://suppliersimulatorbackend.mybluemix.net/api/flights)
+            p - Get all the airline booking events (accessed at GET https://suppliersimulatorbackend.mybluemix.net/api/flights)
+            p - Create an haulier booking event (accessed at POST https://suppliersimulatorbackend.mybluemix.net/api/cargos)
+            p - Get all the haulier booking events (accessed at GET https://suppliersimulatorbackend.mybluemix.net/api/cargos)

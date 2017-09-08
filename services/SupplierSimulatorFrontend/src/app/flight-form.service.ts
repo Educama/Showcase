@@ -6,7 +6,7 @@ import { FlightForm }    from './flight-form';
 
 @Injectable()
 export class FlightFormService {
-  private url = 'https://educama-supplier-simulator-backend.mybluemix.net/api/flights';
+  private url = 'https://suppliersimulatorbackend.mybluemix.net/api/flights';
 
   constructor(private http: Http) { }
 
