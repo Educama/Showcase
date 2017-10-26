@@ -1,12 +1,32 @@
 package org.educama.common.api;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static org.camunda.bpm.engine.test.assertions.bpmn.AbstractAssertions.processEngine;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.put;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.apache.commons.lang3.ArrayUtils;
+import org.camunda.bpm.engine.runtime.CaseExecution;
+import org.camunda.bpm.engine.task.Task;
 import org.educama.EducamaApplication;
 import org.educama.customer.api.CustomerController;
 import org.educama.customer.model.Address;
 import org.educama.customer.model.Customer;
 import org.educama.shipment.api.ShipmentController;
+import org.educama.shipment.process.ShipmentCaseConstants;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Rule;
@@ -25,15 +45,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
-import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * This class uses Spring Rest Docs to generate example requests which are
@@ -68,11 +80,16 @@ public class RestApiDocumentation {
 
     private FieldDescriptor[] fieldDescriptorTask;
 
+    private FieldDescriptor[] fieldDescriptorPlanItem;
+
+    private FieldDescriptor[] fieldDescriptorHistoryTask;
+
     private FieldDescriptor[] fieldDescriptorSaveCustomerResource;
 
     private FieldDescriptor[] fieldDescriptorCustomerResource;
 
     private FieldDescriptor[] fieldDescriptorCustomerListResource;
+
 
     @Before
     public void setUp() {
@@ -154,6 +171,33 @@ public class RestApiDocumentation {
                 fieldWithPath("receiver.address.zipCode").description("The zip code of the receiver's address"),
                 fieldWithPath("receiver.address.city").description("The city of the receiver's address")};
 
+        // PlanItem Resource
+        fieldDescriptorPlanItem = new FieldDescriptor[] {
+                fieldWithPath("id").description("The id of the plan item"),
+                fieldWithPath("name").description("The plan item name"),
+                fieldWithPath("type").description("The plan item type"),
+                fieldWithPath("description").description("The plan item description"),
+                fieldWithPath("isEnabled").description("A boolean that describes if the plan item is enabled"),
+                fieldWithPath("description").description("The plan item description"),
+                fieldWithPath("trackingId").description("The unique business key of the shipment mapped to the plan item")};
+
+
+        //Historic Task Resource
+        fieldDescriptorHistoryTask = new FieldDescriptor[] {
+                fieldWithPath("asignee").description("The assignee of the task"),
+                fieldWithPath("deleteReason").description("The address of the customer"),
+                fieldWithPath("description").description("The latest description given to this task"),
+                fieldWithPath("dueDate").description("Task due date"),
+                fieldWithPath("endTime").description("Time when the task was deleted or completed"),
+                fieldWithPath("followUpDate").description("Task follow-up date"),
+                fieldWithPath("name").description("The latest name given to this task"),
+                fieldWithPath("owner").description("Task owner"),
+                fieldWithPath("priority").description("Task priority"),
+                fieldWithPath("startTime").description("Time when the task started"),
+                fieldWithPath("definitionKey").description("Task definition key"),
+                fieldWithPath("trackingId").description("The unique business key of the shipment mapped to the task")};
+
+
         // Customer Resource
 
         fieldDescriptorSaveCustomerResource = new FieldDescriptor[]{
@@ -225,6 +269,51 @@ public class RestApiDocumentation {
                 .andDo(this.documentationHandler
                         .document(responseFields(
                                 fieldWithPath("tasks[]").description("An array of task objects")).andWithPrefix("tasks[].", fieldDescriptorTask)));
+    }
+
+    @Test
+    public void listEnabledPlanItemsTest() throws Exception {
+
+        MvcResult result = this.mockMvc.perform(post(ShipmentController.SHIPMENT_RESOURCE_PATH).contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsBytes(this.createShipmentResourceHashMap()))).andExpect(status().isCreated()).andReturn();
+
+        JSONObject jsonResult = new JSONObject(result.getResponse().getContentAsString());
+        String trackingId =  jsonResult.getString("trackingId");
+
+
+        this.mockMvc.perform(get("/educama/v1/tasks/enabled").param("trackingId", trackingId))
+                .andExpect(status().isOk())
+                .andDo(this.documentationHandler
+                        .document(responseFields(
+                                fieldWithPath("plantItems[]").description("An array of task objects")).andWithPrefix("plantItems[].", fieldDescriptorPlanItem)));
+    }
+
+
+    @Test
+    public void listCompletedTasksTest() throws Exception {
+
+        MvcResult result = this.mockMvc.perform(post(ShipmentController.SHIPMENT_RESOURCE_PATH).contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsBytes(this.createIncompleteShipmentResourceHashMap()))).andExpect(status().isCreated()).andReturn();
+
+        JSONObject jsonResult = new JSONObject(result.getResponse().getContentAsString());
+        String trackingId =  jsonResult.getString("trackingId");
+
+        CaseExecution completeShipmentOrderCaseExecution = processEngine().getCaseService().createCaseExecutionQuery()
+        .activityId(ShipmentCaseConstants.PLAN_ITEM_HUMAN_TASK_COMPLETE_SHIPMENT_ORDER)
+        .caseInstanceBusinessKey(trackingId).singleResult();
+
+        // Complete task 'Complete shipment order'
+        Task task = processEngine().getTaskService().createTaskQuery()
+                .caseExecutionId(completeShipmentOrderCaseExecution.getId())
+                .singleResult();
+
+        processEngine().getTaskService().complete(task.getId());
+        //Get Completed Task
+        this.mockMvc.perform(get("/educama/v1/tasks/completed").param("trackingId", trackingId))
+                .andExpect(status().isOk())
+                .andDo(this.documentationHandler
+                        .document(responseFields(
+                                fieldWithPath("tasks[]").description("An array of task objects")).andWithPrefix("tasks[].", fieldDescriptorHistoryTask)));
     }
 
     @Test
@@ -352,6 +441,30 @@ public class RestApiDocumentation {
         cargo.put("totalCapacity", "32.5");
         cargo.put("cargoDescription", "this cargo includes pens and other writing articles");
         cargo.put("dangerousGoods", false);
+        shipment.put("shipmentCargo", cargo);
+
+        Map<String, Object> services = new LinkedHashMap<>();
+        services.put("preCarriage", true);
+        services.put("exportInsurance", false);
+        services.put("exportCustomsClearance", true);
+        services.put("flight", true);
+        services.put("importInsurance", true);
+        services.put("importCustomsClearance", false);
+        services.put("onCarriage", true);
+        shipment.put("shipmentServices", services);
+
+        return shipment;
+    }
+
+    private Map<String, Object>  createIncompleteShipmentResourceHashMap() throws Exception {
+        String uuidSender = createCustomer("Herbert Hollig");
+        String uuidReceiver = createCustomer("Herbert Hollig");
+        Map<String, Object> shipment = new LinkedHashMap<>();
+        shipment.put("uuidSender", uuidSender);
+        shipment.put("uuidReceiver", uuidReceiver);
+        shipment.put("customerTypeEnum", "RECEIVER");
+
+        Map<String, Object> cargo = new LinkedHashMap<>();
         shipment.put("shipmentCargo", cargo);
 
         Map<String, Object> services = new LinkedHashMap<>();
