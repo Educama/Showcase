@@ -11,7 +11,7 @@ import {TaskListResource} from "./resources/task-list.resource";
 @Injectable()
 export class TaskService {
 
-    private TASK_RESOURCE_PATH = "tasks";
+    private TASK_RESOURCE_PATH = "tasks/active";
 
     constructor(private _restClientService: RestClientService) {
     }

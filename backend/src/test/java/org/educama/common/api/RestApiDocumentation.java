@@ -220,11 +220,22 @@ public class RestApiDocumentation {
     public void listTasksTest() throws Exception {
         createShipment();
 
-        this.mockMvc.perform(get("/educama/v1/tasks"))
+        this.mockMvc.perform(get("/educama/v1/tasks/active"))
                 .andExpect(status().isOk())
                 .andDo(this.documentationHandler
                         .document(responseFields(
-                                fieldWithPath("tasks[]").description("An array of task objects")).andWithPrefix("tasks[].", fieldDescriptorTask)));
+                                fieldWithPath("tasks[]").description("An array of active tasks")).andWithPrefix("tasks[].", fieldDescriptorTask)));
+    }
+
+    @Test
+    public void listEnabledTasksTest() throws Exception {
+        createShipment();
+
+        this.mockMvc.perform(get("/educama/v1/tasks/enabled"))
+                .andExpect(status().isOk())
+                .andDo(this.documentationHandler
+                        .document(responseFields(
+                                fieldWithPath("tasks[]").description("An array of enabled tasks")).andWithPrefix("tasks[].", fieldDescriptorTask)));
     }
 
     @Test

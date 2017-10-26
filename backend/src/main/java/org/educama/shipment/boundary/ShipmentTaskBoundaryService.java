@@ -10,9 +10,16 @@ import java.util.List;
  */
 public interface ShipmentTaskBoundaryService {
     /**
-     * Retrieves all tasks.
+     * Retrieves all activeTasks.
      *
-     * @return a collection of all tasks
+     * @return a collection of all active tasks
      */
      List<ShipmentTaskDS> findAllActive();
+
+    /**
+     * Retrieves all enabled tasks.
+     *
+     * @return a collection of all activeTasks
+     */
+    List<ShipmentTaskDS> findAllEnabled();
 }

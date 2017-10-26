@@ -1,8 +1,8 @@
 package org.educama.shipment.api;
 
+import org.educama.shipment.api.datastructure.ShipmentTaskDS;
 import org.educama.shipment.api.resource.ShipmentTaskListResource;
 import org.educama.shipment.boundary.ShipmentTaskBoundaryService;
-import org.educama.shipment.api.datastructure.ShipmentTaskDS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,10 +27,21 @@ public class ShipmentTaskController {
      *
      * @return a Tasklist assigned to user "educama"
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/active", method = RequestMethod.GET)
     public ShipmentTaskListResource getTasks() {
         List <ShipmentTaskDS> tasks = shipmentTaskBoundaryService.findAllActive();
-        ShipmentTaskListResource taskList = new ShipmentTaskListResource().fromTaskCollection(tasks);
+        ShipmentTaskListResource taskList = new ShipmentTaskListResource().fromActiveTaskCollection(tasks);
+        return taskList;
+    }
+
+    /**
+     *
+     * @return a Tasklist assigned to user "educama" and only enabled activeTasks
+     */
+    @RequestMapping(value = "/enabled", method = RequestMethod.GET)
+    public ShipmentTaskListResource getEnabledTasks() {
+        List<ShipmentTaskDS> tasks = shipmentTaskBoundaryService.findAllEnabled();
+        ShipmentTaskListResource taskList = new ShipmentTaskListResource().fromActiveTaskCollection(tasks);
         return taskList;
     }
 }

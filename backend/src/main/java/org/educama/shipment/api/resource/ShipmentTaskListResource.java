@@ -13,7 +13,8 @@ public class ShipmentTaskListResource {
 
     public Collection<ShipmentTaskResource> tasks;
 
-    public ShipmentTaskListResource fromTaskCollection(List<ShipmentTaskDS> taskList) {
+
+    public ShipmentTaskListResource fromActiveTaskCollection(List<ShipmentTaskDS> taskList) {
         this.tasks = new ArrayList<>();
         for (ShipmentTaskDS currentTask : taskList) {
             tasks.add(new ShipmentTaskResource().fromTask(currentTask));
