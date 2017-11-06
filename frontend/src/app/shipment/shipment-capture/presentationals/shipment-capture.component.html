@@ -19,7 +19,8 @@
                                                 field="name"
                                                 [suggestions]="customerSuggestions"
                                                 (completeMethod)="loadUserSuggestions($event)"
-                                                (onSelect)="onSenderSelected($event)">
+                                                (onSelect)="onSenderSelected($event)"
+                                                inputId="shipment-capture-component_sender">
                                 </p-autoComplete>
                             </div>
                             <div class="ui-g-3">
@@ -85,7 +86,8 @@
                                                 field="name"
                                                 [suggestions]="customerSuggestions"
                                                 (completeMethod)="loadUserSuggestions($event)"
-                                                (onSelect)="onReceiverSelected($event)">
+                                                (onSelect)="onReceiverSelected($event)"
+                                                inputId="shipment-capture-component_receiver">
                                 </p-autoComplete>
                             </div>
                             <div class="ui-g-3">
@@ -287,11 +289,11 @@
                 <button pButton type="button" (click)="cancel()" label="{{'GENERIC_CANCEL' | translate}}"></button>
             </div>
             <div class="ui-g-12 ui-md-4 ui-lg-2" *ngIf="editorMode === 0">
-                <button pButton type="button" (click)="createShipment()"
+                <button pButton type="button" id="shipment-capture-component_create-button" (click)="createShipment()"
                         label="{{'GENERIC_CREATE' | translate}}" [disabled]="!shipmentCaptureForm.valid"></button>
             </div>
             <div class="ui-g-12 ui-md-4 ui-lg-2" *ngIf="editorMode === 1">
-                <button pButton type="button" (click)="createShipment()"
+                <button pButton type="button" id="shipment-capture-component_save-button" (click)="createShipment()"
                         label="{{'GENERIC_SAVE' | translate}}" [disabled]="!shipmentCaptureForm.valid"></button>
             </div>
         </div>

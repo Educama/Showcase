@@ -119,7 +119,7 @@
 							<wait>1000</wait>
 							<maxAttempts>60</maxAttempts>
 							<arguments>
-								<argument>--server.port=8091</argument>
+								<argument>--server.port=8092</argument>
 							</arguments>
 						</configuration>
 					</execution>
@@ -142,11 +142,14 @@
 					<stopKey>STOP</stopKey>
 					<stopPort>9999</stopPort>
 					<stopWait>5</stopWait>
-					<webAppSourceDirectory>${basedir}/../frontend</webAppSourceDirectory>
+					<webAppSourceDirectory>${basedir}/../frontend/dist</webAppSourceDirectory>
 					<jettyConfig>${project.basedir}/config/jetty/jetty.xml,${project.basedir}/config/jetty/jetty-rewrite.xml</jettyConfig>
 					<httpConnector>
 						<port>8090</port>
 					</httpConnector>
+					<webApp>
+						<webInfIncludeJarPattern>.*/^(asm-all-repackaged)[^/]*\.jar$</webInfIncludeJarPattern>
+					</webApp>
 				</configuration>
 				<dependencies>
 					<dependency>

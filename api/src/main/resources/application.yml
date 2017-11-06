@@ -5,12 +5,14 @@ spring:
 
 # Tomcat Configuration
 server:
-  port: 8081
+  port: 8091
 
 # Default paths to services. Can be overwritten in manifests.
 educama:
+
+
   backend:
-    url: http://localhost:8082
+     url: http://localhost:8092
 
   flightservice:
     url: https://educama-flight-service.mybluemix.net
