@@ -1,0 +1,27 @@
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+            <a class="navbar-brand" (click)="showAll();" href="/">Supplier Simulator Frontend</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li (click)="showAll();"><a href="/">All events</a></li>
+                <li (click)="showFlights();"><a href="/">Airline</a></li>
+                <li (click)="showCargos();"><a href="/">Haulier</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/form"><span class="glyphicon glyphicon-alert"></span> Event form</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<flight-form></flight-form>
+<cargo-form></cargo-form>
+<div class="alert alert-warning">
+    <strong>For testing purposes!</strong> The events are not longer posted from here. This section is only for testing purposes.
+</div>

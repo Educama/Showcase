@@ -1,0 +1,44 @@
+<div class="row row-bordered">
+  <div class="col-sm-3">Haulier Booking</div>
+  <div class="col-sm-3">
+    <span *ngIf="cargo.status == 'Requested'">
+      <div>Tracking number: {{ cargo.trackingNumber }}</div>
+      <div>Supplier ID: {{ cargo.supplierID }}</div>
+      <div>Origin: {{ cargo.origin }}</div>
+      <div>Destination: {{ cargo.destination }}</div>
+    </span>
+    <span *ngIf="cargo.status == 'Declined'">
+      <div>Tracking number: {{ cargo.trackingNumber }}</div>
+      <div>Supplier ID: {{ cargo.supplierID }}</div>
+    </span>
+    <span *ngIf="cargo.status == 'Confirmed'">
+      <div>Tracking number: {{ cargo.trackingNumber }}</div>
+      <div>Supplier ID: {{ cargo.supplierID }}</div>
+    </span>
+    <span *ngIf="cargo.status == 'PickedUp'">
+      <div>Tracking number: {{ cargo.trackingNumber }}</div>
+      <div>Supplier ID: {{ cargo.supplierID }}</div>
+      <div>Address: {{ cargo.origin }}</div>
+      <div>Date/Time: {{ cargo.pickedUpTime }}</div>
+    </span>
+    <span *ngIf="cargo.status == 'Delivered'">
+      <div>Tracking number: {{ cargo.trackingNumber }}</div>
+      <div>Supplier ID: {{ cargo.supplierID }}</div>
+      <div>Address: {{ cargo.destination }}</div>
+      <div>Date/Time: {{ cargo.deliveredTime }}</div>
+    </span>
+  </div>
+  <div class="col-sm-3"> {{ cargo.status }}</div>
+  <div class="col-sm-3">
+    <span *ngIf="cargo.status == 'Requested'">
+      <div><input type="button" class="btn btn-success" value="Confirm" (click)="confirmHaulierBooking();" [disabled]="isLoading"></div>
+      <div><input type="button" class="btn btn-danger" value="Decline" (click)="declineHaulierBooking();" [disabled]="isLoading"></div>
+    </span>
+    <span *ngIf="cargo.status == 'Confirmed'">
+      <div><input type="button" class="btn btn-success" value="Picked Up" (click)="pickedUpCargo();" [disabled]="isLoading"></div>
+    </span>
+    <span *ngIf="cargo.status == 'PickedUp'">
+      <div><input type="button" class="btn btn-success" value="Delivered" (click)="deliveredCargo();" [disabled]="isLoading"></div>
+    </span>
+  </div>
+</div>

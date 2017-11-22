@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CargoForm } from './cargo-form';
+import { Cargo } from '../../models/cargo';
 import { CargoFormService } from './cargo-form.service';
 
 import { Observable } from 'rxjs/Observable';
@@ -13,7 +13,7 @@ import 'rxjs/add/operator/map';
 
 export class CargoFormComponent implements OnInit {
 
-    model: CargoForm;
+    model: Cargo;
     submitted = false;
 
     constructor(private cargoFormService: CargoFormService) { }
@@ -21,21 +21,18 @@ export class CargoFormComponent implements OnInit {
     onSubmit() { this.submitted = true; }
 
     ngOnInit() {
-        this.model = new CargoForm();
+        this.model = new Cargo();
     }
 
     sendEvent() {
-
-        alert('Cargo event sent: \n' +
-            '\n Booking Id: ' + this.model.bookingId +
-            '\n Tracking number: ' + this.model.trackingNumber +
-            '\n Supplier ID: ' + this.model.supplierID +
-            '\n Origin: ' + this.model.origin +
-            '\n Destination: ' + this.model.destination);
-
         this.cargoFormService.sendEvent(this.model)
             .subscribe(res => {
-
+                alert('Cargo event sent: \n' +
+                    '\n Booking Id: ' + res.bookingId +
+                    '\n Tracking number: ' + res.trackingNumber +
+                    '\n Supplier ID: ' + res.supplierID +
+                    '\n Origin: ' + res.origin +
+                    '\n Destination: ' + res.destination);
             });
     }
 }

@@ -1,0 +1,45 @@
+<div class="row row-bordered">
+  <div class="col-sm-3">Airline Booking</div>
+  <div class="col-sm-3">
+    <span *ngIf="flight.status == 'Requested'">
+      <div>Tracking number: {{ flight.trackingNumber }}</div>
+      <div>Airline: {{ flight.airline }}</div>
+      <div>Flight Number: {{ flight.flightNumber }}</div>
+      <div>Origin: {{ flight.origin }}</div>
+      <div>Destination: {{ flight.destination }}</div>
+    </span>
+    <span *ngIf="flight.status == 'Declined'">
+      <div>Tracking number: {{ flight.trackingNumber }}</div>
+      <div>Airline: {{ flight.airline }}</div>
+    </span>
+    <span *ngIf="flight.status == 'Confirmed'">
+      <div>Tracking number: {{ flight.trackingNumber }}</div>
+      <div>Airline: {{ flight.airline }}</div>
+    </span>
+    <span *ngIf="flight.status == 'Departed'">
+      <div>Airline: {{ flight.airline }}</div>
+      <div>Flight Number: {{ flight.flightNumber }}</div>
+      <div>Airport: {{ flight.origin }}</div>
+      <div>Date/Time: {{ flight.departedTime }}</div>
+    </span>
+    <span *ngIf="flight.status == 'Arrived'">
+      <div>Airline: {{ flight.airline }}</div>
+      <div>Flight Number: {{ flight.flightNumber }}</div>
+      <div>Airport: {{ flight.destination }}</div>
+      <div>Date/Time: {{ flight.arrivedTime }}</div>
+    </span>
+  </div>
+  <div class="col-sm-3"> {{ flight.status }}</div>
+  <div class="col-sm-3">
+    <span *ngIf="flight.status == 'Requested'">
+      <div><input type="button" class="btn btn-success" value="Confirm" (click)="confirmAirlineBooking();" [disabled]="isLoading"></div>
+      <div><input type="button" class="btn btn-danger" value="Decline" (click)="declineAirlineBooking();" [disabled]="isLoading"></div>
+    </span>
+    <span *ngIf="flight.status == 'Confirmed'">
+      <div><input type="button" class="btn btn-success" value="Departed" (click)="departedFlight();" [disabled]="isLoading"></div>
+    </span>
+    <span *ngIf="flight.status == 'Departed'">
+      <div><input type="button" class="btn btn-success" value="Arrived" (click)="arrivedFlight();" [disabled]="isLoading"></div>
+    </span>
+  </div>
+</div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FlightForm } from './flight-form';
+import { Flight } from '../../models/flight';
 import { FlightFormService } from './flight-form.service';
 
 import { Observable } from 'rxjs/Observable';
@@ -13,7 +13,7 @@ import 'rxjs/add/operator/map';
 
 export class FlightFormComponent implements OnInit {
 
-    model: FlightForm;
+    model: Flight;
     submitted = false;
 
     constructor(private flightFormService: FlightFormService) { }
@@ -21,22 +21,19 @@ export class FlightFormComponent implements OnInit {
     onSubmit() { this.submitted = true; }
 
     ngOnInit() {
-        this.model = new FlightForm();
+        this.model = new Flight();
     }
 
     sendEvent() {
-
-        alert('Flight event sent: \n' +
-            '\n Booking Id: ' + this.model.bookingId +
-            '\n Tracking number: ' + this.model.trackingNumber +
-            '\n Airline: ' + this.model.airline +
-            '\n Flight number: ' + this.model.flightNumber +
-            '\n Origin: ' + this.model.origin +
-            '\n Destination: ' + this.model.destination);
-
         this.flightFormService.sendEvent(this.model)
             .subscribe(res => {
-
+                alert('Flight event sent: \n' +
+                    '\n Booking Id: ' + res.bookingId +
+                    '\n Tracking number: ' + res.trackingNumber +
+                    '\n Airline: ' + res.airline +
+                    '\n Flight number: ' + res.flightNumber +
+                    '\n Origin: ' + res.origin +
+                    '\n Destination: ' + res.destination);
             });
     }
 }
