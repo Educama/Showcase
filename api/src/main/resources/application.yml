@@ -62,3 +62,15 @@ ribbon:
 management:
   security:
     enabled: false
+
+---
+# Test ports
+spring:
+  profiles: test
+
+server:
+  port: 8091
+
+educama:
+  backend:
+    url: http://localhost:8092

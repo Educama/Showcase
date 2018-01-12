@@ -104,34 +104,56 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<mainClass>org.educama.EducamaApplication</mainClass>
-				</configuration>
-				<executions>
-					<execution>
-						<id>pre-integration-test</id>
-						<goals>
-							<goal>start</goal>
-						</goals>
-						<configuration>
-							<wait>1000</wait>
-							<maxAttempts>60</maxAttempts>
-							<arguments>
-								<argument>--server.port=8091</argument>
-							</arguments>
-						</configuration>
-					</execution>
-					<execution>
-						<id>post-integration-test</id>
-						<goals>
-							<goal>stop</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
+	            <groupId>com.bazaarvoice.maven.plugins</groupId>
+	            <artifactId>process-exec-maven-plugin</artifactId>
+	            <version>0.7</version>
+	            <executions>                    
+	                <execution>
+	                    <id>backend</id>
+	                    <phase>pre-integration-test</phase>
+	                    <goals>
+	                        <goal>start</goal>
+	                    </goals>
+	                    <configuration>
+	                        <name>backend</name>
+	                        <workingDir>/../../backend</workingDir>
+	                        <waitForInterrupt>false</waitForInterrupt>                          
+	                        <arguments>
+	                            <argument>java</argument>
+	                            <argument>-jar</argument>
+	                            <argument>${basedir}/../backend/target/educama-backend-exec.jar</argument>
+	                            <argument>--spring.profiles.active=test</argument>
+	                        </arguments>
+	                    </configuration>
+	                </execution>
+	                <execution>
+	                    <id>api-gateway</id>
+	                    <phase>pre-integration-test</phase>
+	                    <goals>
+	                        <goal>start</goal>
+	                    </goals>
+	                    <configuration>
+	                        <name>api-gateway</name>
+	                        <workingDir>/../../api</workingDir>
+	                        <waitForInterrupt>false</waitForInterrupt>                          
+	                        <arguments>
+	                            <argument>java</argument>
+	                            <argument>-jar</argument>
+	                            <argument>${basedir}/../api/target/educama-api-gateway.jar</argument>
+	                            <argument>--spring.profiles.active=test</argument>
+	                        </arguments>
+	                    </configuration>
+	                </execution>
+	                <!--Stop all processes in reverse order-->
+	                <execution>
+	                    <id>stop-all</id>
+	                    <phase>post-integration-test</phase>
+	                    <goals>
+	                        <goal>stop-all</goal>
+	                    </goals>
+	                </execution>
+	            </executions>
+	        </plugin>
 			<!-- Use Jetty Server to host the frontend during integration tests. Documentation:
 				www.eclipse.org/jetty/documentation/current/jetty-maven-plugin.html -->
 			<plugin>
@@ -142,11 +164,14 @@
 					<stopKey>STOP</stopKey>
 					<stopPort>9999</stopPort>
 					<stopWait>5</stopWait>
-					<webAppSourceDirectory>${basedir}/../frontend</webAppSourceDirectory>
+					<webAppSourceDirectory>${basedir}/../frontend/dist</webAppSourceDirectory>
 					<jettyConfig>${project.basedir}/config/jetty/jetty.xml,${project.basedir}/config/jetty/jetty-rewrite.xml</jettyConfig>
 					<httpConnector>
 						<port>8090</port>
 					</httpConnector>
+					<webApp>
+						<webInfIncludeJarPattern>.*/^(asm-all-repackaged[^/]*\.jar$)</webInfIncludeJarPattern>
+					</webApp>
 				</configuration>
 				<dependencies>
 					<dependency>
