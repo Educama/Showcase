@@ -4,7 +4,7 @@ applications:
   host: educama-backend-sandbox
   path: ../../backend/target/educama-backend-exec.jar
   buildpack: https://github.com/cloudfoundry/java-buildpack.git#v3.10
-  memory: 768M
+  memory: 1024M
   disk_quota: 256M
   timeout: 180
   env:
