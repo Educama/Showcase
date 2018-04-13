@@ -73,7 +73,10 @@ export class TaskListPageComponent implements OnInit, OnDestroy {
         this._store.dispatch(new RequestSingleShipment(task.trackingId));
         this._router.navigate(["caseui/" + task.trackingId + "/organizeFlight"]);
         break;
-      default:
+      case "Create invoice":
+        this._router.navigate(["caseui/" + task.trackingId + "/createInvoice"]);
+        break;
+        default:
         break;
     }
   }

@@ -1,0 +1,134 @@
+<p-panel header="{{'CREATE-INVOICE' | translate}}">
+  <div class="ui-g">
+    <!-- Top Information -->
+
+    <div class="ui-g-12">
+      <div class="ui-g" style="border-bottom: solid; border-color: lightgray;">
+        <div class="ui-g-12 ui-md-2">
+          <label>{{'INVOICE-CREATION-DATE' | translate}}</label>
+        </div>
+        <div class="ui-g-12 ui-md-4">
+          <p-calendar [(ngModel)]="invoiceCreationDate"
+                      [showIcon]="true"
+          ></p-calendar>
+        </div>
+      </div>
+      <!-- EXPORT -->
+      <div class="ui-g" style="border-bottom: solid; border-color: lightgray;">
+        <div class="ui-g-12 ui-md-2">
+          <label>{{'SHIPMENT-RESOURCE_EXPORT-INSURANCE' | translate}}</label>
+        </div>
+        <div class="ui-g-12 ui-md-4">
+          <input
+            pInputText
+            [(ngModel)]="exportInsurance"
+            type="text"
+          />
+        </div>
+        <div class="ui-g-12 ui-md-2">
+          <label>{{'INVOICE-EXPORT-CUSTOMS-CLEARANCE' | translate}}</label>
+        </div>
+        <div class="ui-g-12 ui-md-4">
+          <input
+            pInputText
+            [(ngModel)]="exportCustomsClearance"
+            type="text"
+          />
+        </div>
+      </div>
+      <div class="ui-g" style="border-bottom: solid; border-color: lightgray;">
+        <div class="ui-g-12 ui-md-2">
+          <label>{{'SHIPMENT-RESOURCE_IMPORT-INSURANCE' | translate}}</label>
+        </div>
+        <div class="ui-g-12 ui-md-4">
+          <input
+            pInputText
+            [(ngModel)]="importInsurance"
+            type="text"
+          />
+        </div>
+        <div class="ui-g-12 ui-md-2">
+          <label>{{'INVOICE-IMPORT-CUSTOMS-CLEARANCE' | translate}}</label>
+        </div>
+        <div class="ui-g-12 ui-md-4">
+          <input
+            pInputText
+            [(ngModel)]="importCustomsClearance"
+            type="text"
+          />
+        </div>
+      </div>
+      <div class="ui-g-12 ui-md-2">
+        <label>{{'SHIPMENT-RESOURCE_PRE-CARRIAGE' | translate}}</label>
+      </div>
+      <div class="ui-g-12 ui-md-4">
+        <input
+          pInputText
+          [(ngModel)]="preCarriage"
+          type="text"
+        />
+      </div>
+      <div class="ui-g-12 ui-md-2">
+        <label>{{'FLIGHT-PRICE' | translate}}</label>
+      </div>
+      <div class="ui-g-12 ui-md-4">
+        <input
+          pInputText
+          [(ngModel)]="flightPrice"
+          type="text"
+        />
+      </div>
+      <div class="ui-g-12 ui-md-2">
+        <label>{{'SHIPMENT-RESOURCE_ON-CARRIAGE' | translate}}</label>
+      </div>
+      <div class="ui-g-12 ui-md-4">
+        <input
+          pInputText
+          [(ngModel)]="onCarriage"
+          type="text"
+        />
+      </div>
+      <div class="ui-g-12 ui-md-2">
+        <label>{{'INVOICE-MANAGEMENT-FEE' | translate}}</label>
+      </div>
+      <div class="ui-g-12 ui-md-4">
+        <input
+          pInputText
+          [(ngModel)]="managementFee"
+          type="text"
+        />
+      </div>
+      <div class="ui-g-12 ui-md-2">
+        <label>{{'INVOICE-SERVICE-FEE' | translate}}</label>
+      </div>
+      <div class="ui-g-12 ui-md-4">
+        <input
+          pInputText
+          [(ngModel)]="serviceFee"
+          type="text"
+        />
+      </div>
+      <div class="ui-g-12 ui-md-2">
+        <label>{{'INVOICE-DISCOUNT' | translate}}</label>
+      </div>
+      <div class="ui-g-12 ui-md-4">
+        <input
+          pInputText
+          [(ngModel)]="discount"
+          type="text"
+        />
+      </div>
+    </div>
+    <!-- Footer -->
+    <div class="ui-g-12">
+      <button style="float:right;" class="save-button" pButton type="button" label="{{'GENERIC_CREATE' | translate}}" icon="fa-check"
+              class="ui-button-success" iconPos="right"
+              (click)="saveInvoice()"
+      ></button>
+      <button style="float:right;" class="abord-button" pButton type="button" label="{{'GENERIC_CANCEL' | translate}}" icon="fa-times"
+              class="ui-button-danger" iconPos="right"
+              (click)="cancleInvoice()"
+      ></button>
+    </div>
+  </div>
+</p-panel>

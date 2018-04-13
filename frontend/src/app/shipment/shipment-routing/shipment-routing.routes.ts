@@ -5,6 +5,7 @@ import {ShipmentCapturePageComponent} from "../shipment-capture/container/shipme
 import {CaseUiComponent} from "../caseUI/caseUi.component";
 import {EnabledTaskListPageComponent} from "../enabled-task-list/container/enabled-task-list-page.component";
 import {OrganizeFlightFormPageComponent} from "../../flights/organize-flight-form/container/organize-flight-form-page.component";
+import {ShipmentInvoicePageComponent} from "../shipment-invoice/container/shipment-invoice-page.component";
 
 /*
  * Router configuration for the component task
@@ -32,7 +33,8 @@ export const SHIPMENT_ROUTES: Routes = [
             children: [
               { path: "changeShipment", component: ShipmentCapturePageComponent },
               { path: "completeShipment", component: ShipmentCapturePageComponent},
-              { path: "organizeFlight", component: OrganizeFlightFormPageComponent}
+              { path: "organizeFlight", component: OrganizeFlightFormPageComponent},
+              { path: "createInvoice",  component: ShipmentInvoicePageComponent}
             ]
     },
     {

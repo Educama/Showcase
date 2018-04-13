@@ -7,6 +7,7 @@ import "rxjs/add/observable/throw";
 import {ShipmentListResource} from "./resources/shipment-list.resource";
 import {ShipmentResource} from "./resources/shipment.resource";
 import {OrganizeFlightResource} from "./resources/organize-flight.resource";
+import {InvoiceResource} from "./resources/invoice.resource";
 
 /*
  * Service to communicate with Shipments Resource
@@ -62,7 +63,15 @@ export class ShipmentService {
    */
   public addFlightToShipment(trackingId: string, flight: OrganizeFlightResource): Observable<ShipmentResource> {
     return this._restClientService.put(this.SHIPMENT_RESOURCE_PATH + "/flight/" + trackingId,
-      "{\"shipmentFlight\":" + JSON.stringify(flight) + "}" );
+      "{\"shipmentFlight\":" + JSON.stringify(flight) + "}");
+  }
 
+  /*
+  *  Add flight to existing shipment
+  *  @param trackingId of shipment and shipmentFlight to add
+  *  @return Observable of updated shipment
+  */
+  public createInvoice(trackingId: string, invoice: InvoiceResource): Observable<InvoiceResource> {
+    return this._restClientService.post(this.SHIPMENT_RESOURCE_PATH + "/invoice/" + trackingId, JSON.stringify(invoice));
   }
 }

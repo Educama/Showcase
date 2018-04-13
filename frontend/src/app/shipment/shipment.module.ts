@@ -7,6 +7,8 @@ import {ShipmentRoutingModule} from "./shipment-routing/shipment-routing.module"
 import {EnabledTaskListModule} from "./enabled-task-list/enabled-task-list.module";
 import {CompletedTaskListModule} from "./completed-task-list/completed-task-list.module";
 import {OrganizeFlightFormModule} from "../flights/organize-flight-form/organize-flight-form.module";
+import {ShipmentInvoicePageComponent} from "./shipment-invoice/container/shipment-invoice-page.component";
+import {ShipmentInvoiceModule} from "./shipment-invoice/shipment-invoice.module";
 
 @NgModule({
     imports: [
@@ -17,7 +19,8 @@ import {OrganizeFlightFormModule} from "../flights/organize-flight-form/organize
       TaskListModule,
       EnabledTaskListModule,
       CompletedTaskListModule,
-      OrganizeFlightFormModule
+      OrganizeFlightFormModule,
+      ShipmentInvoiceModule
     ]
 })
 export class ShipmentModule {

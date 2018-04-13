@@ -37,6 +37,9 @@ import {ORGANIZE_FLIGHT_PAGE_REDUCER} from "./shipment/shipment-common/store/shi
 import {OrganizeFlightSlice} from "./shipment/shipment-common/store/shipments/organize-flight-page/organize-flight-page.slice";
 import {ORGANIZE_FLIGHT_SLICE_INITIAL_STATE
 } from "./shipment/shipment-common/store/shipments/organize-flight-page/organize-flight-page.initial-state";
+import {InvoicePageSlice} from "./shipment/shipment-common/store/shipments/invoice-page/invoice-page.slice";
+import {INVOICE_LIST_SLICE_INITIAL_STATE} from "./shipment/shipment-common/store/shipments/invoice-page/invoice-page.initial-state";
+import {INVOICE_PAGE_REDUCER} from "./shipment/shipment-common/store/shipments/invoice-page/invoice-page.reducer";
 
 export interface State {
   shipmentListSlice: ShipmentListSlice;
@@ -50,6 +53,7 @@ export interface State {
   completedTaskListSlice: CompletedTaskListSlice;
   enabledTaskListSlice: EnabledTaskListSlice;
   organizeFlightPageSlice: OrganizeFlightSlice;
+  invoicePageSlice: InvoicePageSlice;
 }
 
 export const INITIAL_STATE = {
@@ -63,7 +67,8 @@ export const INITIAL_STATE = {
   airlineSlice: AIRLINE_SLICE_INITIAL_STATE,
   completedTaskListSlice: COMPLETED_TASK_LIST_SLICE_INITIAL_STATE,
   enabledTaskListSlice: ENABLED_TASK_LIST_SLICE_INITIAL_STATE,
-  organizeFlightSlice: ORGANIZE_FLIGHT_SLICE_INITIAL_STATE
+  organizeFlightSlice: ORGANIZE_FLIGHT_SLICE_INITIAL_STATE,
+  invoiceSlice: INVOICE_LIST_SLICE_INITIAL_STATE
 };
 
 export const reducers: ActionReducerMap<State> = {
@@ -77,5 +82,6 @@ export const reducers: ActionReducerMap<State> = {
   airlineSlice: AIRLINE_REDUCER,
   completedTaskListSlice: COMPLETED_TASK_LIST_PAGE_REDUCER,
   enabledTaskListSlice: ENABLED_TASK_LIST_PAGE_REDUCER,
-  organizeFlightPageSlice: ORGANIZE_FLIGHT_PAGE_REDUCER
+  organizeFlightPageSlice: ORGANIZE_FLIGHT_PAGE_REDUCER,
+  invoicePageSlice: INVOICE_PAGE_REDUCER
 };
