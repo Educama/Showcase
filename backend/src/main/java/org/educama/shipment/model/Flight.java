@@ -1,5 +1,6 @@
 package org.educama.shipment.model;
 
+import javax.persistence.Convert;
 import javax.persistence.Embeddable;
 import java.time.Instant;
 
@@ -13,7 +14,9 @@ public class Flight {
     public String airline;
     public String departureAirport;
     public String destinationAirport;
+    @Convert(converter = InstantConverter.class)
     public Instant departureTime;
+    @Convert(converter = InstantConverter.class)
     public Instant destinationTime;
     public double price;
 
