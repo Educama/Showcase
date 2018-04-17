@@ -11,11 +11,11 @@ public class InstantConverter implements AttributeConverter<Instant, Timestamp> 
 
     @Override
     public Timestamp convertToDatabaseColumn(Instant instant) {
-        return Timestamp.from(instant);
+        return instant == null ? null : Timestamp.from(instant);
     }
 
     @Override
     public Instant convertToEntityAttribute(Timestamp timestamp) {
-        return timestamp.toInstant();
+        return timestamp == null ? null : timestamp.toInstant();
     }
 }

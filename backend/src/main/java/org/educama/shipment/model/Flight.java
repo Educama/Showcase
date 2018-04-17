@@ -33,8 +33,8 @@ public class Flight {
         this.airline = airline;
         this.departureAirport = departureAirport;
         this.destinationAirport = destinationAirport;
-        this.departureTime = Instant.parse(departureTime);
-        this.destinationTime = Instant.parse(destinationTime);
+        this.departureTime = departureTime == null ? null : Instant.parse(departureTime);
+        this.destinationTime = destinationTime == null ? null : Instant.parse(destinationTime);
         this.price = price;
     }
 }
