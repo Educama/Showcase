@@ -13,7 +13,7 @@ public class FlightDS {
     public String destinationAirport;
     public String departureTime;
     public String destinationTime;
-    public double price;
+    public Double price;
 
     private FlightDS() {
         // empty

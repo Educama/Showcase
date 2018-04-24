@@ -5,6 +5,7 @@ import org.educama.shipment.api.datastructure.CargoDS;
 import org.educama.shipment.api.datastructure.FlightDS;
 import org.educama.shipment.api.datastructure.PartyDS;
 import org.educama.shipment.api.datastructure.ServicesDS;
+import org.educama.shipment.model.Flight;
 import org.educama.shipment.model.Shipment;
 
 /**
@@ -33,7 +34,7 @@ public class ShipmentResource {
         this.shipmentCargo = new CargoDS(shipmentModel.shipmentCargo);
         this.shipmentServices = new ServicesDS(shipmentModel.shipmentServices);
         this.customerTypeEnum = shipmentModel.customerTypeEnum;
-        this.shipmentFlight = new FlightDS(shipmentModel.shipmentFlight);
+        this.shipmentFlight = new FlightDS(shipmentModel.shipmentFlight == null ? new Flight() : shipmentModel.shipmentFlight);
 
         return this;
     }

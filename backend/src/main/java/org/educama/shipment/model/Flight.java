@@ -18,7 +18,7 @@ public class Flight {
     public Instant departureTime;
     @Convert(converter = InstantConverter.class)
     public Instant destinationTime;
-    public double price;
+    public Double price;
 
 
     /**
