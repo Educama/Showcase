@@ -66,6 +66,11 @@
 			<version>${serenity.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>net.serenity-bdd</groupId>
+			<artifactId>serenity-rest-assured</artifactId>
+			<version>${serenity.version}</version>
+		</dependency>
 		<!-- Remove default Spring Boot dependency to Tomcat and replace it with
 			Jetty because it can be configured with a directory outside of the project -->
 		<dependency>
@@ -224,6 +229,11 @@
 					<dependency>
 						<groupId>net.serenity-bdd</groupId>
 						<artifactId>serenity-core</artifactId>
+						<version>${serenity.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>net.serenity-bdd</groupId>
+						<artifactId>serenity-rest-assured</artifactId>
 						<version>${serenity.version}</version>
 					</dependency>
 				</dependencies>

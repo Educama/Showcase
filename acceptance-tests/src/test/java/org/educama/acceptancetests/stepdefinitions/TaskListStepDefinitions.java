@@ -10,7 +10,6 @@ import org.jbehave.core.annotations.When;
 /**
  * Step Definitions for the task list.
  */
-
 public class TaskListStepDefinitions {
     @Steps
     TaskListSteps user;

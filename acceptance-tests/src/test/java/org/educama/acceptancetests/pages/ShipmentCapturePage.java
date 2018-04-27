@@ -25,14 +25,15 @@ public class ShipmentCapturePage extends PageObject {
     @FindBy(id = "shipment-capture-component_create-button")
     WebElement createButton;
 
-    public void createShipment() {
-        formFieldSender.sendKeys("Apple");
-        $("//ul//li[contains(.,\"Apple\")]").waitUntilVisible();
+    public void createShipment(String sender, String receiver) {
+
+        formFieldSender.sendKeys(sender);
+        $("//ul//li[contains(.,\"" + sender + "\")]").waitUntilVisible();
         formFieldSender.sendKeys(Keys.DOWN);
         formFieldSender.sendKeys(Keys.RETURN);
 
-        formFieldReceiver.sendKeys("NovaTec Consulting GmbH");
-        $("//ul//li[contains(.,\"NovaTec Consulting GmbH\")]").waitUntilVisible();
+        formFieldReceiver.sendKeys(receiver);
+        $("//ul//li[contains(.,\"" + receiver + "\")]").waitUntilVisible();
         formFieldReceiver.sendKeys(Keys.DOWN);
         formFieldReceiver.sendKeys(Keys.RETURN);
         clickOn(createButton);
