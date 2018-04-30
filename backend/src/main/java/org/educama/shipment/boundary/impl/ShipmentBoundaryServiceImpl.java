@@ -50,6 +50,7 @@ public class ShipmentBoundaryServiceImpl implements ShipmentBoundaryService {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public Shipment createShipment(Shipment shipment) {
         shipment.trackingId = UUID.randomUUID().toString();
         Shipment createdShipment = shipmentRepository.saveAndFlush(shipment);
@@ -70,6 +71,7 @@ public class ShipmentBoundaryServiceImpl implements ShipmentBoundaryService {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public ShipmentResource updateShipment(String trackingId, Shipment saveShipmentResource) {
         Shipment shipment = shipmentRepository.findOneBytrackingId(trackingId);
         if (shipment == null) {
@@ -93,6 +95,7 @@ public class ShipmentBoundaryServiceImpl implements ShipmentBoundaryService {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public ShipmentResource addFlightToShipment(String trackingId, Flight saveFlightResource) {
         Shipment shipment = shipmentRepository.findOneBytrackingId(trackingId);
         if (shipment == null) {

@@ -99,6 +99,7 @@ public class ShipmentTaskBoundaryServiceImpl implements ShipmentTaskBoundaryServ
     }
 
     @Override
+    @Transactional(readOnly = false)
     public void manuallyStartEnabledTask(String trackingID, String name) {
         Collection<CaseExecution> caseExecutions =
                 caseService.createCaseExecutionQuery().caseInstanceBusinessKey(trackingID).list();
@@ -108,6 +109,7 @@ public class ShipmentTaskBoundaryServiceImpl implements ShipmentTaskBoundaryServ
     }
 
     @Override
+    @Transactional(readOnly = false)
     public void completeTask(String trackingID, String name) {
         Collection<CaseExecution> caseExecutions =
                 caseService.createCaseExecutionQuery().caseInstanceBusinessKey(trackingID).list();
