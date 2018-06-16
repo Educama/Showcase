@@ -148,4 +148,15 @@ public class ShipmentController {
 
         return shipmentResource;
     }
+
+    /**
+     * API call to complete Flight Departed Milestone.
+     *
+     * @returns returns true if the Flight Departed Milestone is completed
+     */
+    @RequestMapping(value = "/flightDeparted/{trackingId}", method = RequestMethod.POST)
+    public boolean completeFlightDeparted(@PathVariable("trackingId") String trackingId) {
+        boolean isCompleted = shipmentBoundaryService.completeFlightDeparted(trackingId);
+        return isCompleted;
+    }
 }

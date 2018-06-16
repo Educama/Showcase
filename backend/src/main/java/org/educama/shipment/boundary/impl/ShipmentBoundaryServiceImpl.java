@@ -1,7 +1,11 @@
 package org.educama.shipment.boundary.impl;
 
+import org.camunda.bpm.engine.CaseService;
 import org.camunda.bpm.engine.ProcessEngine;
+import org.camunda.bpm.engine.TaskService;
+import org.camunda.bpm.engine.task.Task;
 import org.educama.common.exceptions.ResourceNotFoundException;
+import org.educama.enums.Status;
 import org.educama.shipment.api.resource.InvoiceResource;
 import org.educama.shipment.api.resource.ShipmentResource;
 import org.educama.shipment.boundary.ShipmentBoundaryService;
@@ -9,7 +13,10 @@ import org.educama.shipment.control.ShipmentCaseControlService;
 import org.educama.shipment.model.Flight;
 import org.educama.shipment.model.Invoice;
 import org.educama.shipment.model.Shipment;
+import org.educama.shipment.process.ShipmentCaseConstants;
 import org.educama.shipment.process.ShipmentCaseEvaluator;
+import org.educama.shipment.process.milestones.FlightDeparted;
+import org.educama.shipment.process.sentries.FlightDepartedSentry;
 import org.educama.shipment.process.tasks.CompleteShipmentOrderTask;
 import org.educama.shipment.process.tasks.CreateInvoiceTask;
 import org.educama.shipment.process.tasks.OrganizeFlightTask;
@@ -39,9 +46,17 @@ public class ShipmentBoundaryServiceImpl implements ShipmentBoundaryService {
 
     private InvoiceRepository invoiceRepository;
 
+    private FlightDepartedSentry flightDepartedSentry;
+
+    private FlightDeparted flightDeparted;
+
     private ShipmentCaseControlService shipmentCaseControlService;
 
     private ShipmentCaseEvaluator shipmentCaseEvaluator;
+
+    private CaseService caseService;
+
+    private TaskService taskService;
 
     @Autowired
     public ShipmentBoundaryServiceImpl(CompleteShipmentOrderTask completeShipmentOrderTask,
@@ -49,23 +64,38 @@ public class ShipmentBoundaryServiceImpl implements ShipmentBoundaryService {
                                        CreateInvoiceTask createInvoiceTask,
                                        ShipmentRepository shipmentRepository,
                                        InvoiceRepository invoiceRepository,
+                                       FlightDepartedSentry flightDepartedSentry,
+                                       FlightDeparted flightDeparted,
                                        ShipmentCaseControlService shipmentCaseControlService,
                                        ShipmentCaseEvaluator shipmentCaseEvaluator,
-                                       ProcessEngine processEngine) {
+                                       ProcessEngine processEngine,
+                                       CaseService caseService,
+                                       TaskService taskService) {
         this.completeShipmentOrderTask = completeShipmentOrderTask;
         this.organizeFlightTask = organizeFlightTask;
         this.createInvoiceTask = createInvoiceTask;
         this.shipmentRepository = shipmentRepository;
         this.invoiceRepository = invoiceRepository;
+        this.flightDepartedSentry = flightDepartedSentry;
+        this.flightDeparted = flightDeparted;
         this.shipmentCaseControlService = shipmentCaseControlService;
         this.shipmentCaseEvaluator = shipmentCaseEvaluator;
+        this.caseService = caseService;
+        this.taskService = taskService;
     }
 
     @Override
     public Shipment createShipment(Shipment shipment) {
         shipment.trackingId = UUID.randomUUID().toString();
-        Shipment createdShipment = shipmentRepository.saveAndFlush(shipment);
+        shipmentRepository.saveAndFlush(shipment);
         shipmentCaseControlService.create(shipment.trackingId);
+
+        if (completeShipmentOrderTask.isActive(shipment.trackingId)) {
+            shipment.statusEnum = Status.SHIPMENT_ORDER_INCOMPLETE;
+        } else {
+            shipment.statusEnum = Status.SHIPMENT_ORDER_COMPLETED;
+        }
+        Shipment createdShipment = shipmentRepository.saveAndFlush(shipment);
         return createdShipment;
     }
 
@@ -124,12 +154,21 @@ public class ShipmentBoundaryServiceImpl implements ShipmentBoundaryService {
 
             if (completeShipmentOrderTask.isActive(trackingId) && completeShipmentOrderTask.canBeCompleted(trackingId)) {
                 completeShipmentOrderTask.complete(trackingId);
+                shipment.statusEnum = Status.SHIPMENT_ORDER_COMPLETED;
+                shipment = shipmentRepository.saveAndFlush(shipment);
                 shipmentCaseEvaluator.reevaluateCase(trackingId);
             }
 
             ShipmentResource convertedShipment = new ShipmentResource().fromShipment(shipment);
             return convertedShipment;
         }
+    }
+
+    @Override
+    public void setStatus(String trackingId, Status status) {
+        Shipment shipment = shipmentRepository.findOneBytrackingId(trackingId);
+        shipment.statusEnum = status;
+        shipmentRepository.saveAndFlush(shipment);
     }
 
     @Override
@@ -147,4 +186,25 @@ public class ShipmentBoundaryServiceImpl implements ShipmentBoundaryService {
         }
     }
 
+    @Override
+    public boolean completeFlightDeparted(String trackingId) {
+        Shipment shipment = shipmentRepository.findOneBytrackingId(trackingId);
+        if (shipment == null) {
+            throw new ResourceNotFoundException("Shipment not found");
+        } else {
+            String caseInstanceId = caseService.createCaseExecutionQuery()
+                    .activityId(ShipmentCaseConstants.SHIPMENT_CASE_PLAN_MODEL).caseInstanceBusinessKey(trackingId)
+                    .singleResult().getId();
+
+            Collection<Task> active = taskService.createTaskQuery().caseInstanceBusinessKey(trackingId).active().list();
+            for (Task task:active) {
+                if (task.getName().equals("Organize Flight")) {
+                    return false;
+                }
+            }
+            flightDepartedSentry.setDeparted(caseInstanceId, true);
+            shipmentCaseEvaluator.reevaluateCase(trackingId);
+        }
+     return !(flightDeparted.isAvailable(trackingId));
+    }
 }

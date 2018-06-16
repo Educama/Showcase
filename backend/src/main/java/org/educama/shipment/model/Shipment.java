@@ -1,17 +1,11 @@
 package org.educama.shipment.model;
 
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import org.educama.customer.model.Customer;
 import org.educama.enums.ClientType;
+import org.educama.enums.Status;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 /**
@@ -48,4 +42,7 @@ public class Shipment extends AbstractPersistable<Long> {
 
     @Embedded
     public Flight shipmentFlight;
+
+    @Enumerated(EnumType.STRING)
+    public Status statusEnum;
 }

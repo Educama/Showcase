@@ -147,7 +147,8 @@ public class RestApiDocumentation {
                 fieldWithPath("shipmentFlight.destinationAirport").description("The destination airport of the flight"),
                 fieldWithPath("shipmentFlight.departureTime").description("The time when the flight starts"),
                 fieldWithPath("shipmentFlight.destinationTime").description("The time when the flight lands"),
-                fieldWithPath("shipmentFlight.price").description("The price of the flight")
+                fieldWithPath("shipmentFlight.price").description("The price of the flight"),
+                fieldWithPath("status").description("The status of the shipment")
         };
 
         // Active Task Resource

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c5e31c63-42ef-4856-8668-4ce0668bc405",
+		"_postman_id": "ba18f80f-8ad9-46ea-965e-063d20097843",
 		"name": "Educama-Backend",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -468,6 +468,30 @@
 								"shipments",
 								"invoice",
 								"2db20a7d-063a-4592-b2b0-14b4ba8a5d48"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Achieve Milestone Flight Departed",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8081/educama/v1/shipments/flightDeparted/fad9fcb2-e91f-4aa4-aa88-3ed5e2055248",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"educama",
+								"v1",
+								"shipments",
+								"flightDeparted",
+								"fad9fcb2-e91f-4aa4-aa88-3ed5e2055248"
 							]
 						}
 					},

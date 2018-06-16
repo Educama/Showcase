@@ -4,6 +4,7 @@ import java.util.UUID;
 
 
 import org.educama.enums.ClientType;
+import org.educama.enums.Status;
 import org.educama.shipment.api.datastructure.CargoDS;
 import org.educama.shipment.api.datastructure.FlightDS;
 import org.educama.shipment.api.datastructure.ServicesDS;
@@ -22,6 +23,7 @@ public class SaveShipmentResource {
     public ServicesDS shipmentServices;
     public ClientType customerTypeEnum;
     public FlightDS shipmentFlight;
+    public Status statusEnum;
 
     /**
      * Convert this instance of API-Model (Resource) to the internal data model.
@@ -35,6 +37,7 @@ public class SaveShipmentResource {
         toConvert.shipmentServices = shipmentServices.toServices();
         toConvert.customerTypeEnum = customerTypeEnum;
         toConvert.shipmentFlight = (shipmentFlight == null ? new Flight() : shipmentFlight.toFlight());
+        toConvert.statusEnum = statusEnum;
         return toConvert;
     }
 }

@@ -1,5 +1,6 @@
 package org.educama.shipment.boundary;
 
+import org.educama.enums.Status;
 import org.educama.shipment.api.resource.InvoiceResource;
 import org.educama.shipment.api.resource.ShipmentResource;
 import org.educama.shipment.model.Invoice;
@@ -62,6 +63,14 @@ public interface ShipmentBoundaryService {
     ShipmentResource updateShipment(String trackingId, Shipment saveShipmentResource);
 
     /**
+     * Sets the status of a shipment.
+     *
+     * @param trackingId to get required shipment
+     * @param status the new status of the shipment
+     */
+    void setStatus(String trackingId, Status status);
+
+    /**
      * Retrieves one shipment and adds shipmentFlight Information.
      *
      * @param trackingId to get required shipment
@@ -69,4 +78,9 @@ public interface ShipmentBoundaryService {
      */
     ShipmentResource addFlightToShipment(String trackingId, Flight saveFlightResource);
 
+    /**
+     * @param trackingId to get required shipment
+     * @return returns true if the Flight Departed Milestone is completed
+     */
+    boolean completeFlightDeparted(String trackingId);
 }

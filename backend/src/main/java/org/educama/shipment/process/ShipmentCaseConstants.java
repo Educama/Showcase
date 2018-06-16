@@ -24,6 +24,7 @@ public final class ShipmentCaseConstants {
 
     // Milestones
     public static final String PLAN_ITEM_MILESTONE_SHIPMENT_ORDER_COMPLETED = "PlanItem_Milestone_ShipmentOrderCompleted";
+    public static final String PLAN_ITEM_MILESTONE_FLIGHT_DEPARTED = "PlanItem_Milestone_FlightDeparted";
 
     // Variables
     public static final String VARIABLE_LAST_EVALUATE_DATE = "lastEvaluateDate";

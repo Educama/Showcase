@@ -103,7 +103,7 @@ public class ShipmentTaskBoundaryServiceImpl implements ShipmentTaskBoundaryServ
         Collection<CaseExecution> caseExecutions =
                 caseService.createCaseExecutionQuery().caseInstanceBusinessKey(trackingID).list();
 
-        caseExecutions.stream().filter(caseExecution -> caseExecution.getActivityName().equals(name)).
+        caseExecutions.stream().filter(caseExecution -> caseExecution.getActivityName().equals(name == null ? " " : name)).
                 findFirst().ifPresent(caseExecution -> caseService.manuallyStartCaseExecution(caseExecution.getId()));
     }
 
@@ -112,7 +112,7 @@ public class ShipmentTaskBoundaryServiceImpl implements ShipmentTaskBoundaryServ
         Collection<CaseExecution> caseExecutions =
                 caseService.createCaseExecutionQuery().caseInstanceBusinessKey(trackingID).list();
 
-        caseExecutions.stream().filter(caseExecution -> caseExecution.getActivityName().equals(name)).
+        caseExecutions.stream().filter(caseExecution -> caseExecution.getActivityName().equals(name == null ? " " : name)).
                 findFirst().ifPresent(caseExecution -> caseService.completeCaseExecution(caseExecution.getId()));
     }
 }

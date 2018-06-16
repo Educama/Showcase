@@ -1,6 +1,9 @@
 package org.educama.shipment.process;
 
 import org.camunda.bpm.engine.CaseService;
+import org.camunda.bpm.engine.HistoryService;
+import org.camunda.bpm.engine.history.HistoricCaseActivityInstance;
+import org.camunda.bpm.engine.history.HistoricCaseInstance;
 import org.camunda.bpm.engine.runtime.CaseExecution;
 import org.camunda.bpm.engine.runtime.CaseInstance;
 import org.camunda.bpm.engine.task.Task;
@@ -12,10 +15,10 @@ import org.educama.customer.model.Address;
 import org.educama.customer.model.Customer;
 import org.educama.customer.repository.CustomerRepository;
 import org.educama.enums.ClientType;
-import org.educama.shipment.model.Cargo;
-import org.educama.shipment.model.Flight;
-import org.educama.shipment.model.Services;
-import org.educama.shipment.model.Shipment;
+import org.educama.enums.Status;
+import org.educama.shipment.boundary.ShipmentBoundaryService;
+import org.educama.shipment.control.ShipmentControlService;
+import org.educama.shipment.model.*;
 import org.educama.shipment.repository.ShipmentRepository;
 import org.junit.After;
 import org.junit.Before;
@@ -26,7 +29,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
-import java.util.UUID;
 
 import static org.camunda.bpm.engine.test.assertions.bpmn.AbstractAssertions.processEngine;
 import static org.junit.Assert.*;
@@ -40,7 +42,6 @@ import static org.junit.Assert.*;
 @Deployment(resources = "cmmn/ShipmentCase.cmmn")
 public class ShipmentCaseModelTest extends AbstractProcessEngineRuleTest {
 
-    String caseInstanceId;
     Long shipmentId;
 
     @Autowired
@@ -51,6 +52,15 @@ public class ShipmentCaseModelTest extends AbstractProcessEngineRuleTest {
 
     @Autowired
     ShipmentCaseEvaluator caseModelHandler;
+
+    @Autowired
+    ShipmentBoundaryService shipmentBoundaryService;
+
+    @Autowired
+    ShipmentControlService shipmentControlService;
+
+    @Autowired
+    HistoryService historyService;
 
     @Before
     public void setup() {
@@ -67,6 +77,7 @@ public class ShipmentCaseModelTest extends AbstractProcessEngineRuleTest {
         shipment.shipmentCargo = new Cargo(null, 2.0, 123.0, "Don't Panic!", true);
         shipment.shipmentServices = new Services(false, false, false, true, false, false, true);
         shipment.shipmentFlight = new Flight("10243", "LH", "FRA", "STR", "2015-06-02T21:34:33.616Z", "2015-06-02T21:34:33.616Z", 100.12);
+        shipment = shipmentBoundaryService.createShipment(shipment);
         shipmentRepository.save(shipment);
 
         this.shipmentId = shipment.getId();
@@ -76,26 +87,11 @@ public class ShipmentCaseModelTest extends AbstractProcessEngineRuleTest {
     public void cleanup() {
         shipmentRepository.deleteAll();
         customerRepository.deleteAll();
-
-        // cleanup
-        processEngine().getCaseService().terminateCaseExecution(caseInstanceId);
-        processEngine().getCaseService().closeCaseInstance(caseInstanceId);
     }
 
     @Test
     public void testCaseInitializationWithIncompleteShipmentData() {
         Shipment shipment = shipmentRepository.findOne(this.shipmentId);
-        shipment.trackingId = UUID.randomUUID().toString();
-        shipmentRepository.save(shipment);
-
-        CaseInstance caseInstance = processEngine().getCaseService()
-                .createCaseInstanceByKey(ShipmentCaseConstants.SHIPMENTCASEKEY, shipment.trackingId);
-        this.caseInstanceId = caseInstance.getId();
-
-        showCaseOverview(caseInstance);
-
-        // Case Instance active?
-        assertTrue(caseInstance.isActive());
 
         // Milestone 'Shipment order completed' not reached?
         assertTrue(processEngine().getCaseService().createCaseExecutionQuery()
@@ -111,22 +107,14 @@ public class ShipmentCaseModelTest extends AbstractProcessEngineRuleTest {
         assertFalse(processEngine().getCaseService().createCaseExecutionQuery()
                 .activityId(ShipmentCaseConstants.PLAN_ITEM_STAGE_PROCESS_SHIPMENT_ORDER)
                 .caseInstanceBusinessKey(shipment.trackingId).singleResult().isEnabled());
+
+        // Status of shipment is set to SHIPMENT_ORDER_INCOMPLETE
+        assertTrue(shipment.statusEnum.equals(Status.SHIPMENT_ORDER_INCOMPLETE));
     }
 
     @Test
     public void testCaseInitializationWithIncompleteShipmentDataWithModelUpdate() {
         Shipment shipment = shipmentRepository.findOne(this.shipmentId);
-        shipment.trackingId = UUID.randomUUID().toString();
-        shipmentRepository.save(shipment);
-
-        CaseInstance caseInstance = processEngine().getCaseService()
-                .createCaseInstanceByKey(ShipmentCaseConstants.SHIPMENTCASEKEY, shipment.trackingId);
-        this.caseInstanceId = caseInstance.getId();
-
-        showCaseOverview(caseInstance);
-
-        // Case Instance active?
-        assertTrue(caseInstance.isActive());
 
         // Milestone 'Shipment order completed' not reached?
         assertTrue(processEngine().getCaseService().createCaseExecutionQuery()
@@ -150,22 +138,16 @@ public class ShipmentCaseModelTest extends AbstractProcessEngineRuleTest {
                 .singleResult()
                 .isEnabled());
 
-        Shipment shipment2 = shipmentRepository.findOne(this.shipmentId);
-        shipment2.shipmentCargo = new Cargo(1, 2.0, 123.0, "Don't Panic!", true);
-        shipmentRepository.save(shipment2);
+        // Status of shipment is set to SHIPMENT_ORDER_INCOMPLETE
+        assertTrue((shipment.statusEnum.equals(Status.SHIPMENT_ORDER_INCOMPLETE)));
 
-        // Complete task 'Complete shipment order'
-        Task task = processEngine().getTaskService().createTaskQuery()
-                .caseExecutionId(completeShipmentOrderCaseExecution.getId())
-                .singleResult();
-        processEngine().getTaskService().complete(task.getId());
+        shipment.shipmentCargo = new Cargo(1, 2.0, 123.0, "Don't Panic!", true);
+        shipmentBoundaryService.updateShipment(shipment.trackingId, shipment);
+        shipment = shipmentRepository.findOne(this.shipmentId);
 
         // evaluate
         System.out.println("CREATING...");
         caseModelHandler.reevaluateCase(shipment.trackingId);
-
-        // print
-        showCaseOverview(caseInstance);
 
         // Task 'Complete shipment order' completed?
         assertNull(processEngine().getCaseService().createCaseExecutionQuery()
@@ -176,28 +158,31 @@ public class ShipmentCaseModelTest extends AbstractProcessEngineRuleTest {
         assertTrue(processEngine().getCaseService().createCaseExecutionQuery()
                 .activityId(ShipmentCaseConstants.PLAN_ITEM_STAGE_PROCESS_SHIPMENT_ORDER)
                 .caseInstanceBusinessKey(shipment.trackingId).singleResult().isActive());
+
+        // Status of shipment is set to SHIPMENT_ORDER_COMPLETE
+        assertTrue(shipment.statusEnum.equals(Status.SHIPMENT_ORDER_COMPLETED));
     }
 
     @Test
     public void testCaseAfterCreation() {
         Shipment shipment = shipmentRepository.findOne(this.shipmentId);
         shipment.shipmentCargo.numberPackages = 2;
-        shipment.trackingId = UUID.randomUUID().toString();
-        shipmentRepository.save(shipment);
+        shipmentBoundaryService.updateShipment(shipment.trackingId, shipment);
+        shipment = shipmentRepository.findOneBytrackingId(shipment.trackingId);
 
-        CaseInstance caseInstance = processEngine().getCaseService()
-                .createCaseInstanceByKey(ShipmentCaseConstants.SHIPMENTCASEKEY, shipment.trackingId);
-        this.caseInstanceId = caseInstance.getId();
+        caseModelHandler.reevaluateCase(shipment.trackingId);
 
-        // Case Instance active?
-        assertTrue(caseInstance.isActive());
-
-        showCaseOverview(caseInstance);
-
-        // Milestone reached and stage activated?
+        // Milestone "Shipment order complete" reached and stage activated?
         assertNull(processEngine().getCaseService().createCaseExecutionQuery()
                 .activityId(ShipmentCaseConstants.PLAN_ITEM_MILESTONE_SHIPMENT_ORDER_COMPLETED)
                 .caseInstanceBusinessKey(shipment.trackingId).singleResult());
+
+        // Milestone 'Flight departed' not reached?
+        assertTrue(processEngine().getCaseService().createCaseExecutionQuery()
+                .activityId(ShipmentCaseConstants.PLAN_ITEM_MILESTONE_FLIGHT_DEPARTED)
+                .caseInstanceBusinessKey(shipment.trackingId)
+                .singleResult()
+                .isAvailable());
 
         // Stage "PlanItem_Stage_ProcessShipmentOrder" automatically active with
         // the input data?
@@ -219,24 +204,228 @@ public class ShipmentCaseModelTest extends AbstractProcessEngineRuleTest {
         assertTrue(processEngine().getCaseService().createCaseExecutionQuery()
                 .activityId(ShipmentCaseConstants.PLAN_ITEM_HUMAN_TASK_ORGANIZE_FLIGHT)
                 .caseInstanceBusinessKey(shipment.trackingId).singleResult().isActive());
+
+        // Status of shipment is set to SHIPMENT_ORDER_COMPLETE
+        assertTrue(shipment.statusEnum.equals(Status.SHIPMENT_ORDER_COMPLETED));
+    }
+
+    @Test
+    public void testCaseAfterOrganizeFlight() {
+        Shipment shipment = shipmentRepository.findOne(this.shipmentId);
+        shipment.shipmentCargo.numberPackages = 2;
+        shipmentBoundaryService.updateShipment(shipment.trackingId, shipment);
+        shipment = shipmentRepository.findOneBytrackingId(shipment.trackingId);
+
+        caseModelHandler.reevaluateCase(shipment.trackingId);
+
+        // Task 'organize flight' active?
+        CaseExecution organizeFlightCaseExecution = processEngine().getCaseService().createCaseExecutionQuery()
+                .activityId(ShipmentCaseConstants.PLAN_ITEM_HUMAN_TASK_ORGANIZE_FLIGHT)
+                .caseInstanceBusinessKey(shipment.trackingId)
+                .active()
+                .singleResult();
+        assertTrue(organizeFlightCaseExecution.isActive());
+
+        // Complete task 'organize flight'
+        Task task = processEngine().getTaskService().createTaskQuery()
+                .caseExecutionId(organizeFlightCaseExecution.getId())
+                .singleResult();
+        processEngine().getTaskService().complete(task.getId());
+
+        // Milestone "Shipment order complete" reached and stage activated?
+        assertNull(processEngine().getCaseService().createCaseExecutionQuery()
+                .activityId(ShipmentCaseConstants.PLAN_ITEM_MILESTONE_SHIPMENT_ORDER_COMPLETED)
+                .caseInstanceBusinessKey(shipment.trackingId).singleResult());
+
+        // Milestone 'Flight departed' not reached?
+        assertTrue(processEngine().getCaseService().createCaseExecutionQuery()
+                .activityId(ShipmentCaseConstants.PLAN_ITEM_MILESTONE_FLIGHT_DEPARTED)
+                .caseInstanceBusinessKey(shipment.trackingId)
+                .singleResult()
+                .isAvailable());
+
+        // Stage "PlanItem_Stage_ProcessShipmentOrder" automatically active with
+        // the input data?
+        assertTrue(processEngine().getCaseService().createCaseExecutionQuery()
+                .activityId(ShipmentCaseConstants.PLAN_ITEM_STAGE_PROCESS_SHIPMENT_ORDER)
+                .caseInstanceBusinessKey(shipment.trackingId).singleResult().isActive());
+
+        // Task 'PlanItem_HumanTask_ChangeShipmentOrder' enabled? -> Manual Task
+        assertTrue(processEngine().getCaseService().createCaseExecutionQuery()
+                .activityId(ShipmentCaseConstants.PLAN_ITEM_HUMAN_TASK_CHANGE_SHIPMENT_ORDER)
+                .caseInstanceBusinessKey(shipment.trackingId).singleResult().isEnabled());
+
+        // Stage 'PlanItem_HumanTask_CreateInvoice' is active?
+        assertTrue(processEngine().getCaseService().createCaseExecutionQuery()
+                .activityId(ShipmentCaseConstants.PLAN_ITEM_HUMAN_TASK_CREATE_INVOICE)
+                .caseInstanceBusinessKey(shipment.trackingId).singleResult().isActive());
+
+        // Task 'PlanItem_HumanTask_OrganizeFlight' is completed?
+        assertNull(processEngine().getCaseService().createCaseExecutionQuery()
+                .activityId(ShipmentCaseConstants.PLAN_ITEM_HUMAN_TASK_ORGANIZE_FLIGHT)
+                .caseInstanceBusinessKey(shipment.trackingId).singleResult());
+
+        // Status of shipment is set to SHIPMENT_ORDER_COMPLETE
+        assertTrue(shipment.statusEnum.equals(Status.SHIPMENT_ORDER_COMPLETED));
+    }
+
+    @Test
+    public void testCaseAfterOrganizeFlightAndFlightDeparted() {
+
+        Shipment shipment = shipmentRepository.findOne(this.shipmentId);
+        shipment.shipmentCargo.numberPackages = 2;
+        shipmentBoundaryService.updateShipment(shipment.trackingId, shipment);
+        shipment = shipmentRepository.findOneBytrackingId(shipment.trackingId);
+
+        caseModelHandler.reevaluateCase(shipment.trackingId);
+
+        // Task 'organize flight' active?
+        CaseExecution organizeFlightCaseExecution = processEngine().getCaseService().createCaseExecutionQuery()
+                .activityId(ShipmentCaseConstants.PLAN_ITEM_HUMAN_TASK_ORGANIZE_FLIGHT)
+                .caseInstanceBusinessKey(shipment.trackingId)
+                .active()
+                .singleResult();
+        assertTrue(organizeFlightCaseExecution.isActive());
+
+        // Complete task 'organize flight'
+        Task task = processEngine().getTaskService().createTaskQuery()
+                .caseExecutionId(organizeFlightCaseExecution.getId())
+                .singleResult();
+        processEngine().getTaskService().complete(task.getId());
+
+        // Milestone 'Flight departed' not reached?
+        CaseExecution flightDepartedCaseExecution = processEngine().getCaseService().createCaseExecutionQuery()
+                .activityId(ShipmentCaseConstants.PLAN_ITEM_MILESTONE_FLIGHT_DEPARTED)
+                .caseInstanceBusinessKey(shipment.trackingId)
+                .available()
+                .singleResult();
+        assertTrue(flightDepartedCaseExecution.isAvailable());
+
+        // Achieve Milestone ´Flight deaparted`
+        shipmentBoundaryService.completeFlightDeparted(shipment.trackingId);
+
+        HistoricCaseActivityInstance milestoneInstanceFlightDeparted = historyService
+                .createHistoricCaseActivityInstanceQuery()
+                .caseInstanceId(flightDepartedCaseExecution.getCaseInstanceId())
+                .caseActivityId(ShipmentCaseConstants.PLAN_ITEM_MILESTONE_FLIGHT_DEPARTED)
+                .singleResult();
+        assertTrue(milestoneInstanceFlightDeparted.isCompleted());
+
+        // Milestone "Shipment order complete" reached and stage activated?
+        assertNull(processEngine().getCaseService().createCaseExecutionQuery()
+                .activityId(ShipmentCaseConstants.PLAN_ITEM_MILESTONE_SHIPMENT_ORDER_COMPLETED)
+                .caseInstanceBusinessKey(shipment.trackingId).singleResult());
+
+        // Stage "PlanItem_Stage_ProcessShipmentOrder" automatically active with
+        // the input data?
+        assertTrue(processEngine().getCaseService().createCaseExecutionQuery()
+                .activityId(ShipmentCaseConstants.PLAN_ITEM_STAGE_PROCESS_SHIPMENT_ORDER)
+                .caseInstanceBusinessKey(shipment.trackingId).singleResult().isActive());
+
+        // Task 'PlanItem_HumanTask_ChangeShipmentOrder' is not available? -> Manual Task
+        assertNull(processEngine().getCaseService().createCaseExecutionQuery()
+                .activityId(ShipmentCaseConstants.PLAN_ITEM_HUMAN_TASK_CHANGE_SHIPMENT_ORDER)
+                .caseInstanceBusinessKey(shipment.trackingId).singleResult());
+
+        // Stage 'PlanItem_HumanTask_CreateInvoice' is active?
+        assertTrue(processEngine().getCaseService().createCaseExecutionQuery()
+                .activityId(ShipmentCaseConstants.PLAN_ITEM_HUMAN_TASK_CREATE_INVOICE)
+                .caseInstanceBusinessKey(shipment.trackingId).singleResult().isActive());
+
+        // Task 'PlanItem_HumanTask_OrganizeFlight' is completed?
+        assertNull(processEngine().getCaseService().createCaseExecutionQuery()
+                .activityId(ShipmentCaseConstants.PLAN_ITEM_HUMAN_TASK_ORGANIZE_FLIGHT)
+                .caseInstanceBusinessKey(shipment.trackingId).singleResult());
+
+        // Status of shipment is set to SHIPMENT_ORDER_COMPLETE
+        assertTrue(shipment.statusEnum.equals(Status.SHIPMENT_ORDER_COMPLETED));
+    }
+
+    @Test
+    public void testCaseAfterOrganizeFlightAndFlightDepartedAndCreateInvoice() {
+
+        Shipment shipment = shipmentRepository.findOne(this.shipmentId);
+        shipment.shipmentCargo.numberPackages = 2;
+        shipmentBoundaryService.updateShipment(shipment.trackingId, shipment);
+        shipment = shipmentRepository.findOneBytrackingId(shipment.trackingId);
+
+        caseModelHandler.reevaluateCase(shipment.trackingId);
+
+        // Task 'organize flight' active?
+        CaseExecution organizeFlightCaseExecution = processEngine().getCaseService().createCaseExecutionQuery()
+                .activityId(ShipmentCaseConstants.PLAN_ITEM_HUMAN_TASK_ORGANIZE_FLIGHT)
+                .caseInstanceBusinessKey(shipment.trackingId)
+                .active()
+                .singleResult();
+        assertTrue(organizeFlightCaseExecution.isActive());
+
+        // Complete task 'organize flight'
+        Task task = processEngine().getTaskService().createTaskQuery()
+                .caseExecutionId(organizeFlightCaseExecution.getId())
+                .singleResult();
+        processEngine().getTaskService().complete(task.getId());
+
+        // Milestone 'Flight departed' not reached?
+        CaseExecution flightDepartedCaseExecution = processEngine().getCaseService().createCaseExecutionQuery()
+                .activityId(ShipmentCaseConstants.PLAN_ITEM_MILESTONE_FLIGHT_DEPARTED)
+                .caseInstanceBusinessKey(shipment.trackingId)
+                .available()
+                .singleResult();
+        assertTrue(flightDepartedCaseExecution.isAvailable());
+
+        // Achieve Milestone ´Flight deaparted`
+        shipmentBoundaryService.completeFlightDeparted(shipment.trackingId);
+
+        HistoricCaseActivityInstance milestoneInstanceFlightDeparted = historyService
+                .createHistoricCaseActivityInstanceQuery()
+                .caseInstanceId(flightDepartedCaseExecution.getCaseInstanceId())
+                .caseActivityId(ShipmentCaseConstants.PLAN_ITEM_MILESTONE_FLIGHT_DEPARTED)
+                .singleResult();
+        assertTrue(milestoneInstanceFlightDeparted.isCompleted());
+
+        // Complete Task 'Create Invoice'
+        Invoice invoice = new Invoice();
+        invoice.discount = 1;
+        invoice.exportCustomsClearance = 1;
+        invoice.exportInsurance = 1;
+        invoice.flightPrice = 1;
+        invoice.importCustomsClearance = 1;
+        invoice.importInsurance = 1;
+        invoice.managementFee = 1;
+        invoice.onCarriage = 1;
+        invoice.serviceFee = 1;
+        invoice.preCarriage = 1;
+        invoice.invoiceCreationDate = java.time.Instant.now();
+
+        shipmentBoundaryService.createInvoice(shipment.trackingId, invoice);
+        shipment = shipmentRepository.findOne(this.shipmentId);
+
+        // Status of shipment is set to SHIPMENT_COMPLETE
+        assertTrue(shipment.statusEnum.equals(Status.SHIPMENT_COMPLETED));
+
+        // Shipment case instance is completed?
+        HistoricCaseInstance completedCaseInstance = historyService
+                .createHistoricCaseInstanceQuery()
+                .caseInstanceId(flightDepartedCaseExecution.getCaseInstanceId())
+                .completed()
+                .singleResult();
+        assertTrue(completedCaseInstance.isCompleted());
     }
 
     @Test
     public void testNullValueDataAfterCreation() {
         Shipment shipment = shipmentRepository.findOne(this.shipmentId);
-        shipment.trackingId = UUID.randomUUID().toString();
-        shipmentRepository.save(shipment);
-
-        CaseInstance caseInstance = processEngine().getCaseService()
-                .createCaseInstanceByKey(ShipmentCaseConstants.SHIPMENTCASEKEY, shipment.trackingId);
-        this.caseInstanceId = caseInstance.getId();
-
-        showCaseOverview(caseInstance);
 
         // Milestone reached and stage activated?
         assertTrue(processEngine().getCaseService().createCaseExecutionQuery()
                 .activityId(ShipmentCaseConstants.PLAN_ITEM_MILESTONE_SHIPMENT_ORDER_COMPLETED)
                 .caseInstanceBusinessKey(shipment.trackingId).singleResult().isAvailable());
+
+        // Milestone 'Flight departed' not reached?
+        assertNull(processEngine().getCaseService().createCaseExecutionQuery()
+                .activityId(ShipmentCaseConstants.PLAN_ITEM_MILESTONE_FLIGHT_DEPARTED)
+                .caseInstanceBusinessKey(shipment.trackingId)
+                .singleResult());
 
         // Stage "PlanItem_Stage_ProcessShipmentOrder" automatically active with
         // the input data?
@@ -258,6 +447,9 @@ public class ShipmentCaseModelTest extends AbstractProcessEngineRuleTest {
         assertNull(processEngine().getCaseService().createCaseExecutionQuery()
                 .activityId(ShipmentCaseConstants.PLAN_ITEM_HUMAN_TASK_ORGANIZE_FLIGHT)
                 .caseInstanceBusinessKey(shipment.trackingId).singleResult());
+
+        // Status of shipment is set to SHIPMENT_ORDER_INCOMPLETE
+        assertTrue(shipment.statusEnum.equals(Status.SHIPMENT_ORDER_INCOMPLETE));
     }
 
     /**
