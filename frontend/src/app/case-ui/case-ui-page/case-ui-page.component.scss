@@ -1,0 +1,13 @@
+.case-ui-wrapper {
+  display: flex;
+  height: 100%;
+
+  .tasks-overview {
+    flex: 1;
+    border-right: 1px solid black;
+  }
+
+  .task-ui {
+    flex: 2;
+  }
+}

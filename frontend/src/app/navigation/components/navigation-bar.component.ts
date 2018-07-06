@@ -36,6 +36,10 @@ export class NavigationBarComponent {
                 routerLink: ["/tasks/active"]
             },
             {
+              label: "Case UI",
+              routerLink: ["/case-ui"]
+            },
+            {
                 label: this._translateService.instant("NAVIGATION-BAR-COMPONENT_MENU-ITEM_MASTER-DATA"),
                 items: [
                     {

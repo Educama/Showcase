@@ -21,27 +21,29 @@ import {CustomerModule} from "./customer/customer.module";
 import {NavigationModule} from "./navigation/navigation.module";
 import {ShipmentModule} from "./shipment/shipment.module";
 import {FlightsModule} from "./flights/flights.module";
+import {CaseUiModule} from "./case-ui/case-ui.module";
 
 @NgModule({
-    imports: [
-        BrowserAnimationsModule,
-        BrowserModule,
-        CustomerModule,
-        EffectsModule.forRoot([]),
-        FlightsModule,
-        NavigationModule,
-        ROUTING,
-        SharedModule.forRoot(),
-        ShipmentModule,
-        StoreModule.forRoot(reducers, {initialState: INITIAL_STATE}),
-        !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 50 }) : []
-    ],
-    declarations: [AppComponent],
-    providers: [
-        {provide: APP_BASE_HREF, useValue: "/"},
-        APP_ROUTING_PROVIDERS
-    ],
-    bootstrap: [AppComponent]
+  imports: [
+    BrowserAnimationsModule,
+    BrowserModule,
+    CustomerModule,
+    EffectsModule.forRoot([]),
+    FlightsModule,
+    NavigationModule,
+    ROUTING,
+    SharedModule.forRoot(),
+    ShipmentModule,
+    CaseUiModule,
+    StoreModule.forRoot(reducers, {initialState: INITIAL_STATE}),
+    !environment.production ? StoreDevtoolsModule.instrument({maxAge: 50}) : []
+  ],
+  declarations: [AppComponent],
+  providers: [
+    {provide: APP_BASE_HREF, useValue: "/"},
+    APP_ROUTING_PROVIDERS
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

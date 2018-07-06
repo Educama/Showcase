@@ -2,6 +2,7 @@
 $fa-font-path : '../node_modules/font-awesome/fonts';
 $list_header_color: #369;
 body {
+  height: calc(100vh - 172px);
   font-family: Arial, Helvetica, sans-serif;
   margin: 2em;
 }

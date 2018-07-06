@@ -1,0 +1,4 @@
+<h2>Available Tasks</h2>
+<ol>
+  <li *ngFor="let task of retrieveAvailableTasks()" (click)="loadDynamicFrame(task.src)">{{task.label}}</li>
+</ol>
