@@ -1,20 +1,37 @@
-import {Component, Input, OnChanges, OnDestroy, OnInit} from "@angular/core";
-import {ActivatedRoute, Router} from "@angular/router";
-import {Subscription} from "rxjs/Subscription";
-import {Observable} from "rxjs/Observable";
-import {State} from "../../../../app.reducers";
-import {Store} from "@ngrx/store";
-import {isNullOrUndefined, isUndefined} from "util";
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
-import {CaseUiCenterAreaSlice} from "../../../shipment-common/store/shipments/case-ui-center-area-page/case-ui-center-area-page.slice";
+import {
+  Component,
+  OnDestroy,
+  OnInit
+} from "@angular/core";
+import {
+  ActivatedRoute,
+  Router
+} from "@angular/router";
+import {
+  Observable,
+  Subscription
+} from "rxjs";
+import { State } from "../../../../app.reducers";
+import { Store } from "@ngrx/store";
+import {
+  isNullOrUndefined,
+  isUndefined
+} from "util";
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup
+} from "@angular/forms";
+import { CaseUiCenterAreaSlice } from "../../../shipment-common/store/shipments/case-ui-center-area-page/case-ui-center-area-page.slice";
 import {
   ClearCaseUiCenterAreaSlice,
-  LoadActiveTasksForCaseUiCenterAreaAction, LoadCompletedTasksForCaseUiCenterAreaAction,
+  LoadActiveTasksForCaseUiCenterAreaAction,
+  LoadCompletedTasksForCaseUiCenterAreaAction,
   LoadEnabledTasksForCaseUiCenterAreaAction,
   LoadInvoiceForCaseUiCenterAreaAction,
   LoadShipmentForCaseUiCenterAreaAction
 } from "../../../shipment-common/store/shipments/case-ui-center-area-page/case-ui-center-area-page.actions";
-import {CaseUiCenterAreaModel} from "./case-ui-center-area.model";
+import { CaseUiCenterAreaModel } from "./case-ui-center-area.model";
 
 @Component({
   selector: "educama-caseui-center-area",
@@ -39,7 +56,6 @@ export class CaseUiCenterAreaComponent implements OnInit, OnDestroy {
 
   public caseUiCenterAreaModel = new CaseUiCenterAreaModel();
 
-
   constructor(private _router: Router,
               private _store: Store<State>,
               private  _activatedRoute: ActivatedRoute,
@@ -49,12 +65,11 @@ export class CaseUiCenterAreaComponent implements OnInit, OnDestroy {
       this.evaluateUrl(event.toString());
     });
 
-
     this._activatedRoute.url.subscribe(url => {
-      this._store.dispatch(new LoadShipmentForCaseUiCenterAreaAction(url[1].toString()));
-      this._store.dispatch(new LoadActiveTasksForCaseUiCenterAreaAction(url[1].toString()));
-      this._store.dispatch(new LoadEnabledTasksForCaseUiCenterAreaAction(url[1].toString()));
-      this._store.dispatch(new LoadCompletedTasksForCaseUiCenterAreaAction(url[1].toString()));
+      this._store.dispatch(new LoadShipmentForCaseUiCenterAreaAction(url[ 1 ].toString()));
+      this._store.dispatch(new LoadActiveTasksForCaseUiCenterAreaAction(url[ 1 ].toString()));
+      this._store.dispatch(new LoadEnabledTasksForCaseUiCenterAreaAction(url[ 1 ].toString()));
+      this._store.dispatch(new LoadCompletedTasksForCaseUiCenterAreaAction(url[ 1 ].toString()));
 
     });
 
@@ -153,17 +168,17 @@ export class CaseUiCenterAreaComponent implements OnInit, OnDestroy {
 
         this.displayFlightForm.get("airline").setValue(this.caseUiCenterAreaModel.shipment.shipmentFlight.airline);
         this.displayFlightForm.get("departureAirport").setValue(this.caseUiCenterAreaModel.shipment.shipmentFlight.departureAirport);
-        this.displayFlightForm.get("departureTime").setValue(this.caseUiCenterAreaModel.shipment.shipmentFlight.departureTime.split("T")[1].replace("Z", ""));
-        this.displayFlightForm.get("departureDate").setValue(this.caseUiCenterAreaModel.shipment.shipmentFlight.departureTime.split("T")[0]);
+        this.displayFlightForm.get("departureTime").setValue(this.caseUiCenterAreaModel.shipment.shipmentFlight.departureTime.split("T")[ 1 ].replace("Z", ""));
+        this.displayFlightForm.get("departureDate").setValue(this.caseUiCenterAreaModel.shipment.shipmentFlight.departureTime.split("T")[ 0 ]);
         this.displayFlightForm.get("destinationAirport").setValue(this.caseUiCenterAreaModel.shipment.shipmentFlight.destinationAirport);
         this.displayFlightForm.get("destinationTime")
-          .setValue(this.caseUiCenterAreaModel.shipment.shipmentFlight.destinationTime
-            .split("T")[1].replace("Z", "")
-          );
+            .setValue(this.caseUiCenterAreaModel.shipment.shipmentFlight.destinationTime
+                          .split("T")[ 1 ].replace("Z", "")
+            );
         this.displayFlightForm.get("destinationDate")
-          .setValue(this.caseUiCenterAreaModel.shipment.shipmentFlight.destinationTime
-            .split("T")[0]
-          );
+            .setValue(this.caseUiCenterAreaModel.shipment.shipmentFlight.destinationTime
+                          .split("T")[ 0 ]
+            );
         this.displayFlightForm.get("price").setValue(this.caseUiCenterAreaModel.shipment.shipmentFlight.price);
       }
     }
@@ -200,64 +215,63 @@ export class CaseUiCenterAreaComponent implements OnInit, OnDestroy {
     }
   }
 
-
   private initalizeShipmentForm() {
     this.displayShipmentForm = this._formBuilder.group({
-      senderName: new FormControl({value: "", disabled: true}),
-      senderStreet: new FormControl({value: "", disabled: true}),
-      senderStreetNo: new FormControl({value: "", disabled: true}),
-      senderCity: new FormControl({value: "", disabled: true}),
-      senderZipCode: new FormControl({value: "", disabled: true}),
+      senderName: new FormControl({ value: "", disabled: true }),
+      senderStreet: new FormControl({ value: "", disabled: true }),
+      senderStreetNo: new FormControl({ value: "", disabled: true }),
+      senderCity: new FormControl({ value: "", disabled: true }),
+      senderZipCode: new FormControl({ value: "", disabled: true }),
 
-      receiverName: new FormControl({value: "", disabled: true}),
-      receiverStreet: new FormControl({value: "", disabled: true}),
-      receiverStreetNo: new FormControl({value: "", disabled: true}),
-      receiverCity: new FormControl({value: "", disabled: true}),
-      receiverZipCode: new FormControl({value: "", disabled: true}),
+      receiverName: new FormControl({ value: "", disabled: true }),
+      receiverStreet: new FormControl({ value: "", disabled: true }),
+      receiverStreetNo: new FormControl({ value: "", disabled: true }),
+      receiverCity: new FormControl({ value: "", disabled: true }),
+      receiverZipCode: new FormControl({ value: "", disabled: true }),
 
-      numberPackages: new FormControl({value: "", disabled: true}),
-      totalWeight: new FormControl({value: "", disabled: true}),
-      totalCapacity: new FormControl({value: "", disabled: true}),
-      cargoDescription: new FormControl({value: "", disabled: true}),
-      dangerousGoods: new FormControl({value: "", disabled: true}),
-      preCarriage: new FormControl({value: "", disabled: true}),
-      exportInsurance: new FormControl({value: "", disabled: true}),
-      exportCustomsClearance: new FormControl({value: "", disabled: true}),
-      flight: new FormControl({value: "", disabled: true}),
-      importInsurance: new FormControl({value: "", disabled: true}),
-      importCustomsClearance: new FormControl({value: "", disabled: true}),
-      onCarriage: new FormControl({value: "", disabled: true}),
-      customerTypeEnum: new FormControl({value: "", disabled: true}),
+      numberPackages: new FormControl({ value: "", disabled: true }),
+      totalWeight: new FormControl({ value: "", disabled: true }),
+      totalCapacity: new FormControl({ value: "", disabled: true }),
+      cargoDescription: new FormControl({ value: "", disabled: true }),
+      dangerousGoods: new FormControl({ value: "", disabled: true }),
+      preCarriage: new FormControl({ value: "", disabled: true }),
+      exportInsurance: new FormControl({ value: "", disabled: true }),
+      exportCustomsClearance: new FormControl({ value: "", disabled: true }),
+      flight: new FormControl({ value: "", disabled: true }),
+      importInsurance: new FormControl({ value: "", disabled: true }),
+      importCustomsClearance: new FormControl({ value: "", disabled: true }),
+      onCarriage: new FormControl({ value: "", disabled: true }),
+      customerTypeEnum: new FormControl({ value: "", disabled: true })
     });
   }
 
   private initalizeFlightForm() {
     this.displayFlightForm = this._formBuilder.group({
-      flightNumber: new FormControl({value: "", disabled: true}),
-      airline: new FormControl({value: "", disabled: true}),
-      departureAirport: new FormControl({value: "", disabled: true}),
-      departureTime: new FormControl({value: "", disabled: true}),
-      departureDate: new FormControl({value: "", disabled: true}),
-      destinationAirport: new FormControl({value: "", disabled: true}),
-      destinationTime: new FormControl({value: "", disabled: true}),
-      destinationDate: new FormControl({value: "", disabled: true}),
-      price: new FormControl({value: "", disabled: true})
+      flightNumber: new FormControl({ value: "", disabled: true }),
+      airline: new FormControl({ value: "", disabled: true }),
+      departureAirport: new FormControl({ value: "", disabled: true }),
+      departureTime: new FormControl({ value: "", disabled: true }),
+      departureDate: new FormControl({ value: "", disabled: true }),
+      destinationAirport: new FormControl({ value: "", disabled: true }),
+      destinationTime: new FormControl({ value: "", disabled: true }),
+      destinationDate: new FormControl({ value: "", disabled: true }),
+      price: new FormControl({ value: "", disabled: true })
     });
   }
 
   private initalizeInvoiceForm() {
     this.displayInvoiceForm = this._formBuilder.group({
-      invoiceCreationDate: new FormControl({value: "", disabled: true}),
-      preCarriage: new FormControl({value: "", disabled: true}),
-      exportInsurance: new FormControl({value: "", disabled: true}),
-      exportCustomsClearance: new FormControl({value: "", disabled: true}),
-      flightPrice: new FormControl({value: "", disabled: true}),
-      importInsurance: new FormControl({value: "", disabled: true}),
-      importCustomsClearance: new FormControl({value: "", disabled: true}),
-      onCarriage: new FormControl({value: "", disabled: true}),
-      managementFee: new FormControl({value: "", disabled: true}),
-      serviceFee: new FormControl({value: "", disabled: true}),
-      discount: new FormControl({value: "", disabled: true})
+      invoiceCreationDate: new FormControl({ value: "", disabled: true }),
+      preCarriage: new FormControl({ value: "", disabled: true }),
+      exportInsurance: new FormControl({ value: "", disabled: true }),
+      exportCustomsClearance: new FormControl({ value: "", disabled: true }),
+      flightPrice: new FormControl({ value: "", disabled: true }),
+      importInsurance: new FormControl({ value: "", disabled: true }),
+      importCustomsClearance: new FormControl({ value: "", disabled: true }),
+      onCarriage: new FormControl({ value: "", disabled: true }),
+      managementFee: new FormControl({ value: "", disabled: true }),
+      serviceFee: new FormControl({ value: "", disabled: true }),
+      discount: new FormControl({ value: "", disabled: true })
     });
   }
 }

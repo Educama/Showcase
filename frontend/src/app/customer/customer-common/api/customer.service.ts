@@ -1,12 +1,9 @@
-import {Injectable} from "@angular/core";
-import {RestClientService} from "../../../shared/http/services/rest-client.service";
-import {Observable} from "rxjs/Observable";
-import "rxjs/add/operator/catch";
-import "rxjs/add/operator/map";
-import "rxjs/add/observable/throw";
-import {CustomerListResource} from "./resources/customer-list.resource";
-import {CustomerResource} from "./resources/customer.resource";
-import {CustomerSuggestionsResource} from "./resources/customer-suggestions.resource";
+import { Injectable } from "@angular/core";
+import { RestClientService } from "../../../shared/http/services/rest-client.service";
+import { Observable } from "rxjs";
+import { CustomerListResource } from "./resources/customer-list.resource";
+import { CustomerResource } from "./resources/customer.resource";
+import { CustomerSuggestionsResource } from "./resources/customer-suggestions.resource";
 
 /*
  * Service to communicate with Customer Resource
@@ -15,7 +12,7 @@ import {CustomerSuggestionsResource} from "./resources/customer-suggestions.reso
 export class CustomerService {
 
     // private CUSTOMER_RESOURCE_PATH:string = "customers";
-    private CUSTOMER_RESOURCE_PATH = "customers";
+  private CUSTOMER_RESOURCE_PATH = "customers";
     private CUSTOMER_SUGGESTIONS_RESOURCE_PATH: string = this.CUSTOMER_RESOURCE_PATH + "/suggestions";
 
     constructor(private _restClientService: RestClientService) {

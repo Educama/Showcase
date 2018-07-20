@@ -1,9 +1,7 @@
 import {Component, Input, Output, EventEmitter, OnInit, OnChanges} from "@angular/core";
 import {ShipmentResource} from "../../shipment-common/api/resources/shipment.resource";
-import {TranslateService} from "ng2-translate";
+import {TranslateService} from "@ngx-translate/core";
 import {SelectItem} from "primeng/primeng";
-import {current} from "codelyzer/util/syntaxKind";
-import {isUndefined} from "util";
 
 interface City {
   name: string;

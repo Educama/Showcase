@@ -1,20 +1,36 @@
-import {NgModule, ModuleWithProviders} from "@angular/core";
-import {HttpModule, Http} from "@angular/http";
 import {
-    TranslateModule,
-    TranslateLoader,
-    TranslateStaticLoader,
-    MissingTranslationHandler, TranslatePipe
-} from "ng2-translate";
-import {I18nDatePipe} from "./pipes/i18n-date.pipe";
-import {TimeAgoPipe} from "./pipes/time-ago.pipe";
-import {EducamaMissingTranslationHandler} from "./helper/educama-missing-translation-handler.helper";
-import {TranslationNotifierService} from "./services/translation-notifier.service";
+  ModuleWithProviders,
+  NgModule
+} from "@angular/core";
+import {
+  MissingTranslationHandler,
+  TranslateLoader,
+  TranslateModule
+} from "@ngx-translate/core";
+import { I18nDatePipe } from "./pipes/i18n-date.pipe";
+import { TimeAgoPipe } from "./pipes/time-ago.pipe";
+import { EducamaMissingTranslationHandler } from "./helper/educama-missing-translation-handler.helper";
+import { TranslationNotifierService } from "./services/translation-notifier.service";
+import {
+  HttpClient,
+  HttpClientModule
+} from "@angular/common/http";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 
 @NgModule({
-    imports: [HttpModule, TranslateModule],
-    declarations: [I18nDatePipe, TimeAgoPipe],
-    exports: [TranslateModule, I18nDatePipe, TimeAgoPipe],
+  imports: [
+    HttpClientModule,
+    TranslateModule
+  ],
+  declarations: [
+    I18nDatePipe,
+    TimeAgoPipe
+  ],
+  exports: [
+    TranslateModule,
+    I18nDatePipe,
+    TimeAgoPipe
+  ]
 })
 export class TranslationModule {
   public static forRoot(): Array<ModuleWithProviders> {
@@ -22,21 +38,23 @@ export class TranslationModule {
       {
         ngModule: TranslationModule,
         providers: [
-          {provide: MissingTranslationHandler, useClass: EducamaMissingTranslationHandler},
+          { provide: MissingTranslationHandler, useClass: EducamaMissingTranslationHandler },
           TranslationNotifierService
         ]
       },
       TranslateModule.forRoot({
-        provide: TranslateLoader,
-        useFactory: (createTranslateLoader),
-        deps: [Http]
+        loader: {
+          provide: TranslateLoader,
+          useFactory: (createTranslateLoader),
+          deps: [ HttpClient ]
+        }
       })
     ];
   }
 }
 
-export function createTranslateLoader(http: Http) {
-  return new TranslateStaticLoader(http, "./assets/i18n", ".json");
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
 }
 
 

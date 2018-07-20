@@ -1,7 +1,7 @@
-import {Injectable} from "@angular/core";
-import {RestClientService} from "../../../shared/http/services/rest-client.service";
-import {Observable} from "rxjs/Observable";
-import {TaskListResource} from "./resources/task-list.resource";
+import { Injectable } from "@angular/core";
+import { RestClientService } from "../../../shared/http/services/rest-client.service";
+import { Observable } from "rxjs";
+import { TaskListResource } from "./resources/task-list.resource";
 
 /*
  * Service to communicate with Task Resource

@@ -7,12 +7,12 @@ jdk:
 - oraclejdk8
 env:
   global:
-  - NODE_VERSION: 6
+  - NODE_VERSION: 8
   - CHROME_BIN: chromium-browser
   - MAVEN_OPTS: -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn #see https://docs.travis-ci.com/user/common-build-problems/#Log-Length-exceeded and https://blogs.itemis.com/en/in-a-nutshell-removing-artifact-messages-from-maven-log-output
 before_script:
   - export DISPLAY=:99.0 && sh -e /etc/init.d/xvfb start #start xvfb so that we can start Firefox, see https://docs.travis-ci.com/user/gui-and-headless-browsers/#Using-xvfb-to-Run-Tests-That-Require-a-GUI
-  - npm install -g @angular/cli@1.0.3
+  - npm install -g @angular/cli@6.0.8
 before_install:
 - nvm install $NODE_VERSION
 script:

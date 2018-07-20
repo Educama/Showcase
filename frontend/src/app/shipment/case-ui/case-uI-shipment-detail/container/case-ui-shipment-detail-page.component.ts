@@ -1,16 +1,20 @@
-import {Component,  OnChanges, OnDestroy, OnInit} from "@angular/core";
-import {Observable} from "rxjs/Observable";
-import {Subscription} from "rxjs/Subscription";
-import {ActivatedRoute} from "@angular/router";
-import {State} from "../../../../app.reducers";
-import {Store} from "@ngrx/store";
-import {CaseUIShipmentDetailModel} from "./case-ui-shipment-detail-page.model";
-import {ShipmentCaptureSlice} from "../../../shipment-common/store/shipments/shipment-capture-page/shipment-capture-page.slice";
-import {RequestSingleShipment} from "../../../shipment-common/store/shipments/shipment-list-page/shipment-list-page.actions";
-import {ResetShipmentCaptureSliceAction
-} from "../../../shipment-common/store/shipments/shipment-capture-page/shipment-capture-page.actions";
-import {ClearCaseUiCenterAreaSlice} from "../../../shipment-common/store/shipments/case-ui-center-area-page/case-ui-center-area-page.actions";
-
+import {
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit
+} from "@angular/core";
+import {
+  Observable,
+  Subscription
+} from "rxjs";
+import { ActivatedRoute } from "@angular/router";
+import { State } from "../../../../app.reducers";
+import { Store } from "@ngrx/store";
+import { CaseUIShipmentDetailModel } from "./case-ui-shipment-detail-page.model";
+import { ShipmentCaptureSlice } from "../../../shipment-common/store/shipments/shipment-capture-page/shipment-capture-page.slice";
+import { RequestSingleShipment } from "../../../shipment-common/store/shipments/shipment-list-page/shipment-list-page.actions";
+import { ResetShipmentCaptureSliceAction } from "../../../shipment-common/store/shipments/shipment-capture-page/shipment-capture-page.actions";
 
 @Component({
   selector: "educama-caseui-shipment-detail-page",
@@ -37,19 +41,19 @@ export class CaseUIShipmentDetailPageComponent implements OnInit, OnDestroy, OnC
 
   public ngOnInit() {
     this._activatedRoute.params.subscribe(params => {
-      if (params["id"] && params["id"] !== "capture") {
-        this._store.dispatch(new RequestSingleShipment(params["id"]));
+      if (params[ "id" ] && params[ "id" ] !== "capture") {
+        this._store.dispatch(new RequestSingleShipment(params[ "id" ]));
       }
-      console.log(params["id"]);
+      console.log(params[ "id" ]);
     });
   }
 
   public ngOnChanges() {
     this._activatedRoute.params.subscribe(params => {
-      if (params["id"] && params["id"] !== "capture") {
-        this._store.dispatch(new RequestSingleShipment(params["id"]));
+      if (params[ "id" ] && params[ "id" ] !== "capture") {
+        this._store.dispatch(new RequestSingleShipment(params[ "id" ]));
       }
-      console.log(params["id"]);
+      console.log(params[ "id" ]);
     });
   }
 
@@ -61,7 +65,6 @@ export class CaseUIShipmentDetailPageComponent implements OnInit, OnDestroy, OnC
   // ***************************************************
   // Event Handler
   // ***************************************************
-
 
   // ***************************************************
   // Data Retrieval

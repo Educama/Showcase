@@ -1,13 +1,21 @@
-import {Component, OnDestroy} from "@angular/core";
-import {Observable} from "rxjs/Observable";
-import {InvoicePageSlice} from "../../shipment-common/store/shipments/invoice-page/invoice-page.slice";
-import {Subscription} from "rxjs/Subscription";
-import {ShipmentInvoicePageModel} from "./shipment-invoice-page.model";
-import {Store} from "@ngrx/store";
-import {State} from "../../../app.reducers";
-import {ActivatedRoute, Router} from "@angular/router";
-import {InvoiceResource} from "../../shipment-common/api/resources/invoice.resource";
-import {CreateInvoiceAction} from "../../shipment-common/store/shipments/invoice-page/invoice-page.actions";
+import {
+  Component,
+  OnDestroy
+} from "@angular/core";
+import {
+  Observable,
+  Subscription
+} from "rxjs";
+import { InvoicePageSlice } from "../../shipment-common/store/shipments/invoice-page/invoice-page.slice";
+import { ShipmentInvoicePageModel } from "./shipment-invoice-page.model";
+import { Store } from "@ngrx/store";
+import { State } from "../../../app.reducers";
+import {
+  ActivatedRoute,
+  Router
+} from "@angular/router";
+import { InvoiceResource } from "../../shipment-common/api/resources/invoice.resource";
+import { CreateInvoiceAction } from "../../shipment-common/store/shipments/invoice-page/invoice-page.actions";
 
 @Component({
   selector: "educama-shipment-invoice-page",
@@ -29,7 +37,7 @@ export class ShipmentInvoicePageComponent implements OnDestroy {
     this.invoiceListSlice = this._store.select(state => state.invoicePageSlice);
 
     this.invoiceListSliceSubscription = this.invoiceListSlice
-      .subscribe(invoiceListSlice => this.invoiceListSlice);
+                                            .subscribe(invoiceListSlice => this.invoiceListSlice);
   }
 
   public ngOnDestroy() {
@@ -43,10 +51,10 @@ export class ShipmentInvoicePageComponent implements OnDestroy {
   public onCreateInvoiceEvent(invoiceResource: InvoiceResource) {
     const trackingId = invoiceResource.trackingId;
     this._store.dispatch(new CreateInvoiceAction(trackingId, invoiceResource));
-    this._router.navigate(["caseui/" + trackingId]);
+    this._router.navigate([ "caseui/" + trackingId ]);
   }
 
   public onCancelInvoiceEvent(trackingId: string) {
-    this._router.navigate(["caseui/" + trackingId]);
+    this._router.navigate([ "caseui/" + trackingId ]);
   }
 }

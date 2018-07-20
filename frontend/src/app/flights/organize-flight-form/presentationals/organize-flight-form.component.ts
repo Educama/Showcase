@@ -1,27 +1,37 @@
-import {Component, OnDestroy, OnInit} from "@angular/core";
-import {Observable} from "rxjs/Observable";
-import {Subscription} from "rxjs/Subscription";
-import {AirportResource} from "../../flights-common/api/airports/airport.resource";
-import {AirlineResource} from "../../flights-common/api/airlines/airline.resource";
-import {OrganizeFlightFormPageModel} from "../container/organize-flight-form-page.model";
-import {ActivatedRoute, Router} from "@angular/router";
-import {Store} from "@ngrx/store";
-import {AirlineService} from "../../flights-common/api/airlines/airline.service";
-import {AirportService} from "../../flights-common/api/airports/airport.service";
-import {State} from "../../../app.reducers";
-import {RequestSingleShipment} from "../../../shipment/shipment-common/store/shipments/shipment-list-page/shipment-list-page.actions";
 import {
-  ResetShipmentCaptureSliceAction, ReloadStoreAction
+  Component,
+  OnDestroy,
+  OnInit
+} from "@angular/core";
+import {
+  Observable,
+  Subscription
+} from "rxjs";
+import { AirportResource } from "../../flights-common/api/airports/airport.resource";
+import { AirlineResource } from "../../flights-common/api/airlines/airline.resource";
+import { OrganizeFlightFormPageModel } from "../container/organize-flight-form-page.model";
+import {
+  ActivatedRoute,
+  Router
+} from "@angular/router";
+import { Store } from "@ngrx/store";
+import { AirlineService } from "../../flights-common/api/airlines/airline.service";
+import { AirportService } from "../../flights-common/api/airports/airport.service";
+import { State } from "../../../app.reducers";
+import { RequestSingleShipment } from "../../../shipment/shipment-common/store/shipments/shipment-list-page/shipment-list-page.actions";
+import {
+  ReloadStoreAction,
+  ResetShipmentCaptureSliceAction
 } from "../../../shipment/shipment-common/store/shipments/shipment-capture-page/shipment-capture-page.actions";
-import {SaveFlightAction} from "../../../shipment/shipment-common/store/shipments/organize-flight-page/organize-flight-page.actions";
-import {OrganizeFlightResource} from "../../../shipment/shipment-common/api/resources/organize-flight.resource";
-import {OrganizeFlightSlice} from "../../../shipment/shipment-common/store/shipments/organize-flight-page/organize-flight-page.slice";
-import {ReloadShipmentAndTasksForCaseUiACtion} from "../../../shipment/shipment-common/store/shipments/case-ui-center-area-page/case-ui-center-area-page.actions";
+import { SaveFlightAction } from "../../../shipment/shipment-common/store/shipments/organize-flight-page/organize-flight-page.actions";
+import { OrganizeFlightResource } from "../../../shipment/shipment-common/api/resources/organize-flight.resource";
+import { OrganizeFlightSlice } from "../../../shipment/shipment-common/store/shipments/organize-flight-page/organize-flight-page.slice";
+import { ReloadShipmentAndTasksForCaseUiACtion } from "../../../shipment/shipment-common/store/shipments/case-ui-center-area-page/case-ui-center-area-page.actions";
 
 @Component({
   selector: "educama-organize-flight-form",
   templateUrl: "./organize-flight-form.component.html",
-  styleUrls: ["../organize-flight-form-style.scss"]
+  styleUrls: [ "../organize-flight-form-style.scss" ]
 })
 export class OrganizeFlightFormComponent implements OnInit, OnDestroy {
 
@@ -34,7 +44,6 @@ export class OrganizeFlightFormComponent implements OnInit, OnDestroy {
   selectedStartAirport: AirportResource;
   selectedDestinationAirport: AirportResource;
 
-
   public flightNumber: string;
   public price: number;
 
@@ -42,7 +51,6 @@ export class OrganizeFlightFormComponent implements OnInit, OnDestroy {
   public departureDate: string;
   public destinationAirport: string;
   public destinationDate: string;
-
 
   public shipmentDetailSlice: Observable<OrganizeFlightSlice>;
   public shipmentDetailSliceSubscription: Subscription;
@@ -65,8 +73,8 @@ export class OrganizeFlightFormComponent implements OnInit, OnDestroy {
 
   public ngOnInit() {
     this._activatedRoute.parent.params.subscribe(params => {
-      this.trackingId = params["id"];
-      this._store.dispatch(new RequestSingleShipment(params["id"]));
+      this.trackingId = params[ "id" ];
+      this._store.dispatch(new RequestSingleShipment(params[ "id" ]));
     });
   }
 
@@ -82,14 +90,14 @@ export class OrganizeFlightFormComponent implements OnInit, OnDestroy {
       this.destinationAirport, this.destinationDate
     )));
 
-    this._router.navigate(["caseui/" + this.trackingId]);
+    this._router.navigate([ "caseui/" + this.trackingId ]);
     this._store.dispatch(new ReloadStoreAction(this.trackingId));
     this._store.dispatch(new ReloadShipmentAndTasksForCaseUiACtion(this.trackingId));
   }
 
   public cancleFlight() {
     this._store.dispatch(new ReloadStoreAction(this.trackingId));
-    this._router.navigate(["caseui/" + this.trackingId]);
+    this._router.navigate([ "caseui/" + this.trackingId ]);
   }
 
   // ***************************************************
@@ -97,12 +105,12 @@ export class OrganizeFlightFormComponent implements OnInit, OnDestroy {
   // ***************************************************
   public loadAirlineSuggestions(event: any) {
     this._airlineService.findAirlineSuggestions(event.query)
-      .subscribe(customerSuggestionResource => this.airlineSuggestion = customerSuggestionResource);
+        .subscribe(customerSuggestionResource => this.airlineSuggestion = customerSuggestionResource);
   }
 
   public loadAirportSuggestions(event: any) {
     this._airportService.findAirportSuggestions(event.query)
-      .subscribe(customerSuggestionResource => this.airportSuggestion = customerSuggestionResource);
+        .subscribe(customerSuggestionResource => this.airportSuggestion = customerSuggestionResource);
   }
 
   public onAirlineSelected(airline: AirlineResource) {

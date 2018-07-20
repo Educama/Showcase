@@ -1,14 +1,10 @@
-import {Injectable} from "@angular/core";
-import {RestClientService} from "../../../shared/http/services/rest-client.service";
-import {Observable} from "rxjs/Observable";
-import "rxjs/add/operator/catch";
-import "rxjs/add/operator/map";
-import "rxjs/add/observable/throw";
-import {ShipmentListResource} from "./resources/shipment-list.resource";
-import {ShipmentResource} from "./resources/shipment.resource";
-import {OrganizeFlightResource} from "./resources/organize-flight.resource";
-import {InvoiceResource} from "./resources/invoice.resource";
-import {InvoiceListResource} from "./resources/invoice-ist.resource";
+import { Injectable } from "@angular/core";
+import { RestClientService } from "../../../shared/http/services/rest-client.service";
+import { Observable } from "rxjs";
+import { ShipmentListResource } from "./resources/shipment-list.resource";
+import { ShipmentResource } from "./resources/shipment.resource";
+import { OrganizeFlightResource } from "./resources/organize-flight.resource";
+import { InvoiceResource } from "./resources/invoice.resource";
 
 /*
  * Service to communicate with Shipments Resource

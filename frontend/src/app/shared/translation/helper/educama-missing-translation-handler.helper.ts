@@ -1,4 +1,7 @@
-import {MissingTranslationHandler, MissingTranslationHandlerParams} from "ng2-translate";
+import {
+  MissingTranslationHandler,
+  MissingTranslationHandlerParams
+} from "@ngx-translate/core";
 
 /*
  * Educama specific implementation of the MissingTranslationHandler
